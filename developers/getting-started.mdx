@@ -9,8 +9,8 @@ Before you start, make sure you have:
 
 - **Node.js** 18+ (we recommend 20 LTS)
 - **pnpm** — our package manager for JavaScript/TypeScript
-  (_never_ use npm or yarn)
-- **uv** — our package manager for Python (_never_ use pip
+  (*never* use npm or yarn)
+- **uv** — our package manager for Python (*never* use pip
   or conda)
 - **Docker** — for running the full service stack
 - **Git** — obviously
@@ -24,30 +24,31 @@ Before you start, make sure you have:
 
 <Steps>
   <Step title="Clone the Repository">
-    ```bash
-    git clone https://github.com/pixelated-empathy/pixelated.git
-    cd pixelated
-    ```
+  ```bash
+  git clone https://github.com/pixelated-empathy/pixelated.git
+  cd pixelated
+  ```
   </Step>
 
   <Step title="Install Dependencies">
-    ```bash
-    # Node dependencies
-    pnpm install
+  ```bash
+  # Node dependencies
+  pnpm install
 
-    # Python dependencies
-    uv install
-    ```
+# Python dependencies
 
-  </Step>
+uv install
 
-  <Step title="Start the Dev Server">
-    ```bash
-    pnpm dev
-    ```
+````
+</Step>
 
-    That gets you the frontend running at
-    `http://localhost:4321`.
+<Step title="Start the Dev Server">
+```bash
+pnpm dev
+````
+
+That gets you the frontend running at
+`http://localhost:4321`.
 
   </Step>
 </Steps>
@@ -86,7 +87,7 @@ pixelated/
 │   ├── simulator/    → The Empathy Gym™
 │   └── styles/       → Global styles & tokens
 ├── ai/               → EI Engine (Python)
-├── docs2/            → This documentation
+├── docs/             → This documentation
 ├── tests/            → Test suites
 ├── docker/           → Docker configurations
 └── scripts/          → Build & utility scripts

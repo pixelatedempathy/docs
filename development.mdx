@@ -1,114 +1,178 @@
 ---
 title: 'Development'
-description: 'Preview changes locally to update your docs'
+description: 'Local development setup and commands for Pixelated Empathy'
 ---
 
 <Info>
-  **Prerequisites**: - Node.js version 19 or higher - A docs repository with a
-  `docs.json` file
+  **Prerequisites**:
+  - Node.js v19+ (use `nvm` to manage versions)
+  - pnpm (for Node.js dependencies)
+  - uv (for Python dependencies)
+  - Docker & Docker Compose (for local infrastructure)
 </Info>
 
-Follow these steps to install and run Mintlify on your operating system.
+## Quick Start
 
 <Steps>
-<Step title="Install the Mintlify CLI">
+<Step title="Install Dependencies">
+
+Install all frontend and service dependencies:
 
 ```bash
-npm i -g mint
+# Node.js dependencies
+pnpm install
+
+# Python dependencies (AI services, bias detection, pipelines)
+uv sync
 ```
 
 </Step>
 
-<Step title="Preview locally">
+<Step title="Start Infrastructure">
 
-Navigate to your docs directory where your `docs.json` file is located, and run
-the following command:
+Launch local infrastructure services (MongoDB, Redis, etc.):
 
 ```bash
-mint dev
+docker compose up -d
 ```
 
-A local preview of your documentation will be available at `http://localhost:3000`.
+</Step>
+
+<Step title="Run Development Server">
+
+Start the Astro development server with all services:
+
+```bash
+pnpm dev:all-services
+```
+
+This starts:
+
+- Frontend dev server (typically port 5173)
+- AI Service (FastAPI)
+- WebSocket server
+- Worker service
 
 </Step>
 </Steps>
 
-## Custom ports
-
-By default, Mintlify uses port 3000. You can customize the port Mintlify runs on
-by using the `--port` flag. For example, to run Mintlify on port 3333, use this
-command:
-
-```bash
-mint dev --port 3333
-```
-
-If you attempt to run Mintlify on a port that's already in use, it will use the
-next available port:
-
-```md
-Port 3000 is already in use. Trying 3001 instead.
-```
-
-## Mintlify versions
-
-Please note that each CLI release is associated with a specific version of
-Mintlify. If your local preview does not align with the production version,
-please update the CLI:
-
-```bash
-npm mint update
-```
-
-## Validating links
-
-The CLI can assist with validating links in your documentation. To identify any
-broken links, use the following command:
-
-```bash
-mint broken-links
-```
-
-## Deployment
-
-If the deployment is successful, you should see the following:
-
-<Frame>
-  <img
-    src="/images/checks-passed.png"
-    alt="Screenshot of a deployment confirmation message that says All checks have
-    passed."
-    style={{ borderRadius: '0.5rem' }}
-  />
-</Frame>
-
-## Code formatting
-
-We suggest using extensions on your IDE to recognize and format MDX. If you're a
-VSCode user, consider the
-[MDX VSCode extension](https://marketplace.visualstudio.com/items?itemName=unifiedjs.vscode-mdx)
-for syntax highlighting, and
-[Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
-for code formatting.
-
-## Troubleshooting
+## Development Commands
 
 <AccordionGroup>
-  <Accordion
-  title='Error: Could not load the "sharp" module using the darwin-arm64
-  runtime'
->
-  This may be due to an outdated version of node. Try the following:
-  1. Remove the currently-installed version of the CLI: `npm remove -g mint`
-  2. Upgrade to Node v19 or higher.
-  3. Reinstall the CLI: `npm i -g mint`
+<Accordion title="Frontend Only" icon="browser">
+
+```bash
+# Start Astro dev server
+pnpm dev
+
+# With custom port
+pnpm dev --port 3000
+```
+
 </Accordion>
 
-  <Accordion title="Issue: Encountering an unknown error">
-  Solution: Go to the root of your device and delete the `~/.mintlify` folder.
-  Then run `mint dev` again.
+<Accordion title="Full Stack" icon="layers">
+
+```bash
+# Start all services
+pnpm dev:all-services
+
+# Start with specific port
+pnpm dev:all-services --port 8080
+```
+
+</Accordion>
+
+<Accordion title="AI Services Only" icon="brain">
+
+```bash
+# Start the AI inference service
+pnpm dev:ai
+
+# Start the research pipeline
+pnpm dev:pipeline
+```
+
 </Accordion>
 </AccordionGroup>
 
-Curious about what changed in the latest CLI version? Check out the
-[CLI changelog](https://www.npmjs.com/package/mintlify?activeTab=versions).
+## Quality Gates
+
+Before submitting changes, run the full quality check:
+
+```bash
+# Type check, lint, and format
+pnpm check:all
+
+# Unit tests
+pnpm test:all
+
+# Security audit
+pnpm security:scan
+
+# Ultimate Bug Scanner (UBS) on changed files
+ubs $(git diff --name-only --cached)
+```
+
+<AccordionGroup>
+<Accordion title="Port Conflicts" icon="circle-exclamation">
+
+If port 5173 is already in use, the Astro dev server will attempt the next available port.
+  You can also specify a custom port:
+
+```bash
+pnpm dev --port 3000
+```
+
+</Accordion>
+
+<Accordion title="Node.js Memory Issues" icon="memory">
+
+The dev server is configured with increased memory (`--max-old-space-size=8192`).
+  If you still encounter memory issues:
+
+```bash
+NODE_OPTIONS="--max-old-space-size=16384" pnpm dev
+```
+
+</Accordion>
+
+<Accordion title="Python Environment Issues" icon="python">
+
+If uv encounters issues, try resetting the environment:
+
+```bash
+rm -rf .venv
+uv sync
+```
+
+</Accordion>
+
+<Accordion title="Docker Services Won't Start" icon="docker">
+
+Check Docker daemon status and available disk space:
+
+```bash
+docker ps
+docker system df
+```
+
+</Accordion>
+</AccordionGroup>
+
+## Documentation
+
+This documentation site is built with [Astro Starlight](https://starlight.astro.build/). To run the docs locally:
+
+```bash
+# From project root
+pnpm dev
+
+# Docs are served at the same port as the main app
+# Navigate to /docs route
+```
+
+<Info>
+  The `<Steps>`, `<Step>`, `<Info>`, `<Accordion>`, and `<AccordionGroup>` components used throughout this
+  documentation are built into Astro Starlight.
+</Info>
