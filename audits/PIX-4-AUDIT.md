@@ -61,7 +61,7 @@ From `metrics/dataset_audit_final_report.md`:
 |------|---------|--------|
 | `ai/pipelines/voice/youtube_processor.py` | YouTube playlist processing | ✅ EXISTS |
 | `ai/pipelines/voice/audio_downloader.py` | Audio download from YouTube | ✅ EXISTS |
-| `ai/pipelines/orchestrator/youtube_rag_system.py` | YouTube RAG system | ✅ EXISTS |
+| `ai/pipelines/youtube_rag_system.py` | YouTube RAG system | ✅ EXISTS |
 | `ai/pipelines/voice/mcp_server.py` | MCP tool: `transcribe_youtube` | ✅ EXISTS |
 | `ai/pipelines/voice/api/server.py` | API endpoints for transcription | ✅ EXISTS |
 

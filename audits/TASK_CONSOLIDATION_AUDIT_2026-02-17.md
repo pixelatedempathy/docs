@@ -38,10 +38,10 @@
 
 | File                                                          | Claimed  | Actual Lines | Stub? |
 | ------------------------------------------------------------- | -------- | ------------ | ----- |
-| `ai/pipelines/orchestrator/main_orchestrator.py`              | Complete | 627          | No    |
-| `ai/pipelines/orchestrator/unified_preprocessing_pipeline.py` | Complete | 1,407        | No    |
-| `ai/pipelines/orchestrator/data_splitter.py`                  | Complete | 113          | No    |
-| `ai/pipelines/orchestrator/logger.py`                         | Complete | 95           | No    |
+| `ai/pipelines/main_orchestrator.py`              | Complete | 627          | No    |
+| `ai/pipelines/unified_preprocessing_pipeline.py` | Complete | 1,407        | No    |
+| `ai/pipelines/data_splitter.py`                  | Complete | 113          | No    |
+| `ai/pipelines/logger.py`                         | Complete | 95           | No    |
 
 ### Phase 2: Sourcing - ⚠️ 80% VERIFIED (Naming Issues)
 

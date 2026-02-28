@@ -20,7 +20,7 @@ All tasks/subtasks are nested under the above Phase issues in Linear. Treat this
 - **Canonical S3 (OVH)**: `s3://pixel-data/` for training-ready data and releases (S3 canonical home).
 - **Consolidated Local Corpora**: ~9.3GB available, ~3.6GB pending remote download (local snapshot). Key artifacts (not checked into git; expect on S3 or mounted storage):
   - `ai/training_data_consolidated/` (expected home for `ULTIMATE_FINAL_DATASET.jsonl`, train/val/test splits ~5.6GB)
-  - `ai/lightning/pixelated-training/processed/` → phase outputs (Priority/Professional/CoT)
+  - `ai/orchestrator/targets/pixelated-training/processed/` → phase outputs (Priority/Professional/CoT)
   - `ai/datasets/` → raw + Reddit tiers + research packs (1.5GB+) and 43+ named sets (see summaries below)
 - **Data Health Baseline (snapshots)**: Source counts, tiers, and quality metrics (now embedded here) formerly in dataset stats/metadata docs.
 - **Backlog (Google Drive → OVH S3)**: ~3.6GB still on GDrive per the master inventory. Action: rclone or VPS stream to `s3://pixel-data/gdrive/processed/` (follow S3/VPS steps in [ai/training_ready/MASTER_TRAINING_EPIC.md](ai/training_ready/MASTER_TRAINING_EPIC.md)).
@@ -36,7 +36,7 @@ All tasks/subtasks are nested under the above Phase issues in Linear. Treat this
 
 ### Embedded Inventory Highlights (from prior inventories)
 - **Totals (last snapshot)**: ~137k-152k conversations tracked; processed phases ~753MB; consolidated ~7.2GB; raw pending ~3.6GB.
-- **Processed Phases** (`ai/lightning/pixelated-training/processed/`):
+- **Processed Phases** (`ai/orchestrator/targets/pixelated-training/processed/`):
   - Phase 1 Priority (106,248 conv, 424MB), Phase 2 Professional (16,386 conv, 49MB), Phase 3 CoT (59,559 conv, 280MB).
 - **Consolidated Finals** (`ai/training_data_consolidated/`):
   - `ULTIMATE_FINAL_DATASET.jsonl` (~2GB, ~608k conv), `merged_dataset.jsonl` (~1.5GB), `unified_training_data.jsonl` (~600MB), `pixelated_empathy_test_*.jsonl` / `pixelated_empathy_val_*.jsonl` (~190MB each).
@@ -56,7 +56,7 @@ All tasks/subtasks are nested under the above Phase issues in Linear. Treat this
   - Network safety: ensure HTTPS endpoints; restrict to allow-listed bucket/region.
 - **2) Verify S3 landing**: `rclone ls s3ovh:pixel-data/gdrive/processed | head` and spot-check object sizes; keep audit logs.
 - **3) Post-sync refresh (update numbers in this hub)**:
-  - Recompute sizes/counts (example): `du -sh ai/datasets tier* ai/lightning/pixelated-training/processed 2>/dev/null` and `find ai -name "*.jsonl" -maxdepth 4 -print0 | xargs -0 wc -l | sort -nr | head`
+  - Recompute sizes/counts (example): `du -sh ai/datasets tier* ai/orchestrator/targets/pixelated-training/processed 2>/dev/null` and `find ai -name "*.jsonl" -maxdepth 4 -print0 | xargs -0 wc -l | sort -nr | head`
   - If consolidated datasets are remote-only, pull manifests or run counts server-side, then overwrite the embedded figures above.
   - Re-run integration (if enabled) via `python ai/integration_pipeline/master_pipeline.py` (note: current implementation is stubbed; prefer your production merge job if available).
 

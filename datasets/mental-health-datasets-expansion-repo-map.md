@@ -41,7 +41,7 @@ Canonical flow:
 
 ### Training scripts
 
-- `ai/lightning/`
+- `ai/orchestrator/targets/`
   - Lightning.ai training scripts (verify versions before use).
 
 ### Workspace note

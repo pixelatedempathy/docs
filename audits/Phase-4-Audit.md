@@ -27,7 +27,7 @@ script.
 ## 📊 The "Metric Fraud" Investigation (PIX-8)
 
 The previous operator claimed **275,000** new conversations were generated and categorized.
-**Real-World Audit of `ai/training/ready_packages/datasets/`:**
+**Real-World Audit of `ai/training/datasets/`:**
 
 - `nemo_synthetic_conversations.jsonl`: 5.1 KB (Estimated ~10 records)
 - `books_training_data.jsonl`: 214 bytes (1 record)

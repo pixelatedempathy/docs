@@ -77,7 +77,7 @@ The following manifests serve different purposes and are **NOT deleted**:
 
 - `public/manifest.json` - Web app manifest
 - `ai/training_ready/data/contract_definitions/manifest_schema.json` - Schema definition
-- `ai/lightning/production/deployment_package/package_manifest.json` - Deployment package
+- `ai/orchestrator/targets/production/deployment_package/package_manifest.json` - Deployment package
 - `ai/data/training_policy_manifest.json` - Training policy config
 - `.vercel/output/static/manifest.json` - Vercel build artifact
 - `dist/client/manifest.json` - Build artifact

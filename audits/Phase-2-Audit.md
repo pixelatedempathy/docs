@@ -15,14 +15,14 @@
 
 - **Finding**: Multiple P1 scripts required for Phase 2 were completely
   missing from the filesystem.
-  - `ai/training/ready_packages/scripts/extract_all_books_to_training.py`
+  - `ai/training/scripts/extract_all_books_to_training.py`
   (PIX-2) - **ABSENT**
-  - `ai/training/ready_packages/scripts/extract_all_youtube_transcripts.py`
+  - `ai/training/scripts/extract_all_youtube_transcripts.py`
   (PIX-4) - **ABSENT**
-  - `ai/training/ready_packages/scripts/generate_nemo_synthetic_data.py`
+  - `ai/training/scripts/generate_nemo_synthetic_data.py`
   - **ABSENT**
   - `ai/journal_dataset_research/trigger.py` - **ABSENT**
-  - `ai/pipelines/orchestrator/generate_h100_manifest.py` (PIX-34) - **ABSENT**
+  - `ai/pipelines/generate_h100_manifest.py` (PIX-34) - **ABSENT**
 - **Impact**: Pipeline was non-functional; data sourcing couldn't be triggered.
 
 ### 2. Hallucinated Implementation
@@ -64,8 +64,8 @@
 
 - Created required directory structure:
   - `ai/data/acquired_datasets/books`
-  - `ai/training/ready_packages/datasets/stage2_reasoning`
-  - `ai/training/ready_packages/datasets/synthetic`
+  - `ai/training/datasets/stage2_reasoning`
+  - `ai/training/datasets/synthetic`
 
 ---
 
