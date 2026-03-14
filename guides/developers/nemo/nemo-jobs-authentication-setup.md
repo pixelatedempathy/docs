@@ -18,7 +18,7 @@ to the NVIDIA container registry. This key should be the same as your
 
 On the remote server, create a `.env` file in the quickstart directory:
 
-```bash
+```bash text
 ssh vivi@212.2.244.60
 cd ~/nemo-microservices/nemo-microservices-quickstart_v25.10
 
@@ -28,13 +28,19 @@ NEMO_MICROSERVICES_IMAGE_TAG=25.10
 NIM_API_KEY=your-nvidia-api-key-here
 NVIDIA_API_KEY=your-nvidia-api-key-here
 EOF
+
+
 ```
 
 ### 2. Restart services
 
 ```bash
+
+
 docker compose down jobs-controller
 docker compose up -d jobs-controller
+
+
 ```
 
 ### 3. Verify authentication
@@ -42,7 +48,11 @@ docker compose up -d jobs-controller
 Check the jobs-controller logs:
 
 ```bash
+
+
 docker compose logs jobs-controller --tail 20 | grep -i "auth\|error"
+
+
 ```
 
 You should **not** see 401 Unauthorized errors.
@@ -69,22 +79,47 @@ If authentication still fails:
 1. **Verify API key is correct:**
 
    ```bash
+
+
    echo $NIM_API_KEY | docker login nvcr.io -u '$oauthtoken' --password-stdin
-   ```
 
-2. **Check jobs-controller environment:**
+
+``` text
+
+
+
+1. **Check jobs-controller environment:**
+
+
 
    ```bash
+
+
    docker compose exec jobs-controller env | grep NIM
+
+
    ```
 
-3. **Check Docker service logs:**
+1. **Check Docker service logs:**
 
    ```bash
+
+
    docker compose logs docker --tail 20
-   ```
 
-4. **Restart all services:**
+
+``` text
+
+
+
+1. **Restart all services:**
+
+
+
    ```bash
+
+
    docker compose restart
+
+
    ```

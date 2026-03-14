@@ -22,36 +22,45 @@ OAuth 2.0 authorization code flow.
   <Step title="Redirect to authorization">
     Direct the user to the Pixelated Empathy authorization endpoint:
 
-    ```
-    https://auth.pixelatedempathy.com/authorize?
+````text
+    <https://auth.pixelatedempathy.com/authorize?>
       response_type=code&
       client_id=YOUR_CLIENT_ID&
-      redirect_uri=https://yourapp.com/callback&
+      redirect_uri=<https://yourapp.com/callback&>
       scope=read write&
       state=random_state_value
+
     ```
+
 
   </Step>
-  <Step title="Exchange authorization code">
-    After the user authenticates, they are redirected to your `redirect_uri` with an authorization code. Exchange it for tokens:
+      <Step title="Exchange authorization code">
+        After the user authenticates, they are redirected to your `redirect_uri`
+        with an authorization code. Exchange it for tokens:
 
-    ```bash
-    curl -X POST https://auth.pixelatedempathy.com/token \
-      -H "Content-Type: application/json" \
-      -d '{
-        "grant_type": "authorization_code",
-        "code": "AUTH_CODE_FROM_REDIRECT",
-        "client_id": "YOUR_CLIENT_ID",
-        "client_secret": "YOUR_CLIENT_SECRET",
-        "redirect_uri": "https://yourapp.com/callback"
-      }'
-    ```
+
+        ```bash
+
+        curl -X POST <https://auth.pixelatedempathy.com/token> \
+          -H "Content-Type: application/json" \
+          -d '{
+            "grant_type": "authorization_code",
+            "code": "AUTH_CODE_FROM_REDIRECT",
+            "client_id": "YOUR_CLIENT_ID",
+            "client_secret": "YOUR_CLIENT_SECRET",
+            "redirect_uri": "<https://yourapp.com/callback">
+          }'
+
+        ```
+
 
   </Step>
   <Step title="Receive token response">
     The token endpoint returns an access token, refresh token, and metadata:
 
-    ```json
+
+```json text
+
     {
       "access_token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9...",
       "refresh_token": "rt_a1b2c3d4e5f6g7h8i9j0...",
@@ -65,16 +74,22 @@ OAuth 2.0 authorization code flow.
         "organization_id": "org_p5q6r7s8"
       }
     }
+
     ```
+
 
   </Step>
   <Step title="Include token in requests">
     Add the access token to the `Authorization` header of every API request:
 
+
     ```bash
-    curl https://api.pixelatedempathy.com/v1/sessions \
+
+    curl <https://api.pixelatedempathy.com/v1/sessions> \
       -H "Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9..."
+
     ```
+
 
   </Step>
 </Steps>
@@ -112,8 +127,10 @@ JWT tokens contain the following claims:
 When an access token expires, use the refresh token to obtain a new one without
 requiring the user to log in again.
 
+
 ```bash
-curl -X POST https://auth.pixelatedempathy.com/token \
+
+curl -X POST <https://auth.pixelatedempathy.com/token> \
   -H "Content-Type: application/json" \
   -d '{
     "grant_type": "refresh_token",
@@ -121,18 +138,23 @@ curl -X POST https://auth.pixelatedempathy.com/token \
     "client_id": "YOUR_CLIENT_ID",
     "client_secret": "YOUR_CLIENT_SECRET"
   }'
-```
+
+``` text
+
 
 Response:
 
-```json
+
+```json text
+
 {
   "access_token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.NEW_TOKEN...",
   "refresh_token": "rt_z9y8x7w6v5u4t3s2r1q0...",
   "token_type": "Bearer",
   "expires_in": 3600
 }
-```
+
+````
 
 <Note>
   Each refresh token is single-use. The response includes a new refresh token
@@ -153,23 +175,31 @@ login is not practical.
     Log in to the Pixelated Empathy dashboard and go to **Settings** → **API Keys**.
   </Step>
   <Step title="Create a new key">
-    Click **Generate new key**. Provide a descriptive name (e.g., "EHR Integration - Production") and select the appropriate permission scopes.
+    Click **Generate new key**. Provide a descriptive name (e.g., "EHR Integration -
+    Production") and select the appropriate permission scopes.
   </Step>
   <Step title="Copy your key">
     Your API key is displayed once. Copy it immediately and store it securely. The key format is:
 
-    ```
+````text
+
     pe_live_a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6
+
     ```
+
 
   </Step>
   <Step title="Include key in requests">
     Add the API key to the `X-API-Key` header:
 
+
     ```bash
-    curl https://api.pixelatedempathy.com/v1/analytics/dashboard \
+
+    curl <https://api.pixelatedempathy.com/v1/analytics/dashboard> \
       -H "X-API-Key: pe_live_a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6"
+
     ```
+
 
   </Step>
 </Steps>
@@ -211,12 +241,18 @@ enforce security policies.
 
 ### Listing active sessions
 
+
 ```bash
-curl https://api.pixelatedempathy.com/v1/auth/sessions \
+
+curl <https://api.pixelatedempathy.com/v1/auth/sessions> \
   -H "Authorization: Bearer YOUR_JWT_TOKEN"
-```
+
+``` text
+
+
 
 ```json
+
 {
   "status": "success",
   "data": [
@@ -236,13 +272,16 @@ curl https://api.pixelatedempathy.com/v1/auth/sessions \
     }
   ]
 }
-```
+
+````
 
 ### Revoking a session
 
 ```bash
-curl -X DELETE https://api.pixelatedempathy.com/v1/auth/sessions/ses_def456 \
+
+curl -X DELETE <https://api.pixelatedempathy.com/v1/auth/sessions/ses_def456> \
   -H "Authorization: Bearer YOUR_JWT_TOKEN"
+
 ```
 
 ## Role-based access control
@@ -256,18 +295,20 @@ permissions of the roles below it.
   <Tab title="Admin">
     Full platform access including organization settings, user management, billing, and all API endpoints.
 
-    **Unique permissions:**
+## Unique permissions
+
     - Manage organization settings and billing
     - Create and manage user accounts
     - Access audit logs
     - Configure SSO and security policies
     - Export organization-wide data
 
-  </Tab>
-  <Tab title="Supervisor">
-    Access to trainee management, session review, scenario creation, and analytics for assigned trainees.
+   </Tab>
+   <Tab title="Supervisor">
+     Access to trainee management, session review, scenario creation, and analytics for assigned trainees.
 
-    **Unique permissions:**
+## Supervisor permissions
+
     - View and annotate trainee sessions
     - Create and deploy custom scenarios
     - Access comparative benchmarking
@@ -278,7 +319,8 @@ permissions of the roles below it.
   <Tab title="Therapist">
     Access to their own training sessions, personal analytics, and assigned scenarios.
 
-    **Unique permissions:**
+## Therapist permissions
+
     - Create and manage own training sessions
     - View personal competency scores and progress
     - Access assigned scenarios
@@ -288,7 +330,8 @@ permissions of the roles below it.
   <Tab title="User">
     Basic read access for exploring the platform and viewing public resources.
 
-    **Unique permissions:**
+## User permissions
+
     - View public scenario library
     - Access own profile
     - Read documentation and resources
@@ -300,12 +343,17 @@ permissions of the roles below it.
 
 Use the permissions endpoint to verify what the current token can access:
 
-```bash
-curl https://api.pixelatedempathy.com/v1/auth/permissions \
+````bash
+
+curl <https://api.pixelatedempathy.com/v1/auth/permissions> \
   -H "Authorization: Bearer YOUR_JWT_TOKEN"
-```
+
+``` text
+
+
 
 ```json
+
 {
   "status": "success",
   "data": {
@@ -328,14 +376,17 @@ curl https://api.pixelatedempathy.com/v1/auth/permissions \
     }
   }
 }
-```
+
+````
 
 ## JWKS endpoint
 
 Validate JWT tokens using the JSON Web Key Set (JWKS) published at:
 
-```
-https://auth.pixelatedempathy.com/.well-known/jwks.json
+```text text
+
+<https://auth.pixelatedempathy.com/.well-known/jwks.json>
+
 ```
 
 <Tip>
@@ -347,25 +398,25 @@ https://auth.pixelatedempathy.com/.well-known/jwks.json
 ## Security best practices
 
 <AccordionGroup>
-  <Accordion title='Store secrets securely'>
+  <Accordion title="Store secrets securely">
     Use environment variables or a secrets manager (AWS Secrets Manager,
     HashiCorp Vault) for API keys and client secrets. Never commit secrets to
     version control.
   </Accordion>
-  <Accordion title='Implement token refresh proactively'>
+  <Accordion title="Implement token refresh proactively">
     Refresh access tokens 5 minutes before expiration rather than waiting for a
     `401` response. This prevents failed requests and improves user experience.
   </Accordion>
-  <Accordion title='Use the principle of least privilege'>
+  <Accordion title="Use the principle of least privilege">
     Request only the scopes your application needs. Create API keys with the
     minimum permissions required for each integration.
   </Accordion>
-  <Accordion title='Monitor and rotate regularly'>
+  <Accordion title="Monitor and rotate regularly">
     Review API key usage monthly. Rotate keys at least quarterly, or immediately
     if a key may have been compromised. Enable key expiration dates for
     temporary integrations.
   </Accordion>
-  <Accordion title='Validate tokens server-side'>
+  <Accordion title="Validate tokens server-side">
     Always verify JWT signatures using the JWKS endpoint on your server. Never
     rely on client-side token validation for authorization decisions.
   </Accordion>
@@ -374,14 +425,14 @@ https://auth.pixelatedempathy.com/.well-known/jwks.json
 ## Next steps
 
 <CardGroup cols={2}>
-  <Card title='API overview' icon='book' href='/api-reference/introduction'>
+  <Card title="API overview" icon="book" href="/api-reference/introduction">
     Review the full API reference including rate limits, error codes, and
     pagination.
   </Card>
   <Card
-    title='Bias Analysis API'
-    icon='scale-balanced'
-    href='/api-reference/bias-analysis'
+    title="Bias Analysis API"
+    icon="scale-balanced"
+    href="/api-reference/bias-analysis"
   >
     Start making your first API calls with the bias analysis endpoint.
   </Card>

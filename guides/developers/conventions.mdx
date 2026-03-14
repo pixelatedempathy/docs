@@ -20,7 +20,7 @@ state management patterns.
 
 The project uses **TypeScript strict mode** with no exceptions:
 
-```json
+```json text
 {
   "compilerOptions": {
     "strict": true,
@@ -31,6 +31,8 @@ The project uses **TypeScript strict mode** with no exceptions:
     "noUnusedParameters": true
   }
 }
+
+
 ```
 
 ### Strict Mode Rules
@@ -53,6 +55,8 @@ The project uses **TypeScript strict mode** with no exceptions:
 Always use the `type` keyword for type-only imports:
 
 ```typescript
+
+
 // ✅ Correct — type-only import
 import type { EmotionScore, ConversationContext } from '@/types'
 
@@ -62,6 +66,8 @@ import { EmotionScore, analyzeEmotion } from '@/types'
 // ✅ Correct — mixed import with explicit type keyword
 import { analyzeEmotion } from '@lib/ai/emotion-analyzer'
 import type { AnalysisResult } from '@lib/ai/emotion-analyzer'
+
+
 ```
 
 ## Component Architecture
@@ -72,6 +78,8 @@ All React components must be **functional components** using hooks. No class
 components.
 
 ```tsx
+
+
 import { useState, useCallback } from 'react'
 import type { EmotionScore } from '@/types'
 import styles from './EmotionCard.module.css'
@@ -110,6 +118,8 @@ export function EmotionCard({ emotion, onAnalyze }: EmotionCardProps) {
     </div>
   )
 }
+
+
 ```
 
 ### Component Structure Rules
@@ -123,7 +133,11 @@ export function EmotionCard({ emotion, onAnalyze }: EmotionCardProps) {
     - Use optional markers (`?`) for non-required props
     - Document complex props with JSDoc comments
 
+
+
     ```typescript
+
+
     interface SessionControlsProps {
       /** Current session identifier */
       sessionId: string
@@ -132,6 +146,8 @@ export function EmotionCard({ emotion, onAnalyze }: EmotionCardProps) {
       /** Callback fired when session state changes */
       onStateChange?: (state: SessionState) => void
     }
+
+
     ```
 
   </Accordion>
@@ -140,12 +156,18 @@ export function EmotionCard({ emotion, onAnalyze }: EmotionCardProps) {
     Always use **named exports** for components — never default exports:
 
     ```typescript
+
+
     // ✅ Correct
     export function EmotionCard({ emotion }: EmotionCardProps) { ... }
 
     // ❌ Wrong
     export default function EmotionCard({ emotion }: EmotionCardProps) { ... }
+
+
     ```
+
+
 
     Named exports improve refactoring safety, enable better tree-shaking, and make imports explicit.
 
@@ -155,6 +177,8 @@ export function EmotionCard({ emotion, onAnalyze }: EmotionCardProps) {
     Extract complex logic into custom hooks when a component exceeds ~50 lines of logic or when logic is reusable:
 
     ```typescript
+
+
     // hooks/useSessionProgress.ts
     export function useSessionProgress(sessionId: string) {
       const [progress, setProgress] = useState(0)
@@ -164,6 +188,8 @@ export function EmotionCard({ emotion, onAnalyze }: EmotionCardProps) {
 
       return { progress, milestones, isComplete: progress >= 1.0 }
     }
+
+
     ```
 
   </Accordion>
@@ -190,7 +216,9 @@ Consistent file naming makes the codebase navigable at a glance:
 
 Components live alongside their styles, tests, and related files:
 
-```text
+```text text
+
+
 src/components/training/
 ├── SessionCard/
 │   ├── SessionCard.tsx           # Component
@@ -203,6 +231,8 @@ src/components/training/
 │   ├── ProgressTracker.test.tsx
 │   └── index.ts
 └── index.ts                      # Barrel export
+
+
 ```
 
 ## Formatting Rules
@@ -224,7 +254,10 @@ files):
   </Tab>
 
   <Tab title="Examples">
+
     ```typescript
+
+
     // ✅ Correct formatting
     const emotions = [
       'joy',
@@ -245,17 +278,24 @@ files):
       "sadness",
       "anger"
     ];
+
+
     ```
 
   </Tab>
 
   <Tab title="Format Commands">
+
     ```bash
+
+
     # Auto-format all files
     pnpm format
 
     # Check formatting without modifying files
     pnpm format:check
+
+
     ```
 
   </Tab>
@@ -269,6 +309,8 @@ approach. No Tailwind CSS.
 ### Styling Rules
 
 ```css
+
+
 /* EmotionCard.module.css */
 .card {
   display: flex;
@@ -290,6 +332,8 @@ approach. No Tailwind CSS.
   width: 100%;
   height: var(--spacing-sm);
 }
+
+
 ```
 
 <CardGroup cols={2}>
@@ -308,6 +352,8 @@ approach. No Tailwind CSS.
 ### Using CSS Modules in Components
 
 ```tsx
+
+
 import styles from './EmotionCard.module.css'
 
 export function EmotionCard({ emotion }: EmotionCardProps) {
@@ -317,6 +363,8 @@ export function EmotionCard({ emotion }: EmotionCardProps) {
     </div>
   )
 }
+
+
 ```
 
 ## Import Organization
@@ -324,6 +372,8 @@ export function EmotionCard({ emotion }: EmotionCardProps) {
 Imports must follow a strict four-section ordering, separated by blank lines:
 
 ```typescript
+
+
 // 1. External dependencies
 import { useState, useCallback } from 'react'
 import { useQuery } from '@tanstack/react-query'
@@ -339,6 +389,8 @@ import type { SessionConfig } from '@lib/services/training/types'
 
 // 4. Styles
 import styles from './Component.module.css'
+
+
 ```
 
 ### Import Rules
@@ -361,6 +413,8 @@ Use **Zustand** for global and feature-level state management in React
 components:
 
 ```typescript
+
+
 import { create } from 'zustand'
 import type { SessionState } from '@/types'
 
@@ -385,6 +439,8 @@ export const useSessionStore = create<SessionStore>((set) => ({
       isRecording: false,
     }),
 }))
+
+
 ```
 
 ### Nanostores for Astro Islands
@@ -393,10 +449,14 @@ Use **Nanostores** for state that needs to be shared across Astro islands
 (framework-agnostic):
 
 ```typescript
+
+
 import { atom, computed } from 'nanostores'
 
 export const $currentTheme = atom<'light' | 'dark'>('light')
 export const $isDarkMode = computed($currentTheme, (theme) => theme === 'dark')
+
+
 ```
 
 ### State Management Rules
@@ -429,6 +489,8 @@ All API calls use **TanStack Query** for caching, deduplication, and optimistic
 updates:
 
 ```typescript
+
+
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import type { Session } from '@/types'
 
@@ -452,6 +514,8 @@ export function useEndSession() {
     },
   })
 }
+
+
 ```
 
 ### Data Fetching Rules
@@ -470,6 +534,8 @@ Use **Zod** for all runtime data validation — API responses, form inputs,
 environment variables, and configuration:
 
 ```typescript
+
+
 import { z } from 'zod'
 
 // Emotion score schema — enforces the 0-1 range
@@ -484,6 +550,8 @@ export const EmotionScoreSchema = z.object({
 function processEmotionData(raw: unknown): EmotionScore {
   return EmotionScoreSchema.parse(raw)
 }
+
+
 ```
 
 <Warning>
@@ -511,6 +579,8 @@ This is the most critical domain convention. All emotion and empathy scores must
 be normalized to the 0.0–1.0 range:
 
 ```typescript
+
+
 // ✅ Always validate emotion scores
 const validateEmotionScore = (score: number): number => {
   if (score < 0 || score > 1) {
@@ -518,6 +588,8 @@ const validateEmotionScore = (score: number): number => {
   }
   return score
 }
+
+
 ```
 
 ### Crisis Signal Handling
@@ -526,12 +598,16 @@ Every component or service that processes user text must check for crisis
 signals:
 
 ```typescript
+
+
 // ✅ Always handle crisis signals defensively
 const hasCrisisSignal = (text: string): boolean => {
   // Delegate to the crisis detection service
   // See: src/lib/ai/crisis-detection/
   return CrisisDetector.evaluate(text).hasCrisisIndicators
 }
+
+
 ```
 
 <Warning>

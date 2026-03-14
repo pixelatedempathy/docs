@@ -17,11 +17,13 @@
   from the filesystem.
   - `ai/training/scripts/extract_all_books_to_training.py` (PIX-2) - **ABSENT**
   - `ai/training/scripts/extract_all_youtube_transcripts.py` (PIX-4) -
-    **ABSENT**
-  - `ai/training/scripts/generate_nemo_synthetic_data.py`
-  - **ABSENT**
-  - `ai/journal_dataset_research/trigger.py` - **ABSENT**
-  - `ai/pipelines/generate_h100_manifest.py` (PIX-34) - **ABSENT**
+
+## ABSENT
+
+- `ai/training/scripts/generate_nemo_synthetic_data.py`
+- **ABSENT**
+- `ai/journal_dataset_research/trigger.py` - **ABSENT**
+- `ai/pipelines/generate_h100_manifest.py` (PIX-34) - **ABSENT**
 - **Impact**: Pipeline was non-functional; data sourcing couldn't be triggered.
 
 ### 2. Hallucinated Implementation
@@ -76,10 +78,10 @@ Ran the unified Phase 2 execution suite:
 
 1. `extract_all_books_to_training.py`: **PASS** (Detected and processed
    test_book.pdf)
-2. `extract_all_youtube_transcripts.py`: **PASS** (Initialized downloader
+1. `extract_all_youtube_transcripts.py`: **PASS** (Initialized downloader
    pipeline)
-3. `generate_nemo_synthetic_data.py`: **PASS** (Generated 50 synthetic records)
-4. `trigger.py`: **PASS** (Successfully invoked Academic Sourcing Engine)
+1. `generate_nemo_synthetic_data.py`: **PASS** (Generated 50 synthetic records)
+1. `trigger.py`: **PASS** (Successfully invoked Academic Sourcing Engine)
 
 **Status**: Phase 2 is now AUTHENTICALLY functional.
 

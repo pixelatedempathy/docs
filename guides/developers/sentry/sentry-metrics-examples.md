@@ -34,6 +34,7 @@ Sentry.metrics.distribution('api_response_time', 150, {
 Sentry.metrics.gauge('active_sessions', 42, {
   attributes: { region: 'us-west' },
 })
+
 ```
 
 ### Using Project Utilities (Recommended)
@@ -41,6 +42,7 @@ Sentry.metrics.gauge('active_sessions', 42, {
 The project provides type-safe utilities in `src/lib/sentry/utils.ts`:
 
 ```typescript
+
 import {
   countMetric,
   gaugeMetric,
@@ -84,6 +86,7 @@ apiMetrics.responseTime('/api/analyze', 187.5, 'POST')
 
 sessionMetrics.started('therapy')
 sessionMetrics.completed('therapy', 45) // duration in minutes
+
 ```
 
 ## Metric Types
@@ -121,7 +124,8 @@ Use for value distributions (calculates percentiles: p50, p90, p99):
 
 Attributes allow you to filter and group metrics in Sentry:
 
-```typescript
+```typescript text
+
 Sentry.metrics.count('button_click', 1, {
   attributes: {
     browser: 'Firefox',
@@ -130,13 +134,15 @@ Sentry.metrics.count('button_click', 1, {
     button: 'submit',
   },
 })
+
 ```
 
 ## Specifying Units
 
 For `gauge` and `distribution` metrics, specify units for better display:
 
-```typescript
+```typescript text
+
 Sentry.metrics.distribution('response_time', 187.5, {
   unit: 'millisecond',
 })
@@ -144,6 +150,7 @@ Sentry.metrics.distribution('response_time', 187.5, {
 Sentry.metrics.gauge('memory_usage', 1024, {
   unit: 'byte',
 })
+
 ```
 
 ## Flushing Metrics
@@ -151,10 +158,12 @@ Sentry.metrics.gauge('memory_usage', 1024, {
 By default, metrics are buffered and flushed automatically. To manually flush:
 
 ```typescript
+
 import { flushMetrics } from '@/lib/sentry/utils'
 
 // Flush all pending metrics
 await flushMetrics()
+
 ```
 
 ## Configuration

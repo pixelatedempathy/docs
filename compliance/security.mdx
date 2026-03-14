@@ -11,7 +11,7 @@ edge to database — enforces strict security controls that exceed HIPAA
 requirements.
 
 <Note>
-  **Security Contact:**
+## Security Contact:
   [security@pixelatedempathy.com](mailto:security@pixelatedempathy.com)
   **Responsible Disclosure:** If you discover a security vulnerability, please
   report it to
@@ -21,7 +21,7 @@ requirements.
 
 ## Architecture Overview
 
-```
+```text
 ┌─────────────────────────────────────────────────────────┐
 │                     Client Layer                        │
 │  TLS 1.3 · Certificate Pinning · CSP Headers           │
@@ -41,6 +41,7 @@ requirements.
 │              Infrastructure Security                    │
 │  Network Segmentation · Secrets Management · SIEM       │
 └─────────────────────────────────────────────────────────┘
+
 ```
 
 ---
@@ -64,6 +65,7 @@ access tokens and secure refresh token rotation.
     | **ID Token** | 1 hour | Memory only | On re-authentication |
 
     ```typescript
+
     // JWT validation pipeline
     interface TokenValidation {
       // 1. Verify signature against Auth0 JWKS
@@ -75,28 +77,35 @@ access tokens and secure refresh token rotation.
       // 4. Extract and validate permissions
       extractPermissions: (payload: JWTPayload) => string[];
     }
+
     ```
 
+
     <Warning>
-      Access tokens are **never** stored in localStorage or sessionStorage. They are held in memory only to prevent XSS-based token theft.
+      Access tokens are **never** stored in localStorage or sessionStorage. They are held in memory only to prevent
+XSS-based token theft.
     </Warning>
 
   </Tab>
   <Tab title="Refresh Token Security">
     Refresh tokens implement **automatic rotation** — each use invalidates the previous token and issues a new one.
 
-    **Theft detection:** If a previously rotated refresh token is reused, the entire token family is immediately invalidated, forcing re-authentication.
+    **Theft detection:** If a previously rotated refresh token is reused, the entire token family is immediately
+invalidated, forcing re-authentication.
 
-    ```typescript
+```typescript text
+
     // Refresh token rotation flow
     // 1. Client sends expired access token + refresh token
     // 2. Server validates refresh token
     // 3. Server issues new access token + NEW refresh token
     // 4. Previous refresh token is invalidated
     // 5. If reuse detected → revoke entire token family
+
     ```
 
-    **Additional protections:**
+
+## Additional protections:
     - Refresh tokens are bound to the originating device fingerprint
     - Absolute expiration prevents indefinite session extension
     - Concurrent session limits enforced per user role
@@ -131,7 +140,9 @@ scoped permissions.
 
 ### Role Hierarchy
 
-```
+
+``` text
+
 ┌──────────────────────────────────────────────┐
 │  admin (100)      Full system access         │
 ├──────────────────────────────────────────────┤
@@ -145,6 +156,7 @@ scoped permissions.
 ├──────────────────────────────────────────────┤
 │  guest (20)       Public content only        │
 └──────────────────────────────────────────────┘
+
 ```
 
 ### Permission Matrix
@@ -153,7 +165,8 @@ scoped permissions.
   <Tab title="Admin">
     **Hierarchy Level:** 100 · **PHI Access:** Full · **MFA:** Always required
 
-    Full system access with all permissions. Admin accounts cannot be self-assigned — they are created through a secure provisioning process with dual-approval.
+    Full system access with all permissions. Admin accounts cannot be self-assigned — they are created through a secure
+provisioning process with dual-approval.
 
   </Tab>
   <Tab title="Therapist">
@@ -185,7 +198,8 @@ scoped permissions.
     - `read:anonymized_data` · `read:research_analytics` · `export:research_data`
     - `access:research_tools` · `manage:research_projects`
 
-    **Restrictions:** Cannot access identifiable patient data or individual therapy sessions. Data access limited to IRB-approved studies.
+    **Restrictions:** Cannot access identifiable patient data or individual therapy sessions. Data access limited to
+IRB-approved studies.
 
   </Tab>
 </Tabs>
@@ -229,12 +243,14 @@ All data is encrypted both at rest and in transit, with no exceptions for PHI.
 | **Key Management**    | AWS KMS / Azure Key Vault | Hardware Security Modules (HSMs) with automated rotation              |
 | **Application-Level** | Fernet (PBKDF2 + AES)     | PHI encrypted at the application layer before database storage        |
 
-```typescript
+```typescript text
+
 // Encryption is enforced at every boundary
 // 1. Client ↔ API: TLS 1.3 (mandatory, no fallback)
 // 2. API ↔ Database: TLS 1.3 + AES-256-GCM at rest
 // 3. API ↔ AI Services: TLS 1.3 + application-level encryption
 // 4. Backups: AES-256 with separate key material
+
 ```
 
 <Info>
@@ -263,12 +279,14 @@ abuse while ensuring clinical workflows are uninterrupted.
 
 ### Rate Limit Response
 
-```http
+```http text
+
 HTTP/1.1 429 Too Many Requests
 Retry-After: 30
 X-RateLimit-Limit: 60
 X-RateLimit-Remaining: 0
 X-RateLimit-Reset: 1706745600
+
 ```
 
 <Tip>
@@ -287,6 +305,7 @@ type checking and sanitization.
 ### Validation Pipeline
 
 ```typescript
+
 import { z } from 'zod'
 
 // Example: Session message validation
@@ -312,6 +331,7 @@ const SessionMessageSchema = z.object({
 // 1. Client-side (immediate feedback)
 // 2. API gateway (request rejection)
 // 3. Service layer (business logic validation)
+
 ```
 
 ### Protection Against Common Attacks
@@ -343,13 +363,14 @@ const SessionMessageSchema = z.object({
 Cross-Origin Resource Sharing is configured with a strict allowlist:
 
 ```typescript
+
 // CORS configuration
 const corsConfig = {
   // Only explicitly approved origins
   origin: [
-    'https://app.pixelatedempathy.com',
-    'https://admin.pixelatedempathy.com',
-    'https://api.pixelatedempathy.com',
+    '<https://app.pixelatedempathy.com',>
+    '<https://admin.pixelatedempathy.com',>
+    '<https://api.pixelatedempathy.com',>
   ],
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Request-ID'],
@@ -357,6 +378,7 @@ const corsConfig = {
   maxAge: 600, // Preflight cache: 10 minutes
   // No wildcard origins, no wildcard headers
 }
+
 ```
 
 <Warning>
@@ -399,6 +421,7 @@ capabilities.
 ### Log Format
 
 ```json
+
 {
   "eventId": "evt_a1b2c3d4-e5f6-7890-abcd-ef1234567890",
   "timestamp": "2025-01-15T14:30:00.000Z",
@@ -420,6 +443,7 @@ capabilities.
   "reason": "treatment",
   "correlationId": "req_a1b2c3d4"
 }
+
 ```
 
 ### Log Security
@@ -460,13 +484,15 @@ capabilities.
 </CardGroup>
 
 ```bash
+
 # Secret hierarchy (never committed to source control)
-# ├── HIPAA_ENCRYPTION_KEY     → Vault (auto-rotated)
-# ├── AUTH0_CLIENT_SECRET      → Vault (per-environment)
-# ├── DATABASE_URL             → Vault (dynamic credentials)
-# ├── REDIS_PASSWORD           → Vault (auto-rotated)
-# ├── SENTRY_DSN               → Environment variable
-# └── SLACK_WEBHOOK_URL        → Vault (restricted access)
+## ├── HIPAA_ENCRYPTION_KEY     → Vault (auto-rotated)
+## ├── AUTH0_CLIENT_SECRET      → Vault (per-environment)
+## ├── DATABASE_URL             → Vault (dynamic credentials)
+## ├── REDIS_PASSWORD           → Vault (auto-rotated)
+## ├── SENTRY_DSN               → Environment variable
+## └── SLACK_WEBHOOK_URL        → Vault (restricted access)
+
 ```
 
 ---
@@ -540,7 +566,8 @@ across all security controls:
 
 ### Network Segmentation
 
-```
+``` text
+
 ┌──────────────────────────────────────────────────┐
 │                  Public Zone                      │
 │  Load Balancer · WAF · CDN                       │
@@ -557,6 +584,7 @@ across all security controls:
 │              Management Zone                      │
 │  SIEM · Vault · Monitoring · Logging             │
 └──────────────────────────────────────────────────┘
+
 ```
 
 - Each zone is isolated with dedicated security groups and network ACLs

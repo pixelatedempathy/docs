@@ -36,6 +36,8 @@ interfaces.
 │  Conversation  │    │  Background jobs │
 │  persistence   │    │  Async tasks     │
 └────────────────┘    └──────────────────┘
+
+
 ```
 
 ## Service Breakdown
@@ -183,6 +185,8 @@ We use **Zod** for runtime validation across all service boundaries. Key
 validation rules:
 
 ```typescript
+
+
 // Emotion scores MUST be 0.0–1.0
 const EmotionScore = z.number().min(0).max(1)
 
@@ -192,6 +196,8 @@ const MessageInput = z.object({
   sessionId: z.string().uuid(),
   timestamp: z.string().datetime(),
 })
+
+
 ```
 
 <Warning>
@@ -224,10 +230,10 @@ Run everything with `pnpm test:all`.
 All deployments go through:
 
 1. `pnpm check:all` — Lint + typecheck + format
-2. `pnpm test:all` — Full test suite
-3. `pnpm security:scan` — Security audit
-4. Build verification
-5. Staged deployment
+1. `pnpm test:all` — Full test suite
+1. `pnpm security:scan` — Security audit
+1. Build verification
+1. Staged deployment
 
   </Tab>
 </Tabs>

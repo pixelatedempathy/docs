@@ -152,7 +152,8 @@ feedback to trainees. The annotation system supports multiple feedback types.
 
 <AccordionGroup>
   <Accordion title="Inline comments">
-    Highlight any portion of a session transcript and attach a comment. Inline comments appear as margin notes when the trainee reviews their session.
+    Highlight any portion of a session transcript and attach a comment. Inline comments appear as margin notes when the
+trainee reviews their session.
 
     Common uses:
     - Noting effective empathic responses
@@ -161,13 +162,16 @@ feedback to trainees. The annotation system supports multiple feedback types.
 
   </Accordion>
   <Accordion title="Competency flags">
-    Tag specific exchanges with competency markers: **Strength**, **Growth area**, or **Critical**. These flags feed into the trainee's competency timeline and help track improvement in targeted areas.
+    Tag specific exchanges with competency markers: **Strength**, **Growth area**, or **Critical**. These flags feed
+into the trainee's competency timeline and help track improvement in targeted areas.
   </Accordion>
   <Accordion title="Audio notes">
-    Record a brief audio note (up to 2 minutes) attached to a specific point in the session. Audio notes are especially useful for nuanced clinical feedback that benefits from tone and emphasis.
+    Record a brief audio note (up to 2 minutes) attached to a specific point in the session. Audio notes are especially
+useful for nuanced clinical feedback that benefits from tone and emphasis.
   </Accordion>
   <Accordion title="Rubric scoring">
-    Apply your organization's custom rubric to individual responses or entire sessions. Rubric scores integrate with the analytics system for longitudinal tracking.
+    Apply your organization's custom rubric to individual responses or entire sessions. Rubric scores integrate with the
+analytics system for longitudinal tracking.
   </Accordion>
 </AccordionGroup>
 
@@ -185,9 +189,9 @@ coordinated training plans.
 ### Creating a group
 
 1. Navigate to **Group Training** → **New Group**
-2. Enter a group name and optional description
-3. Add trainees by searching or selecting from your roster
-4. Set the group's training schedule and scenario assignments
+1. Enter a group name and optional description
+1. Add trainees by searching or selecting from your roster
+1. Set the group's training schedule and scenario assignments
 
 ### Assigning scenarios
 
@@ -195,42 +199,65 @@ You can assign scenarios to groups in several ways:
 
 <Tabs>
   <Tab title="Sequential path">
-    Assign an ordered sequence of scenarios that trainees complete in order. Each scenario unlocks after the previous one meets a minimum competency threshold.
+    Assign an ordered sequence of scenarios that trainees complete in order. Each scenario unlocks after the previous
+one meets a minimum competency threshold.
 
-    ```json
+```json text
     {
       "assignment_type": "sequential",
       "scenarios": ["intake-assessment", "crisis-intervention", "cultural-sensitivity"],
       "minimum_score": 70,
       "deadline": "2025-03-15"
     }
+
+
     ```
+
+
 
   </Tab>
   <Tab title="Open selection">
-    Provide a pool of approved scenarios and let trainees choose their own path. You set a minimum number of completions required.
+    Provide a pool of approved scenarios and let trainees choose their own path. You set a minimum number of completions
+required.
 
-    ```json
+
+
+```json text
+
+
     {
       "assignment_type": "open",
       "scenario_pool": ["anxiety-cbt", "grief-processing", "substance-use", "family-dynamics"],
       "minimum_completions": 3,
       "deadline": "2025-03-15"
     }
+
+
     ```
+
+
 
   </Tab>
   <Tab title="Adaptive">
-    Let the platform automatically select scenarios based on each trainee's competency gaps. The adaptive engine prioritizes areas where the trainee scores below the group average.
+    Let the platform automatically select scenarios based on each trainee's competency gaps. The adaptive engine
+prioritizes areas where the trainee scores below the group average.
 
-    ```json
+
+
+```json text
+
+
     {
       "assignment_type": "adaptive",
       "focus_areas": ["bias_awareness", "crisis_response"],
       "session_count": 5,
       "difficulty_range": [3, 7]
     }
+
+
     ```
+
+
 
   </Tab>
 </Tabs>

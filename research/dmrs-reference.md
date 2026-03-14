@@ -3,7 +3,6 @@
 > **Framework Source**: J. Christopher Perry's Defense Mechanism Rating Scales
 > (DMRS), operationalized for NLP annotation in the
 > [PsyDefDetect Annotation Handbook](./Psychological%20Defense%20Mechanism%20Coding%20Handbook.pdf).
-
 ---
 
 ## Overview
@@ -120,12 +119,12 @@ functioning.
 
 1. **Primacy of Context**: The preceding dialogue determines the true
    psychological function of an utterance
-2. **Function-Oriented**: Ask "What psychological goal is the speaker trying to
+1. **Function-Oriented**: Ask "What psychological goal is the speaker trying to
    achieve?"
-3. **Emotion ≠ Defense**: Expressing an emotion directly ("I am very sad") is
+1. **Emotion ≠ Defense**: Expressing an emotion directly ("I am very sad") is
    NOT a defense. A defense is present only when emotion is distorted, avoided,
    or transformed.
-4. **Multiple Defenses**: If multiple are present, label the most immature
+1. **Multiple Defenses**: If multiple are present, label the most immature
    (lower maturity level) as primary
 
 ---
@@ -136,10 +135,11 @@ functioning.
 
 The DMRS hierarchy maps directly to therapeutic growth:
 
-```text
+```text text
 Immature (1-3) → Intermediate (4-5) → Mature (6-7)
      ↑                                        ↑
   Therapy begins                    Therapeutic progress
+
 ```
 
 Tracking a client's defense maturity over sessions provides an objective measure

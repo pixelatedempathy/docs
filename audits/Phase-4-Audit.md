@@ -40,11 +40,13 @@ deployed and verified to begin authentic scaling.
 All pipeline gates (Crisis, Taxonomy, Quality) have been authentically verified
 via `scripts/data/test_e2e_pipeline.py`.
 
-```bash
+```bash text
 [INFO] Step 1: Validating Crisis Detector... Verified ✅
 [INFO] Step 2: Validating Taxonomy Classifier... Verified ✅
 [INFO] Step 3: Validating Quality Pipeline... Verified ✅
 [INFO] 🎉 ALL PIPELINE GATES AUTHENTICALLY VERIFIED
+
+
 ```
 
 > **Final Conclusion:** Phase 4 is now legitimately fully functional. No more

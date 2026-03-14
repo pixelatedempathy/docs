@@ -23,13 +23,13 @@ GitHub, allowing you to:
    - Grant necessary permissions (Contents: Read, Metadata: Read, Pull Requests:
      Read & Write)
 
-2. **Source Maps**: Ensure source maps are being uploaded with releases
+1. **Source Maps**: Ensure source maps are being uploaded with releases
    - ✅ Configured in `astro.config.mjs` (Astro Sentry integration)
    - ✅ Configured in `vite.config.js` (Sentry Vite plugin)
    - ✅ Configured in `.github/workflows/sentry-build.yml` (CI/CD release
      creation)
 
-3. **Release Tracking**: Releases must be set during builds
+1. **Release Tracking**: Releases must be set during builds
    - ✅ Configured to use `SENTRY_RELEASE` environment variable (defaults to
      `github.sha` in CI/CD)
 
@@ -40,7 +40,7 @@ GitHub, allowing you to:
    - Click "Configure" next to your GitHub instance
    - Click the **Code Mappings** tab
 
-2. **Add a New Code Mapping**:
+1. **Add a New Code Mapping**:
    - Click **Add Mapping**
    - Fill out the following fields:
 
@@ -62,10 +62,11 @@ Based on our project structure:
 
 If a stack trace shows:
 
-```
+``` text
 Error: Something went wrong
   at MyComponent (src/components/MyComponent.tsx:42:15)
   at App (src/pages/index.tsx:10:5)
+
 ```
 
 Then:
@@ -79,10 +80,12 @@ The paths match directly, so both values are `src/`.
 
 If a stack trace shows:
 
-```
+``` text
+
 Error: Database connection failed
   at connectDatabase (src/lib/db/index.ts:25:10)
   at handler (src/pages/api/health.ts:8:3)
+
 ```
 
 Then:
@@ -96,15 +99,21 @@ Again, the paths match directly.
 
 If your stack trace shows paths like:
 
-```
+``` text
+
 Error: Processing failed
   at processData (/app/src/lib/processing.ts:15:5)
-```
+
+``` text
+
 
 But in your GitHub repo the file is at:
 
-```
-https://github.com/your-org/pixelated/blob/master/src/lib/processing.ts
+
+``` text
+
+<https://github.com/your-org/pixelated/blob/master/src/lib/processing.ts>
+
 ```
 
 Then:
@@ -116,9 +125,9 @@ Then:
 
 1. **Always provide a non-empty Stack Trace Root** when possible for better
    accuracy
-2. **Test with a real error** - Create a test error and verify the code mapping
+1. **Test with a real error** - Create a test error and verify the code mapping
    works
-3. **Update mappings when structure changes** - If you reorganize your code,
+1. **Update mappings when structure changes** - If you reorganize your code,
    update the mappings
 
 ## Verifying Configuration
@@ -134,10 +143,10 @@ In Sentry dashboard:
 ### 2. Test Stack Trace Linking
 
 1. Trigger a test error in your application
-2. Navigate to the error in Sentry
-3. Click on a file in the stack trace
-4. You should be redirected to the exact file in GitHub
-5. If commit tracking is enabled, you'll see the exact commit version
+1. Navigate to the error in Sentry
+1. Click on a file in the stack trace
+1. You should be redirected to the exact file in GitHub
+1. If commit tracking is enabled, you'll see the exact commit version
 
 ### 3. Check Code Mappings Status
 
@@ -151,13 +160,13 @@ In `Settings > Integrations > GitHub > Configurations > Code Mappings`:
 To enable commit tracking for releases:
 
 1. **Set up GitHub Integration** (already covered in Prerequisites)
-2. **Associate Commits with Releases**:
+1. **Associate Commits with Releases**:
    - Our CI/CD workflow (`.github/workflows/sentry-build.yml`) sets
      `SENTRY_RELEASE` to `github.sha`
    - When creating releases, commits are automatically associated if the GitHub
      integration is configured
 
-3. **Verify Commit Association**:
+1. **Verify Commit Association**:
    - Go to a release in Sentry
    - Check the "Commits" tab
    - You should see the commits included in that release
@@ -170,11 +179,11 @@ To enable commit tracking for releases:
    - Go to `Releases > [your-release]`
    - Check "Source Maps" section - should show uploaded files
 
-2. **Verify code mappings**:
+1. **Verify code mappings**:
    - Ensure Stack Trace Root matches what Sentry sees
    - Ensure Source Code Root matches your GitHub repo structure
 
-3. **Check file paths**:
+1. **Check file paths**:
    - Look at a stack trace in Sentry
    - Compare the file path shown with your actual GitHub repo structure
    - Adjust code mappings accordingly
@@ -183,18 +192,20 @@ To enable commit tracking for releases:
 
 1. **Check environment variables**:
 
-   ```bash
+```bash text
+
    SENTRY_AUTH_TOKEN  # Required for uploads
    SENTRY_ORG         # Default: 'pixelated-empathy-dq'
    SENTRY_PROJECT     # Default: 'pixel-astro'
    SENTRY_RELEASE     # Set to commit SHA in CI/CD
+
    ```
 
-2. **Check build logs**:
+1. **Check build logs**:
    - Look for Sentry upload messages during build
    - Verify `sentry-cli` is running in CI/CD workflow
 
-3. **Check Astro/Vite configs**:
+1. **Check Astro/Vite configs**:
    - Verify `SENTRY_AUTH_TOKEN` is set during build
    - Check `astro.config.mjs` and `vite.config.js` for correct configuration
 
@@ -204,11 +215,11 @@ To enable commit tracking for releases:
    - Contents: Read (required)
    - Metadata: Read (required)
 
-2. **Check repository access**:
+1. **Check repository access**:
    - Ensure Sentry GitHub app has access to your repository
    - Verify the repository name matches exactly (org/repo format)
 
-3. **Test with a simple mapping**:
+1. **Test with a simple mapping**:
    - Start with `src/` for both Stack Trace Root and Source Code Root
    - Verify it works, then refine if needed
 
@@ -231,17 +242,17 @@ before code is merged.
    - ✅ GitHub integration installed
    - ✅ Pull Requests: Read & Write permissions granted
 
-2. **Code Mappings** (already configured):
+1. **Code Mappings** (already configured):
    - ✅ Stack Trace Root and Source Code Root configured
    - ✅ Repository linked to Sentry project
 
-3. **Seer by Sentry GitHub App** (required):
+1. **Seer by Sentry GitHub App** (required):
    - Install the
      [Seer by Sentry GitHub App](https://github.com/apps/seer-by-sentry)
    - Click "Configure" and install for your repository
    - Grant necessary permissions (automatically requested)
 
-4. **Enable AI Features**:
+1. **Enable AI Features**:
    - In Sentry dashboard: `Settings > Organization Settings > AI Features`
    - Enable "PR Review and Test Generation"
    - Ensure your organization has access to AI features
@@ -264,12 +275,12 @@ Once configured, Sentry AI Code Review will:
    - Shows issues first seen within the past 90 days, last seen within the past
      14 days
 
-2. **Language Support**:
+1. **Language Support**:
    - Currently supports: Python, JavaScript/TypeScript, PHP, and Ruby
    - For JavaScript/TypeScript: Requires source maps to be set up (✅ already
      configured)
 
-3. **Integration**:
+1. **Integration**:
    - Automatically enabled once GitHub integration and Seer app are installed
    - Comments appear on pull requests without additional configuration
    - Can be disabled via `Settings > Integrations > GitHub > Configure`
@@ -283,13 +294,13 @@ To verify AI Code Review is working:
    - Navigate to `Settings > Integrations > GitHub Apps`
    - Verify "Seer by Sentry" is installed and configured
 
-2. **Test with a Pull Request**:
+1. **Test with a Pull Request**:
    - Create a test pull request
    - Wait a few moments after opening
    - Check for Sentry comments on the PR
    - Comments should identify potential issues based on historical errors
 
-3. **Check Sentry Dashboard**:
+1. **Check Sentry Dashboard**:
    - Go to `Settings > Integrations > GitHub > Configure`
    - Verify AI Code Review features are enabled
    - Check that repository is linked correctly
@@ -299,17 +310,17 @@ To verify AI Code Review is working:
 **AI Code Review not commenting on PRs**:
 
 1. Verify Seer by Sentry GitHub App is installed
-2. Check that AI features are enabled in Sentry organization settings
-3. Ensure code mappings are configured correctly
-4. Verify source maps are uploaded (for JavaScript/TypeScript)
-5. Check that files modified in PR match supported languages
+1. Check that AI features are enabled in Sentry organization settings
+1. Ensure code mappings are configured correctly
+1. Verify source maps are uploaded (for JavaScript/TypeScript)
+1. Check that files modified in PR match supported languages
 
 **Comments not appearing**:
 
 1. Wait a few moments - analysis takes time
-2. Check GitHub app permissions are granted
-3. Verify repository is connected in Sentry dashboard
-4. Ensure PR contains changes to supported file types
+1. Check GitHub app permissions are granted
+1. Verify repository is connected in Sentry dashboard
+1. Ensure PR contains changes to supported file types
 
 ## Additional Resources
 
@@ -324,6 +335,6 @@ To verify AI Code Review is working:
 If you encounter issues:
 
 1. Check the troubleshooting section above
-2. Review Sentry dashboard error messages
-3. Check build logs for upload failures
-4. Verify environment variables are set correctly
+1. Review Sentry dashboard error messages
+1. Check build logs for upload failures
+1. Verify environment variables are set correctly

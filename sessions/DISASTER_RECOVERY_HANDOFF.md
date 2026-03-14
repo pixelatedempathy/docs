@@ -44,26 +44,46 @@ If the server suffers a catastrophic failure, follow these steps to restore:
 1. **Prepare Environment:** Install required services and fetch the latest
    backup from Google Drive:
 
-   ```bash
+```bash text
    rclone copy drive:pixel-data/backups/ . --progress
-   ```
 
-2. **Restore Application & DB Data:** Run the restore command providing the
+
+``` text
+
+
+
+1. **Restore Application & DB Data:** Run the restore command providing the
    timestamp of the backup:
 
-   ```bash
+
+
+```bash text
+
+
    ./scripts/backup/backup-system.sh restore <YYYYMMDD_HHMMSS>
-   ```
+
+
+``` text
+
+
 
    _This command unzips the DB backup and pipes it to psql, and untars the
    application data._
 
-3. **Verify Integrity:** Ensure the database tables are populated and uploaded
+1. **Verify Integrity:** Ensure the database tables are populated and uploaded
    files exist in the `/uploads` directory.
 
-4. **Rollback (If Deployment Failed):** If a deployment caused the issue, use
+1. **Rollback (If Deployment Failed):** If a deployment caused the issue, use
    the backup manager's rollback feature:
-   ```bash
+
+
+
+```bash text
+
+
    ./scripts/backup/backup_manager.sh rollback all
+
+
    ```
+
    Then execute the generated rollback script located in `/tmp/`.

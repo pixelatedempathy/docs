@@ -13,18 +13,23 @@ All API routes follow REST conventions and return JSON.
 
 ## Base URLs
 
-| Environment     | URL                         |
-| :-------------- | :-------------------------- |
-| **Development** | `http://localhost:4321/api` |
-| **AI Service**  | `http://localhost:8000`     |
-| **WebSocket**   | `ws://localhost:8080`       |
+<!-- markdownlint-disable MD060 -->
+
+| Environment     | URL                           |
+| :-------------- | :---------------------------- |
+| **Development** | `<http://localhost:4321/api`> |
+| **AI Service**  | `<http://localhost:8000`>     |
+| **WebSocket**   | `ws://localhost:8080`         |
+
+<!-- markdownlint-enable MD060 -->
 
 ## Authentication
 
 API requests require a valid JWT token in the `Authorization` header:
 
-```text
+```text text
 Authorization: Bearer <token>
+
 ```
 
 Tokens are issued on login and expire according to your environment
@@ -35,7 +40,9 @@ for setup.
 
 <AccordionGroup>
   <Accordion title="Start a Session" icon="play">
-    ```http
+
+````http text
+
     POST /api/sessions
     Content-Type: application/json
 
@@ -43,11 +50,15 @@ for setup.
       "scenarioId": "crisis-first-session",
       "difficulty": "intermediate"
     }
-    ```
+
+``` text
+
 
     **Response** (201):
 
+
     ```json
+
     {
       "sessionId": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
       "scenario": {
@@ -72,12 +83,16 @@ for setup.
       },
       "status": "active"
     }
+
     ```
+
 
   </Accordion>
 
   <Accordion title="Send a Message" icon="paper-plane">
-    ```http
+
+```http text
+
     POST /api/sessions/:sessionId/messages
     Content-Type: application/json
 
@@ -85,11 +100,15 @@ for setup.
       "content": "It sounds like you've been carrying a lot.",
       "timestamp": "2026-02-15T10:30:00Z"
     }
-    ```
+
+``` text
+
 
     **Response** (200):
 
-    ```json
+
+```json text
+
     {
       "clientResponse": {
         "content": "Yeah... I guess I just don't know who to talk to anymore.",
@@ -107,18 +126,26 @@ for setup.
           + "checking in on the isolation signal."
       }
     }
+
     ```
+
 
   </Accordion>
 
   <Accordion title="End a Session" icon="flag-checkered">
-    ```http
+
+```http text
+
     POST /api/sessions/:sessionId/end
-    ```
+
+``` text
+
 
     **Response** (200):
 
+
     ```json
+
     {
       "sessionId": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
       "duration": "14:32",
@@ -140,25 +167,33 @@ for setup.
       },
       "status": "completed"
     }
+
     ```
+
 
   </Accordion>
 </AccordionGroup>
 
 ## Emotion Analysis
 
-```http
+
+```http text
+
 POST /api/analyze/emotion
 Content-Type: application/json
 
 {
   "text": "I don't know if I can keep doing this."
 }
-```
+
+``` text
+
 
 **Response** (200):
 
-```json
+
+```json text
+
 {
   "emotions": {
     "sadness": 0.65,
@@ -173,7 +208,8 @@ Content-Type: application/json
   },
   "confidence": 0.82
 }
-```
+
+````
 
 ## Data Validation
 
@@ -181,7 +217,7 @@ Content-Type: application/json
   All emotion scores must be between 0.0 and 1.0. The API will
   reject any value outside this range with a `400 Bad Request`:
 
-```json
+```json text
 {
   "error": "ValidationError",
   "message": "Emotion score must be between 0 and 1, got: 1.5",
@@ -219,16 +255,16 @@ ws.onmessage = (event) => {
 ```
 
 <CardGroup cols={2}>
-  <Card title='client_response' icon='comment'>
+  <Card title="client_response" icon="comment">
     New message from the simulated client.
   </Card>
-  <Card title='emotion_update' icon='chart-line'>
+  <Card title="emotion_update" icon="chart-line">
     Real-time emotional state change.
   </Card>
-  <Card title='crisis_alert' icon='shield-halved'>
+  <Card title="crisis_alert" icon="shield-halved">
     Crisis signal detected — requires attention.
   </Card>
-  <Card title='session_feedback' icon='clipboard-check'>
+  <Card title="session_feedback" icon="clipboard-check">
     End-of-session evaluation results.
   </Card>
 </CardGroup>
@@ -237,7 +273,7 @@ ws.onmessage = (event) => {
 
 All errors follow a consistent format:
 
-```json
+```json text
 {
   "error": "ErrorType",
   "message": "Human-readable description",
@@ -269,10 +305,12 @@ API requests are rate-limited to prevent abuse. Current limits:
 <Note>
   Rate limit headers are included in every response:
 
-```text
+```text text
+
 X-RateLimit-Limit: 60
 X-RateLimit-Remaining: 45
 X-RateLimit-Reset: 1708000000
+
 ```
 
 </Note>
@@ -280,17 +318,17 @@ X-RateLimit-Reset: 1708000000
 ## Related Reading
 
 <CardGroup cols={3}>
-  <Card title='Architecture' icon='sitemap' href='/developers/architecture'>
+  <Card title="Architecture" icon="sitemap" href="/developers/architecture">
     System design context.
   </Card>
   <Card
-    title='Getting Started'
-    icon='rocket'
-    href='/developers/getting-started'
+    title="Getting Started"
+    icon="rocket"
+    href="/developers/getting-started"
   >
     Local setup.
   </Card>
-  <Card title='Platform Overview' icon='circle-info' href='/platform/overview'>
+  <Card title="Platform Overview" icon="circle-info" href="/platform/overview">
     How it all works.
   </Card>
 </CardGroup>

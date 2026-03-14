@@ -9,11 +9,11 @@ Metrics have been strategically placed in the most efficient and logical
 locations to provide comprehensive observability:
 
 1. **API Routes** - Request counts, response times, error rates
-2. **AI Services** - Emotion analysis, bias detection, response generation
-3. **Background Jobs** - Job processing times, queue depth, success/failure
+1. **AI Services** - Emotion analysis, bias detection, response generation
+1. **Background Jobs** - Job processing times, queue depth, success/failure
    rates
-4. **User Interactions** - Button clicks, form submissions, chat messages
-5. **AI Providers** - Model usage, latency, success rates
+1. **User Interactions** - Button clicks, form submissions, chat messages
+1. **AI Providers** - Model usage, latency, success rates
 
 ## Implementation Details
 
@@ -43,6 +43,7 @@ export const POST: APIRoute = async ({ request }) => {
     trackApiError(endpoint, errorType, 'POST')
   }
 }
+
 ```
 
 ### 2. Critical API Routes Instrumented
@@ -181,21 +182,21 @@ export const POST: APIRoute = async ({ request }) => {
 
 1. **Consistent Naming**: All metrics use dot notation (e.g., `api.request`,
    `jobs.completed`)
-2. **Rich Attributes**: Metrics include relevant context (model, endpoint, error
+1. **Rich Attributes**: Metrics include relevant context (model, endpoint, error
    type, etc.)
-3. **Error Tracking**: All error paths include error type classification
-4. **Performance Tracking**: Critical operations track latency distributions
-5. **Domain-Specific Helpers**: Use `emotionMetrics`, `apiMetrics`,
+1. **Error Tracking**: All error paths include error type classification
+1. **Performance Tracking**: Critical operations track latency distributions
+1. **Domain-Specific Helpers**: Use `emotionMetrics`, `apiMetrics`,
    `biasMetrics` from `@/lib/sentry/utils`
 
 ## Next Steps (Optional Enhancements)
 
 1. **Additional API Routes**: Add metrics to more API endpoints as needed
-2. **Database Operations**: Add metrics for database query performance
-3. **External Service Calls**: Track latency for external API calls
-4. **Cache Operations**: Track cache hit/miss rates
-5. **WebSocket Metrics**: More detailed WebSocket connection and message metrics
-6. **Session Metrics**: Track active sessions, session duration, etc.
+1. **Database Operations**: Add metrics for database query performance
+1. **External Service Calls**: Track latency for external API calls
+1. **Cache Operations**: Track cache hit/miss rates
+1. **WebSocket Metrics**: More detailed WebSocket connection and message metrics
+1. **Session Metrics**: Track active sessions, session duration, etc.
 
 ## References
 

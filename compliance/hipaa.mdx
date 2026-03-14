@@ -46,6 +46,7 @@ Privacy Rule requirements across five key areas.
     - All access requests logged in the compliance audit trail
     - No unreasonable barriers to access
 
+
     ```typescript
     // Access request handling
     interface PHIAccessRequest {
@@ -55,6 +56,7 @@ Privacy Rule requirements across five key areas.
       processedBy: string;
       completionDeadline: Date; // 30 days from request
     }
+
     ```
 
   </Accordion>
@@ -247,6 +249,7 @@ of electronic PHI (ePHI).
     | **Encryption** | AES-256 at rest, TLS 1.3 in transit |
 
     ```typescript
+
     // Role-based access control enforcement
     type UserRole = 'admin' | 'therapist' | 'patient'
                   | 'researcher' | 'support' | 'guest';
@@ -258,6 +261,7 @@ of electronic PHI (ePHI).
       requiresMFA: boolean;
       sessionTimeout: number; // minutes
     }
+
     ```
 
   </Tab>
@@ -277,6 +281,7 @@ of electronic PHI (ePHI).
     Comprehensive audit logging captures every interaction with PHI:
 
     ```typescript
+
     interface AuditLogEntry {
       userId: string;
       resourceType: 'patient_record' | 'session' | 'assessment';
@@ -288,7 +293,9 @@ of electronic PHI (ePHI).
       outcome: 'success' | 'failure';
       phiAccessed: boolean;
     }
+
     ```
+
 
     - **Retention:** All audit logs retained for **6 years** per HIPAA requirements
     - **Tamper Protection:** Logs are append-only with cryptographic integrity verification
@@ -297,13 +304,14 @@ of electronic PHI (ePHI).
 
   </Tab>
   <Tab title="Integrity & Transmission">
-    **Data Integrity:**
+## Data Integrity:
     - Cryptographic checksums (SHA-256) for all stored PHI
     - Version control with full change history
     - Electronic signature verification
     - Database-level integrity constraints
 
-    **Transmission Security:**
+## Transmission Security
+
     - End-to-end encryption using TLS 1.3 for all communications
     - VPN required for all administrative access
     - Network segmentation isolating PHI systems
@@ -347,9 +355,9 @@ the HIPAA Breach Notification Rule (45 CFR §§ 164.400–414).
 Every potential breach is evaluated using a four-factor risk assessment:
 
 1. **Nature and extent** of PHI involved (types and identifiers)
-2. **Unauthorized person** who accessed or received the PHI
-3. **Whether PHI was actually acquired or viewed** (vs. opportunity only)
-4. **Extent of risk mitigation** applied after discovery
+1. **Unauthorized person** who accessed or received the PHI
+1. **Whether PHI was actually acquired or viewed** (vs. opportunity only)
+1. **Extent of risk mitigation** applied after discovery
 
 <Warning>
   Low-probability exceptions (unintentional access, good faith internal

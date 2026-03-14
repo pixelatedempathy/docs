@@ -9,8 +9,9 @@ Pixelated Empathy AI jobs on OVHcloud AI Platform.
 
 **Symptom**: `ovhai me` or `ovhai job run` fails with:
 
-```text
+```text text
 AI Training error: request error: 403: forbidden, pci project status is ""
+
 ```
 
 **Cause**: OVH **backend bug**. Our side is correctly set up: project is activated,
@@ -56,7 +57,7 @@ Useful for debugging and for support tickets.
   confirm-before-upgrade; nothing that would fix 403.
 - **Debug**: When a command fails, the error message may include
   `ovhai debug <SESSION_ID>` to print full request/response logs for that run.
-- **Install (US-EAST-VA)**: `curl https://cli.us-east-va.ai.cloud.ovh.us/install.sh | bash`.
+- **Install (US-EAST-VA)**: `curl <https://cli.us-east-va.ai.cloud.ovh.us/install.sh> | bash`.
 
 ### 1. Exit Code 2 (Immediate Crash)
 
@@ -97,7 +98,7 @@ revision to Docker Hub. **Resolution**:
 Persona re-generation (**batch_regenerate.py** / Lightning script) uses
 **NVIDIA NIM** for LLM response rewriting via the OpenAI-compatible API.
 Gemini is not used. **Required env**: **NIM_API_KEY** or **NVIDIA_API_KEY**.
-Optional: **OPENAI_BASE_URL** (default `https://integrate.api.nvidia.com/v1`),
+Optional: **OPENAI_BASE_URL** (default `<https://integrate.api.nvidia.com/v1`),>
 **PERSONA_NIM_MODEL** or **LLM_MODEL** (default `meta/llama-3.3-70b-instruct`).
 Do not rely on GEMINI_API_KEY for this job.
 
@@ -108,18 +109,20 @@ Do not rely on GEMINI_API_KEY for this job.
 Ensure your production stage looks like this:
 
 ```dockerfile
-# OVH AI Training runs as UID 42420
+
+## OVH AI Training runs as UID 42420
 RUN groupadd -g 42420 ovhcloud && \
     useradd -u 42420 -g 42420 -m -s /bin/bash ovhcloud
 
 WORKDIR /app
 COPY . ai/
 
-# Set ownership to OVH user
+## Set ownership to OVH user
 RUN chown -R 42420:42420 /app
 USER 42420
 
 CMD ["python", "-m", "ai.api.main"]
+
 ```
 
 ## 🚀 Running the Job
@@ -127,10 +130,12 @@ CMD ["python", "-m", "ai.api.main"]
 Always specify `PYTHONPATH` in the environment variables:
 
 ```bash
+
 ovhai job run \
   --env PYTHONPATH="/app" \
   docker.io/pixelatedempathy/training-node:v<TIMESTAMP> \
   -- python /app/ai/training/scripts/batch_regenerate.py ...
+
 ```
 
 ## 🔁 Persona Re-Generation Resume (OVH Output-Count Based)
@@ -147,6 +152,7 @@ record instead of restarting from zero.
 Example launch flags:
 
 ```bash
+
 ovhai job run \
   ... \
   --env CHECKPOINT_PREFIX="checkpoints/persona-regeneration" \
@@ -157,11 +163,15 @@ ovhai job run \
     --checkpoint-prefix "${CHECKPOINT_PREFIX}" \
     --checkpoint-job-name "${CHECKPOINT_JOB_NAME}" \
     --checkpoint-frequency 250
-```
+
+``` text
+
 
 Inspect or clear checkpoint data manually (for example, if a bad checkpoint is blocking progress):
 
+
 ```bash
+
 PYTHONPATH="${PYTHONPATH:-$(pwd)}" python - <<'PY'
 import os
 
@@ -179,4 +189,5 @@ try:
 except Exception as exc:
     print("Failed", checkpoint_key, exc)
 PY
+
 ```

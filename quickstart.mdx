@@ -11,7 +11,7 @@ description:
 
 <Card title="🧠 I'm a Therapist" icon="heart-pulse" href="#for-therapists--counselors">
 
-**Start practicing**
+## Start practicing
 
 AI clients with real-time feedback on your therapeutic skills. Perfect for
 clinical skill development.
@@ -20,7 +20,7 @@ clinical skill development.
 
 <Card title="👁️ I'm a Supervisor" icon="user-shield" href="#for-supervisors--institutions">
 
-**Manage Training**
+## Manage Training
 
 Set up organizations, invite trainees, and configure custom training programs.
 
@@ -28,7 +28,7 @@ Set up organizations, invite trainees, and configure custom training programs.
 
 <Card title="💻 I'm a Developer" icon="code" href="#for-developers">
 
-**Build & Integrate**
+## Build & Integrate
 
 Clone the repo, install dependencies, and spin up the full platform locally.
 
@@ -41,7 +41,6 @@ Clone the repo, install dependencies, and spin up the full platform locally.
 ## 🧠 For Therapists & Counselors
 
 > _Get from sign-up to your first AI training session in under five minutes._
-
 <Steps>
 
 <Step title="1. Create your account">
@@ -49,7 +48,7 @@ Clone the repo, install dependencies, and spin up the full platform locally.
 Navigate to **[pixelatedempathy.com](https://pixelatedempathy.com)** and click
 **Get Started**.
 
-**What you'll need:**
+## What you'll need
 
 - 📧 Email or institutional SSO
 - 🏷️ Professional role (therapist, counselor, psychologist, student)
@@ -72,8 +71,8 @@ Calibrate training scenarios to your experience level:
 
 1. **Select training focus** — Crisis intervention, trauma-informed care,
    motivational interviewing, couples therapy, substance abuse
-2. **Set difficulty** — Beginner (guided) → Master (complex, multi-issue)
-3. **Choose feedback** — Real-time, post-session, or both
+1. **Set difficulty** — Beginner (guided) → Master (complex, multi-issue)
+1. **Choose feedback** — Real-time, post-session, or both
 
 <Info>
 
@@ -90,9 +89,9 @@ Click **Enter The Empathy Gym™** from your dashboard:
 
 1. **Pick a scenario** — Anxiety, depression, trauma, crisis, personality
    disorders
-2. **Review client profile** — Emotional baseline, personality traits, triggers,
+1. **Review client profile** — Emotional baseline, personality traits, triggers,
    goals
-3. **Start the conversation** — Text or voice. AI client adapts dynamically.
+1. **Start the conversation** — Text or voice. AI client adapts dynamically.
 
 <Warning>
 
@@ -133,7 +132,6 @@ improvement suggestions.
 
 > _Set up your organization's training environment and monitor trainee
 > progress._
-
 <Steps>
 
 <Step title="1. Register your organization">
@@ -142,7 +140,7 @@ Contact
 **[enterprise@pixelatedempathy.com](mailto:enterprise@pixelatedempathy.com)** or
 visit the **[Enterprise Portal](https://pixelatedempathy.com/enterprise)**.
 
-**Required:**
+## Required
 
 - 🏢 Organization name & type
 - 👥 Estimated trainee count
@@ -172,7 +170,7 @@ Organize by class year, specialization, or rotation. Each cohort gets:
 
 <Accordion title="Assign training pathways" icon="route">
 
-**Built-in programs:**
+## Built-in programs
 
 - _Basic Therapeutic Skills_ — 5 progressive sessions for beginners
 - _Crisis Intervention Specialist_ — 8 complex scenarios for experienced
@@ -203,10 +201,10 @@ Minimum levels across 8 core skills:
 <Accordion title="Invite trainees" icon="envelope">
 
 1. Dashboard → Cohorts → [Cohort Name] → Members
-2. Click **Invite Members**
-3. Enter emails or upload CSV
-4. Select role & training pathway
-5. Send invitations
+1. Click **Invite Members**
+1. Enter emails or upload CSV
+1. Select role & training pathway
+1. Send invitations
 
 Trainees auto-enroll upon registration.
 
@@ -241,7 +239,6 @@ All data is encrypted & access-controlled. See
 ## 💻 For Developers
 
 > _Set up the full platform locally for development and contribution._
-
 <Info>
 
 **Prerequisites:** Node.js 19+ • Python 3.11+ • pnpm • MongoDB • Redis • Docker
@@ -253,9 +250,10 @@ All data is encrypted & access-controlled. See
 
 <Step title="1. Clone the repository">
 
-```bash
-git clone https://github.com/pixelatedempathy/pixelated-empathy.git
+```bash text
+git clone <https://github.com/pixelatedempathy/pixelated-empathy.git>
 cd pixelated-empathy
+
 ```
 
 </Step>
@@ -263,38 +261,46 @@ cd pixelated-empathy
 <Step title="2. Install dependencies">
 
 ```bash
+
 # Frontend
 pnpm install
 
-# Python AI/ML
+## Python AI/ML
 cd ai-services
 python -m venv .venv
 source .venv/bin/activate  # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
 cd ..
+
 ```
 
 </Step>
 
 <Step title="3. Configure environment">
 
-```bash
+```bash text
+
 cp .env.example .env
-```
+
+``` text
+
 
 Key variables:
 
+
 ```bash
-# Database
+
+## Database
 MONGODB_URI=mongodb://localhost:27017/pixelated-empathy
 REDIS_URL=redis://localhost:6379
 
-# AI Services
+## AI Services
 TOGETHER_API_KEY=your_together_api_key
 FINE_TUNED_THERAPEUTIC_MODEL=meta-llama-3-8b-instruct
 
-# Auth
+## Auth
 AUTH_SECRET=your_auth_secret_here
+
 ```
 
 <Warning>
@@ -308,13 +314,15 @@ Never commit `.env` to version control!
 <Step title="4. Start development server">
 
 ```bash
-# Full stack
+
+## Full stack
 pnpm dev
 
-# Or with AI services (separate terminal)
+## Or with AI services (separate terminal)
 cd ai-services
 source .venv/bin/activate
 python -m uvicorn main:app --reload --port 8000
+
 ```
 
 🌐 **Astro:** <http://localhost:4321>
@@ -324,15 +332,17 @@ python -m uvicorn main:app --reload --port 8000
 <Step title="5. Run tests">
 
 ```bash
-# Unit & integration
+
+## Unit & integration
 pnpm test
 
-# E2E
+## E2E
 pnpm test:e2e
 
-# Python AI
+## Python AI
 cd ai-services
 python -m pytest
+
 ```
 
 </Step>
@@ -346,6 +356,7 @@ python -m pytest
 <Accordion title="Project structure" icon="folder-tree">
 
 ```text
+
 pixelated-empathy/
 ├── src/                    # Astro + React frontend
 │   ├── components/          # Dashboard, simulator, etc.
@@ -357,6 +368,7 @@ pixelated-empathy/
 ├── ai/                     # Training pipelines & models
 ├── docs/                  # This documentation (Astro Starlight)
 └── tests/                 # Test suites
+
 ```
 
 </Accordion>
@@ -378,16 +390,22 @@ pixelated-empathy/
 <Accordion title="Docker setup" icon="docker">
 
 ```bash
-# Full containerized environment
+
+## Full containerized environment
 docker compose up --build
-```
+
+``` text
+
 
 Available at **<http://localhost:4321>**
 
+
 ```bash
-# Tests in Docker
+
+## Tests in Docker
 docker compose exec app pnpm test
 docker compose exec ai-services python -m pytest
+
 ```
 
 </Accordion>
@@ -431,13 +449,14 @@ Extended docs: database seeding, mock data, CI/CD, staging deployments.
 
 <div align="center">
 
-## 💜 Need Help?
+## 💜 Need Help
 
 **[support@pixelatedempathy.com](mailto:support@pixelatedempathy.com)** ·
-**[Community Forum](https://pixelatedempathy.com/community)**
+
+## [Community Forum](https://pixelatedempathy.com/community)
 
 ---
 
-_Last Updated: February 2026_
+## Last Updated: February 2026
 
 </div>

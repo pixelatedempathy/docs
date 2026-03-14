@@ -6,8 +6,8 @@
 
 ### Service Details
 
-- **Service URL**: `http://212.2.244.60:8080/v1/data-designer`
-- **Health Endpoint**: `http://212.2.244.60:8080/v1/data-designer/health`
+- **Service URL**: `<http://212.2.244.60:8080/v1/data-designer`>
+- **Health Endpoint**: `<http://212.2.244.60:8080/v1/data-designer/health`>
 - **Status**: All services are running and healthy
 - **Deployment Method**: Docker Compose with NeMo Microservices quickstart
 
@@ -16,16 +16,16 @@
 The following services are running:
 
 1. **data-designer** - Main Data Designer service (healthy)
-2. **envoy-gateway** - API Gateway on port 8080 (healthy)
-3. **datastore** - Data storage service (healthy)
-4. **entity-store** - Entity management service (healthy)
-5. **jobs-api** - Job management API (healthy)
-6. **jobs-controller** - Job controller (healthy)
-7. **postgres** - PostgreSQL database (healthy)
-8. **minio** - Object storage (healthy)
-9. **openbao** - Secrets management (healthy)
-10. **fluentbit** - Logging (healthy)
-11. **docker** - Docker-in-Docker for job execution (healthy)
+1. **envoy-gateway** - API Gateway on port 8080 (healthy)
+1. **datastore** - Data storage service (healthy)
+1. **entity-store** - Entity management service (healthy)
+1. **jobs-api** - Job management API (healthy)
+1. **jobs-controller** - Job controller (healthy)
+1. **postgres** - PostgreSQL database (healthy)
+1. **minio** - Object storage (healthy)
+1. **openbao** - Secrets management (healthy)
+1. **fluentbit** - Logging (healthy)
+1. **docker** - Docker-in-Docker for job execution (healthy)
 
 ## Configuration
 
@@ -33,8 +33,9 @@ The following services are running:
 
 Your local `.env` file has been updated with:
 
-```env
-NEMO_DATA_DESIGNER_BASE_URL=http://212.2.244.60:8080
+```env text
+NEMO_DATA_DESIGNER_BASE_URL=<http://212.2.244.60:8080>
+
 ```
 
 ### Service Access
@@ -47,17 +48,21 @@ to the Data Designer service internally.
 ### Test Connection
 
 ```bash
-# From your local machine
-curl http://212.2.244.60:8080/health
 
-# Test with Python
+## From your local machine
+curl <http://212.2.244.60:8080/health>
+
+## Test with Python
 uv run python ai/data_designer/test_setup.py
+
 ```
 
 ### Run Examples
 
 ```bash
+
 uv run python ai/data_designer/examples.py
+
 ```
 
 ## Management Commands
@@ -65,35 +70,49 @@ uv run python ai/data_designer/examples.py
 ### View Service Status
 
 ```bash
+
 ssh vivi@212.2.244.60 'cd ~/nemo-microservices/nemo-microservices-quickstart_v25.10 && docker compose ps'
+
 ```
 
 ### View Logs
 
 ```bash
-# All services
+
+## All services
 ssh vivi@212.2.244.60 'cd ~/nemo-microservices/nemo-microservices-quickstart_v25.10 && docker compose logs -f'
 
-# Data Designer only
-ssh vivi@212.2.244.60 'cd ~/nemo-microservices/nemo-microservices-quickstart_v25.10 && docker compose logs -f data-designer'
+## Data Designer only
+ssh vivi@212.2.244.60 'cd ~/nemo-microservices/nemo-microservices-quickstart_v25.10 && docker compose logs -f
+data-designer'
+
 ```
 
 ### Restart Service
 
 ```bash
-ssh vivi@212.2.244.60 'cd ~/nemo-microservices/nemo-microservices-quickstart_v25.10 && docker compose --profile data-designer restart'
+
+ssh vivi@212.2.244.60 'cd ~/nemo-microservices/nemo-microservices-quickstart_v25.10 && docker compose --profile
+data-designer restart'
+
 ```
 
 ### Stop Service
 
 ```bash
-ssh vivi@212.2.244.60 'cd ~/nemo-microservices/nemo-microservices-quickstart_v25.10 && docker compose --profile data-designer down'
+
+ssh vivi@212.2.244.60 'cd ~/nemo-microservices/nemo-microservices-quickstart_v25.10 && docker compose --profile
+data-designer down'
+
 ```
 
 ### Start Service
 
 ```bash
-ssh vivi@212.2.244.60 'cd ~/nemo-microservices/nemo-microservices-quickstart_v25.10 && docker compose --profile data-designer up -d'
+
+ssh vivi@212.2.244.60 'cd ~/nemo-microservices/nemo-microservices-quickstart_v25.10 && docker compose --profile
+data-designer up -d'
+
 ```
 
 ## Firewall Configuration
@@ -102,11 +121,13 @@ If you cannot access the service from outside the server, ensure port 8080 is
 open:
 
 ```bash
-# On the remote server
+
+## On the remote server
 sudo ufw allow 8080/tcp
-# Or for firewalld
+## Or for firewalld
 sudo firewall-cmd --add-port=8080/tcp --permanent
 sudo firewall-cmd --reload
+
 ```
 
 ## Next Steps
@@ -114,22 +135,32 @@ sudo firewall-cmd --reload
 1. **Test the service:**
 
    ```bash
-   uv run python ai/data_designer/test_setup.py
-   ```
 
-2. **Generate a test dataset:**
+   uv run python ai/data_designer/test_setup.py
+
+``` text
+
+
+1. **Generate a test dataset:**
+
 
    ```bash
-   uv run python ai/data_designer/examples.py
-   ```
 
-3. **Integrate with your application:**
+   uv run python ai/data_designer/examples.py
+
+``` text
+
+
+1. **Integrate with your application:**
+
 
    ```python
+
    from ai.data_designer import NeMoDataDesignerService
 
    service = NeMoDataDesignerService()
    result = service.generate_therapeutic_dataset(num_samples=100)
+
    ```
 
 ## Troubleshooting
@@ -139,18 +170,30 @@ sudo firewall-cmd --reload
 1. Check if services are running:
 
    ```bash
+
    ssh vivi@212.2.244.60 'cd ~/nemo-microservices/nemo-microservices-quickstart_v25.10 && docker compose ps'
-   ```
 
-2. Check logs for errors:
+``` text
+
+
+1. Check logs for errors:
+
 
    ```bash
-   ssh vivi@212.2.244.60 'cd ~/nemo-microservices/nemo-microservices-quickstart_v25.10 && docker compose logs data-designer --tail=50'
-   ```
 
-3. Verify firewall:
-   ```bash
+   ssh vivi@212.2.244.60 'cd ~/nemo-microservices/nemo-microservices-quickstart_v25.10 && docker compose logs
+data-designer --tail=50'
+
+``` text
+
+
+1. Verify firewall:
+
+
+```bash text
+
    ssh vivi@212.2.244.60 'sudo ufw status | grep 8080'
+
    ```
 
 ### Connection Timeouts
@@ -158,7 +201,7 @@ sudo firewall-cmd --reload
 - Increase timeout in `.env`: `NEMO_DATA_DESIGNER_TIMEOUT=600`
 - Check network connectivity
 - Verify service is responding:
-  `ssh vivi@212.2.244.60 'curl http://localhost:8080/health'`
+  `ssh vivi@212.2.244.60 'curl <http://localhost:8080/health'`>
 
 ## Deployment Information
 

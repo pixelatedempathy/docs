@@ -46,6 +46,8 @@ interface EmotionVector {
   anticipation: number // Expectation, interest, vigilance
 }
 // All values normalized 0.0 – 1.0
+
+
 ```
 
 Each emotion is scored as a continuous value between 0.0 (absent) and 1.0
@@ -89,63 +91,109 @@ dominance axis:
 
 <Tabs>
   <Tab title="Valence">
-    **Range: -1.0 to +1.0**
+## Range: -1.0 to +1.0
 
     Measures the positive or negative quality of the emotional experience.
 
-    ```
+``` text
+
+
     Positive valence (+) ← joy, trust, anticipation
     Negative valence (-) ← sadness, anger, fear, disgust
-    ```
 
-    **Calculation:**
-    ```
+
+``` text
+
+
+
+## Calculation
+
+
+``` text
+
+
     positive = joy + trust + (surprise × 0.5)
     negative = sadness + anger + fear + disgust
     valence  = tanh((positive - negative) / 2)
+
+
     ```
+
+
 
     Valence is the most clinically relevant dimension — it directly correlates
     with client wellbeing and session progress.
 
   </Tab>
   <Tab title="Arousal">
-    **Range: 0.0 to 1.0**
+## Range: 0.0 to 1.0
 
     Measures the activation or energy level of the emotional state.
 
-    ```
+
+
+``` text
+
+
     High arousal ← anger, fear, surprise, joy (partially)
     Low arousal  ← sadness, trust, disgust (partially)
-    ```
 
-    **Calculation:**
-    ```
+
+``` text
+
+
+
+## Calculation (2)
+
+
+``` text
+
+
     highArousal = anger + fear + surprise + (joy × 0.7)
     lowArousal  = sadness + trust + (disgust × 0.5)
     arousal     = clamp((highArousal - lowArousal × 0.3) / 2, 0, 1)
+
+
     ```
+
+
 
     High arousal states require careful therapist management — a client in
     high-arousal fear may need grounding before cognitive work is effective.
 
   </Tab>
   <Tab title="Dominance">
-    **Range: -1.0 to +1.0**
+## Range: -1.0 to +1.0 (2)
 
     Measures the sense of control or power in the emotional experience.
 
-    ```
+
+
+``` text
+
+
     High dominance (+) ← anger, trust, anticipation
     Low dominance (-)  ← fear, sadness, surprise (partially)
-    ```
 
-    **Calculation:**
-    ```
+
+``` text
+
+
+
+## Calculation (3)
+
+
+``` text
+
+
     dominant   = anger + trust + anticipation
     submissive = fear + sadness + (surprise × 0.5)
     dominance  = tanh((dominant - submissive) / 2)
+
+
     ```
+
+
 
     Dominance tracking is essential for detecting power dynamics in the
     therapeutic relationship and identifying clients who feel helpless or
@@ -159,7 +207,11 @@ dominance axis:
 The three dimensions create a rich emotional space where patterns become visible
 over time:
 
-```text
+
+
+```text text
+
+
                     High Arousal
                          │
             Angry ●      │      ● Excited
@@ -171,6 +223,8 @@ over time:
        Bored ●            │           ● Trusting
                          │
                     Low Arousal
+
+
 ```
 
 The `MultidimensionalEmotionMapper` tracks movement through this space across a
@@ -190,7 +244,7 @@ calibrating AI persona behavior and recognizing trainee communication patterns:
 
 <AccordionGroup>
   <Accordion title="Openness to experience" icon="lightbulb">
-    **Range: 0.0 – 1.0**
+## Range: 0.0 – 1.0
 
     Measures intellectual curiosity, creativity, and willingness to explore new
     ideas and emotions.
@@ -205,7 +259,7 @@ calibrating AI persona behavior and recognizing trainee communication patterns:
 
   </Accordion>
   <Accordion title="Conscientiousness" icon="list-check">
-    **Range: 0.0 – 1.0**
+## Range: 0.0 – 1.0 (2)
 
     Measures self-discipline, organization, and goal-directed behavior.
 
@@ -219,7 +273,7 @@ calibrating AI persona behavior and recognizing trainee communication patterns:
 
   </Accordion>
   <Accordion title="Extraversion" icon="comments">
-    **Range: 0.0 – 1.0**
+## Range: 0.0 – 1.0 (3)
 
     Measures sociability, assertiveness, and energy derived from social interaction.
 
@@ -233,7 +287,7 @@ calibrating AI persona behavior and recognizing trainee communication patterns:
 
   </Accordion>
   <Accordion title="Agreeableness" icon="handshake-simple">
-    **Range: 0.0 – 1.0**
+## Range: 0.0 – 1.0 (4)
 
     Measures cooperativeness, empathy, and interpersonal warmth.
 
@@ -247,7 +301,7 @@ calibrating AI persona behavior and recognizing trainee communication patterns:
 
   </Accordion>
   <Accordion title="Neuroticism" icon="chart-line">
-    **Range: 0.0 – 1.0**
+## Range: 0.0 – 1.0 (5)
 
     Measures emotional instability, anxiety proneness, and vulnerability to stress.
 
@@ -280,6 +334,8 @@ The system detects significant emotional transitions — moments when the client
 emotional state shifts meaningfully:
 
 ```typescript
+
+
 interface EmotionTransition {
   from: EmotionDimensions // Starting emotional state
   to: EmotionDimensions // New emotional state
@@ -287,6 +343,8 @@ interface EmotionTransition {
   intensity: number // Magnitude of the shift
   timestamp: string // When the transition occurred
 }
+
+
 ```
 
 Transitions are flagged when the Euclidean distance between consecutive
@@ -315,8 +373,12 @@ Raw emotion signals can be noisy. The engine applies exponential moving average
 smoothing with a configurable factor (default: 0.3) to produce stable,
 clinically meaningful trajectories:
 
-```typescript
+```typescript text
+
+
 smoothed[t] = α × previous[t-1] + (1 - α) × current[t]
+
+
 ```
 
 This produces emotion trajectories that are responsive to real shifts while
@@ -368,6 +430,8 @@ The `EmotionSynthesizer` creates realistic emotional responses based on
 therapeutic context:
 
 ```typescript
+
+
 type EmotionTransitionContext =
   | 'therapist_validates' // → joy↑, sadness↓, anger↓
   | 'therapist_challenges' // → anger↑ initially, then trust↑ if done well
@@ -380,6 +444,8 @@ type EmotionTransitionContext =
   | 'patient_resists' // → anger↑, trust↓
   | 'goal_achieved' // → joy↑, anticipation↑, trust↑
   | 'setback_experienced' // → sadness↑, anger↑, anticipation↓
+
+
 ```
 
 Each context triggers specific emotion adjustments with configurable decay
@@ -447,6 +513,8 @@ Empathy PQ integrates signals from multiple analysis dimensions:
 The full analysis pipeline processes each message through these stages:
 
 ```text
+
+
 Message Input
      │
      ▼
@@ -482,6 +550,8 @@ Message Input
 ┌──────────────┐
 │ PQ Scoring   │  ← Empathy Performance Quotient computation
 └──────────────┘
+
+
 ```
 
 Every stage produces metadata including confidence scores, processing time, and

@@ -23,30 +23,40 @@ Before you start, make sure you have:
 
 <Steps>
   <Step title="Clone the Repository">
-  ```bash
-  git clone https://github.com/pixelated-empathy/pixelated.git
+
+```bash text
+  git clone <https://github.com/pixelated-empathy/pixelated.git>
   cd pixelated
+
   ```
+
   </Step>
 
   <Step title="Install Dependencies">
+
   ```bash
+
   # Node dependencies
   pnpm install
 
-# Python dependencies
+## Python dependencies
 
 uv install
 
+
 ````
+
 </Step>
 
 <Step title="Start the Dev Server">
+
 ```bash
+
 pnpm dev
+
 ````
 
-That gets you the frontend running at `http://localhost:4321`.
+That gets you the frontend running at `<http://localhost:4321`.>
 
   </Step>
 </Steps>
@@ -56,7 +66,9 @@ That gets you the frontend running at `http://localhost:4321`.
 The full Pixelated Empathy stack includes multiple services. To start them all:
 
 ```bash
+
 pnpm dev:all-services
+
 ```
 
 This spins up:
@@ -69,12 +81,15 @@ This spins up:
 Alternatively, use Docker Compose for a production-like environment:
 
 ```bash
+
 pnpm docker:up
+
 ```
 
 ## Project Structure at a Glance
 
 ```text
+
 pixelated/
 ├── src/              → Frontend (Astro + React)
 │   ├── components/   → Reusable UI components
@@ -87,6 +102,7 @@ pixelated/
 ├── tests/            → Test suites
 ├── docker/           → Docker configurations
 └── scripts/          → Build & utility scripts
+
 ```
 
 <Info>
@@ -132,16 +148,22 @@ pixelated/
 
 Copy the example env file and fill in your values:
 
-```bash
+```bash text
+
 cp .env.example .env.local
-```
+
+``` text
+
 
 Key variables you'll need:
 
-```bash
+
+```bash text
+
 NODE_ENV=development
 PORT=4321
 MEM0_API_KEY=your-mem0-api-key
+
 ```
 
 <Warning>**Never commit `.env.local`.** It's already in `.gitignore`.</Warning>
@@ -151,13 +173,19 @@ MEM0_API_KEY=your-mem0-api-key
 We use path aliases to keep imports clean. Instead of:
 
 ```typescript
+
 import { EmotionAnalyzer } from '../../../lib/ai/emotion-analyzer'
-```
+
+``` text
+
 
 You write:
 
+
 ```typescript
+
 import { EmotionAnalyzer } from '@/lib/ai/emotion-analyzer'
+
 ```
 
 Available aliases:
@@ -183,7 +211,9 @@ Once you're running locally:
     Choose an issue or feature to work on from the issue tracker.
   </Step>
   <Step title='Branch from Main'>
+
     ```bash git checkout -b feature/your-feature-name ```
+
   </Step>
   <Step title='Make Your Changes'>
     Follow code conventions and run quality checks as you go.

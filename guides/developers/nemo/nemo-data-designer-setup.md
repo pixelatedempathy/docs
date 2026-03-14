@@ -1,6 +1,6 @@
 # NVIDIA NeMo Data Designer Setup Guide
 
-## What is NVIDIA NeMo Data Designer?
+## What is NVIDIA NeMo Data Designer
 
 [NVIDIA NeMo Data Designer](https://docs.nvidia.com/nemo/microservices/latest/design-synthetic-data-from-scratch-or-seeds/index.html)
 is a powerful tool for generating high-quality, domain-specific synthetic
@@ -22,8 +22,8 @@ cloud API service. According to the
 getting started requires:
 
 1. Data Designer **deployed on your laptop or compute instance**
-2. The NeMo Microservices SDK installed
-3. Connectivity to models that are available via API or deployed in the same
+1. The NeMo Microservices SDK installed
+1. Connectivity to models that are available via API or deployed in the same
    environment
 
 ## Key Features
@@ -56,48 +56,58 @@ getting started requires:
 
 ### Step 1: Get Your NVIDIA API Key
 
-1. Visit https://build.nvidia.com
-2. Sign up or log in to NVIDIA Build
-3. Navigate to API Keys section
-4. Generate a new API key
-5. Copy the API key (you'll need it for deployment)
+1. Visit <https://build.nvidia.com>
+1. Sign up or log in to NVIDIA Build
+1. Navigate to API Keys section
+1. Generate a new API key
+1. Copy the API key (you'll need it for deployment)
 
 ### Step 2: Install Python SDK
 
 The package is already added to `pyproject.toml`. Install it with:
 
 ```bash
-# Make sure you're in the uv shell
+## Make sure you're in the uv shell
 uv pip install 'nemo-microservices[data-designer]'
+
 ```
 
 ### Step 3: Deploy NeMo Data Designer
 
-**Option A: Using Docker Compose (Recommended for Local Development)**
+## Option A: Using Docker Compose (Recommended for Local Development)
 
 1. Ensure Docker and Docker Compose are installed
-2. Run the deployment script:
+1. Run the deployment script:
 
-```bash
+````bash text
+
 ./scripts/deploy/deploy-nemo-data-designer.sh
-```
+
+``` text
+
 
 Or manually:
 
-```bash
+
+```bash text
+
 docker-compose -f docker-compose.nemo-data-designer.yml up -d
-```
 
-3. Wait for the service to be healthy (check with
-   `curl http://localhost:8000/health`)
+````
 
-**Option B: Remote Server Deployment**
+1. Wait for the service to be healthy (check with
+   `curl <http://localhost:8000/health`)>
+
+## Option B: Remote Server Deployment
 
 For deploying on a remote server (e.g., `vivi@212.2.244.60`):
 
-```bash
+````bash text
+
 ./scripts/deploy/deploy-nemo-data-designer-remote.sh
-```
+
+``` text
+
 
 This will automatically:
 
@@ -109,13 +119,17 @@ This will automatically:
 See [Remote Deployment Guide](./nemo-data-designer-remote-deployment.md) for
 detailed instructions.
 
-**Option C: Using Helm (For Kubernetes/Production)**
+## Option C: Using Helm (For Kubernetes/Production)
 
 For Kubernetes deployment, you can use the new deployment script:
 
-```bash
+
+```bash text
+
 ./scripts/infrastructure/deploy-nemo-data-designer-k8s.sh
-```
+
+``` text
+
 
 This script will:
 
@@ -126,9 +140,12 @@ This script will:
 
 Alternatively, you can manually deploy using the provided Kubernetes manifest:
 
-```bash
+
+```bash text
+
 kubectl apply -f ai/deployment/nemo-data-designer-k8s.yaml
-```
+
+````
 
 See the
 [official deployment guide](https://docs.nvidia.com/nemo/microservices/latest/set-up/deploy-as-microservices/data-designer/parent-chart.html)
@@ -139,25 +156,27 @@ for Helm chart deployment.
 Update your `.env` file with the local deployment URL:
 
 ```env
-# NVIDIA NeMo Data Designer Configuration
+
+## NVIDIA NeMo Data Designer Configuration
 NVIDIA_API_KEY=your-api-key-here
-# Use localhost when running Docker Compose locally (direct access)
-NEMO_DATA_DESIGNER_BASE_URL=http://localhost:8000
-# For remote server via Envoy gateway (includes /v1/data-designer path)
-# NEMO_DATA_DESIGNER_BASE_URL=http://212.2.244.60:8080/v1/data-designer
-# For Kubernetes/production, use your cluster ingress URL
-# NEMO_DATA_DESIGNER_BASE_URL=https://nemo-data-designer.your-cluster-domain.com
+## Use localhost when running Docker Compose locally (direct access)
+NEMO_DATA_DESIGNER_BASE_URL=<http://localhost:8000>
+## For remote server via Envoy gateway (includes /v1/data-designer path)
+## NEMO_DATA_DESIGNER_BASE_URL=<http://212.2.244.60:8080/v1/data-designer>
+## For Kubernetes/production, use your cluster ingress URL
+## NEMO_DATA_DESIGNER_BASE_URL=<https://nemo-data-designer.your-cluster-domain.com>
 NEMO_DATA_DESIGNER_TIMEOUT=300
 NEMO_DATA_DESIGNER_MAX_RETRIES=3
 NEMO_DATA_DESIGNER_BATCH_SIZE=1000
+
 ```
 
 **Important**:
 
 - Replace `your-api-key-here` with your actual API key
-- Use `http://localhost:8000` for local Docker Compose deployment
+- Use `<http://localhost:8000`> for local Docker Compose deployment
 - For Kubernetes, use your cluster's ingress URL (e.g.,
-  `https://nemo-data-designer.your-cluster-domain.com`)
+  `<https://nemo-data-designer.your-cluster-domain.com`)>
 
 ### Step 5: Verify Installation
 
@@ -165,73 +184,92 @@ NEMO_DATA_DESIGNER_BATCH_SIZE=1000
 
 For local Docker Compose deployment:
 
-```bash
-curl http://localhost:8000/health
-```
+````bash
+
+curl <http://localhost:8000/health>
+
+``` text
+
 
 For Kubernetes deployment:
 
-```bash
-curl https://nemo-data-designer.your-cluster-domain.com/health
-```
-
-2. Run the example script:
 
 ```bash
+
+curl <https://nemo-data-designer.your-cluster-domain.com/health>
+
+``` text
+
+
+1. Run the example script:
+
+
+```bash
+
 uv run python ai/data_designer/examples.py
-```
+
+``` text
+
 
 You should see output like:
 
-```
+
+``` text
+
 ================================================================================
 Example 1: Generating Therapeutic Dataset
 ================================================================================
 Generated 100 samples
 Generation time: 12.34 seconds
 Columns: age, gender, ethnicity, primary_diagnosis, ...
-```
+
+````
 
 ## Usage Examples
 
 ### Example 1: Generate Therapeutic Dataset
 
 ```python
+
 from ai.data_designer import NeMoDataDesignerService
 
-# Initialize service
+## Initialize service
 service = NeMoDataDesignerService()
 
-# Generate 1000 samples
+## Generate 1000 samples
 result = service.generate_therapeutic_dataset(num_samples=1000)
 
-# Access the data
+## Access the data
 data = result['data']
 print(f"Generated {result['num_samples']} samples")
+
 ```
 
 ### Example 2: Generate Bias Detection Dataset
 
 ```python
+
 from ai.data_designer import NeMoDataDesignerService
 
 service = NeMoDataDesignerService()
 
-# Generate dataset for bias analysis
+## Generate dataset for bias analysis
 result = service.generate_bias_detection_dataset(
     num_samples=500,
     protected_attributes=["gender", "ethnicity", "age_group"],
 )
 
-# Use with bias detection system
+## Use with bias detection system
 from src.lib.ai.bias_detection.python_service.bias_detection_service import BiasDetectionService
 bias_service = BiasDetectionService()
 analysis = bias_service.analyze_session_bias(result['data'])
+
 ```
 
 ### Example 3: Custom Dataset
 
 ```python
+
 from ai.data_designer import NeMoDataDesignerService
 from nemo_microservices.data_designer.essentials import (
     SamplerColumnConfig,
@@ -242,7 +280,7 @@ from nemo_microservices.data_designer.essentials import (
 
 service = NeMoDataDesignerService()
 
-# Define your own columns
+## Define your own columns
 columns = [
     SamplerColumnConfig(
         name="patient_id",
@@ -262,6 +300,7 @@ result = service.generate_custom_dataset(
     column_configs=columns,
     num_samples=200,
 )
+
 ```
 
 ## Integration with Pixelated Empathy
@@ -272,19 +311,21 @@ The generated datasets integrate seamlessly with the existing bias detection
 system:
 
 ```python
+
 from ai.data_designer import NeMoDataDesignerService
 
-# Generate synthetic data for bias testing
+## Generate synthetic data for bias testing
 designer = NeMoDataDesignerService()
 dataset = designer.generate_bias_detection_dataset(
     num_samples=1000,
     protected_attributes=["gender", "ethnicity"],
 )
 
-# Use with existing bias detection
+## Use with existing bias detection
 from src.lib.ai.bias_detection.python_service.bias_detection_service import BiasDetectionService
 bias_service = BiasDetectionService()
 results = bias_service.analyze_session_bias(dataset['data'])
+
 ```
 
 ### Dataset Pipeline Integration
@@ -292,16 +333,18 @@ results = bias_service.analyze_session_bias(dataset['data'])
 Integrate with the existing dataset pipeline:
 
 ```python
+
 from ai.data_designer import NeMoDataDesignerService
 from ai.dataset_pipeline.main_orchestrator import DatasetOrchestrator
 
-# Generate synthetic therapeutic data
+## Generate synthetic therapeutic data
 designer = NeMoDataDesignerService()
 synthetic = designer.generate_therapeutic_dataset(num_samples=5000)
 
-# Process through existing pipeline
+## Process through existing pipeline
 orchestrator = DatasetOrchestrator()
 processed = orchestrator.process_dataset(synthetic['data'])
+
 ```
 
 ## Deployment Options
@@ -311,27 +354,29 @@ processed = orchestrator.process_dataset(synthetic['data'])
 Docker Compose is the easiest way to get started with NeMo Data Designer
 locally.
 
-**Pros:**
+## Pros
 
 - Easy to set up and run
 - No Kubernetes required
 - Good for development and testing
 - Isolated environment
 
-**Cons:**
+## Cons
 
 - Requires Docker and Docker Compose
 - Local resource usage
 - Not suitable for high-scale production
 
-**Deployment Steps:**
+## Deployment Steps
 
 ```bash
-# Using the provided script
+
+## Using the provided script
 ./scripts/deploy/deploy-nemo-data-designer.sh
 
-# Or manually
+## Or manually
 docker-compose -f docker-compose.nemo-data-designer.yml up -d
+
 ```
 
 ### Option 2: Kubernetes/Helm (Recommended for Production)
@@ -341,38 +386,50 @@ For production deployments, use Kubernetes with Helm charts.
 #### Docker Compose Deployment
 
 ```bash
-# Clone NeMo microservices repository
-git clone https://github.com/NVIDIA/NeMo-Microservices.git
+
+## Clone NeMo microservices repository
+git clone <https://github.com/NVIDIA/NeMo-Microservices.git>
 cd NeMo-Microservices
 
-# Deploy data designer service
+## Deploy data designer service
 docker-compose -f docker-compose.data-designer.yml up -d
+
 ```
 
 #### Kubernetes Deployment
 
 Using the new deployment script (recommended):
 
-```bash
+````bash text
+
 ./scripts/infrastructure/deploy-nemo-data-designer-k8s.sh
-```
+
+``` text
+
 
 Or manually with Helm:
 
+
 ```bash
-# Add NVIDIA Helm repository
-helm repo add nvidia https://helm.ngc.nvidia.com/nvidia
+
+## Add NVIDIA Helm repository
+helm repo add nvidia <https://helm.ngc.nvidia.com/nvidia>
 helm repo update
 
-# Install data designer
+## Install data designer
 helm install nemo-data-designer nvidia/nemo-data-designer
-```
+
+``` text
+
 
 Or using the provided Kubernetes manifest:
 
-```bash
+
+```bash text
+
 kubectl apply -f ai/deployment/nemo-data-designer-k8s.yaml
-```
+
+````
 
 See
 [NVIDIA Documentation](https://docs.nvidia.com/nemo/microservices/latest/set-up/deploy-as-microservices/data-designer/parent-chart.html)
@@ -382,27 +439,32 @@ for detailed deployment instructions.
 
 ### Environment Variables
 
-| Variable                         | Description                     | Default                 | Required |
-| -------------------------------- | ------------------------------- | ----------------------- | -------- |
-| `NVIDIA_API_KEY`                 | Your NVIDIA API key             | -                       | Yes      |
-| `NEMO_DATA_DESIGNER_BASE_URL`    | API base URL (local or cluster) | `http://localhost:8000` | Yes      |
-| `NEMO_DATA_DESIGNER_TIMEOUT`     | Request timeout (seconds)       | `300`                   | No       |
-| `NEMO_DATA_DESIGNER_MAX_RETRIES` | Max retry attempts              | `3`                     | No       |
-| `NEMO_DATA_DESIGNER_BATCH_SIZE`  | Batch size for processing       | `1000`                  | No       |
+<!-- markdownlint-disable MD060 -->
+
+| Variable                         | Description                     | Default                   | Required |
+| -------------------------------- | ------------------------------- | ------------------------- | -------- |
+| `NVIDIA_API_KEY`                 | Your NVIDIA API key             | -                         | Yes      |
+| `NEMO_DATA_DESIGNER_BASE_URL`    | API base URL (local or cluster) | `<http://localhost:8000`> | Yes      |
+| `NEMO_DATA_DESIGNER_TIMEOUT`     | Request timeout (seconds)       | `300`                     | No       |
+| `NEMO_DATA_DESIGNER_MAX_RETRIES` | Max retry attempts              | `3`                       | No       |
+| `NEMO_DATA_DESIGNER_BATCH_SIZE`  | Batch size for processing       | `1000`                    | No       |
+
+<!-- markdownlint-enable MD060 -->
 
 **Note**: `NEMO_DATA_DESIGNER_BASE_URL` should be:
 
-- `http://localhost:8000` for local Docker Compose deployment
+- `<http://localhost:8000`> for local Docker Compose deployment
 - Your cluster ingress URL for Kubernetes (e.g.,
-  `https://nemo-data-designer.your-cluster-domain.com`)
+  `<https://nemo-data-designer.your-cluster-domain.com`)>
 
 ### Custom Configuration
 
 ```python
+
 from ai.data_designer import NeMoDataDesignerService, DataDesignerConfig
 
 config = DataDesignerConfig(
-    base_url="https://nemo-data-designer.your-cluster-domain.com",
+    base_url="<https://nemo-data-designer.your-cluster-domain.com",>
     api_key="your-api-key",
     timeout=600,  # 10 minutes
     max_retries=5,
@@ -410,6 +472,7 @@ config = DataDesignerConfig(
 )
 
 service = NeMoDataDesignerService(config=config)
+
 ```
 
 ## Troubleshooting
@@ -419,7 +482,9 @@ service = NeMoDataDesignerService(config=config)
 **Solution**: Set the `NVIDIA_API_KEY` environment variable:
 
 ```bash
+
 export NVIDIA_API_KEY="your-api-key-here"
+
 ```
 
 Or add it to your `.env` file.
@@ -428,8 +493,10 @@ Or add it to your `.env` file.
 
 **Solution**: Install the package:
 
-```bash
+```bash text
+
 uv pip install 'nemo-microservices[data-designer]'
+
 ```
 
 ### Issue: Timeout errors when generating large datasets
@@ -437,35 +504,45 @@ uv pip install 'nemo-microservices[data-designer]'
 **Solution**:
 
 1. Increase the timeout:
+
    ```bash
+
    export NEMO_DATA_DESIGNER_TIMEOUT=600
    ```
-2. Generate in smaller batches:
-   ```python
+
+````text
+
+
+1. Generate in smaller batches:
+
+
+```python text
+
    # Generate 1000 samples at a time
    for i in range(10):
        result = service.generate_therapeutic_dataset(num_samples=1000)
-   ```
+
+````
 
 ### Issue: Rate limiting errors
 
 **Solution**:
 
 1. Implement retry logic with exponential backoff
-2. Reduce batch size
-3. Add delays between requests
-4. Consider self-hosting for production
+1. Reduce batch size
+1. Add delays between requests
+1. Consider self-hosting for production
 
 ## Best Practices
 
 1. **Start Small**: Begin with small datasets (100-1000 samples) to test your
    configuration
-2. **Use Appropriate Timeouts**: Set timeouts based on expected dataset size
-3. **Batch Processing**: For large datasets, generate in batches
-4. **Validate Data**: Always validate generated data before using in production
-5. **Monitor Costs**: Be aware of API usage and costs if using cloud API
-6. **Cache Results**: Cache generated datasets to avoid regenerating
-7. **Version Control**: Track dataset versions and configurations
+1. **Use Appropriate Timeouts**: Set timeouts based on expected dataset size
+1. **Batch Processing**: For large datasets, generate in batches
+1. **Validate Data**: Always validate generated data before using in production
+1. **Monitor Costs**: Be aware of API usage and costs if using cloud API
+1. **Cache Results**: Cache generated datasets to avoid regenerating
+1. **Version Control**: Track dataset versions and configurations
 
 ## Resources
 

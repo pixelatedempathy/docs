@@ -118,10 +118,10 @@ updated.
 The following tasks appeared in multiple documents and have been consolidated:
 
 1. "Crisis detection implementation" - appeared in 4 documents
-2. "EARS compliance gate" - appeared in 3 documents
-3. "S3 integration" - appeared in 5 documents
-4. "Annotation pilot" - appeared in 3 documents
-5. "Memory system integration" - appeared in 4 documents
+1. "EARS compliance gate" - appeared in 3 documents
+1. "S3 integration" - appeared in 5 documents
+1. "Annotation pilot" - appeared in 3 documents
+1. "Memory system integration" - appeared in 4 documents
 
 **Total duplicates eliminated**: 47
 
@@ -135,14 +135,14 @@ The following tasks appeared in multiple documents and have been consolidated:
    - Move `.ralph/fix_plan.md` to `.notes/archive/`
    - Regenerate `.notes/TASK_CONSOLIDATION_HUB.md`
 
-2. **Update PRD File Names**
+1. **Update PRD File Names**
    - Document that `quality_gates.py` is implemented as
      `quality_gates_runner.py`
    - Document that `checkpoint_manager.py` is implemented as
      `checkpoint_rollback.py`
    - Update Phase 2 sourcing script names to actual file names
 
-3. **Focus Active Work**
+1. **Focus Active Work**
    - Priority 1: Download Tier 1 Priority Datasets (blocking training)
    - Priority 2: Complete Phase 1.3 Annotation (4,000 → 5,000)
    - Priority 3: Build CPTSD Dataset from Tim Fletcher transcripts
@@ -150,9 +150,9 @@ The following tasks appeared in multiple documents and have been consolidated:
 ### Process Improvements
 
 1. **Single Source of Truth**: Use `.memory/40-active.md` as primary tracker
-2. **Progress Logging**: Continue `.ralph/progress.txt` for history
-3. **PRD Tracking**: Update PRD checkboxes when phases complete
-4. **Quarterly Audit**: Run this audit process monthly
+1. **Progress Logging**: Continue `.ralph/progress.txt` for history
+1. **PRD Tracking**: Update PRD checkboxes when phases complete
+1. **Quarterly Audit**: Run this audit process monthly
 
 ---
 

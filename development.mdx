@@ -20,8 +20,9 @@ Install all frontend and service dependencies:
 # Node.js dependencies
 pnpm install
 
-# Python dependencies (AI services, bias detection, pipelines)
+## Python dependencies (AI services, bias detection, pipelines)
 uv sync
+
 ```
 
 </Step>
@@ -31,7 +32,9 @@ uv sync
 Launch local infrastructure services (MongoDB, Redis, etc.):
 
 ```bash
+
 docker compose up -d
+
 ```
 
 </Step>
@@ -41,7 +44,9 @@ docker compose up -d
 Start the Astro development server with all services:
 
 ```bash
+
 pnpm dev:all-services
+
 ```
 
 This starts:
@@ -60,11 +65,13 @@ This starts:
 <Accordion title="Frontend Only" icon="browser">
 
 ```bash
-# Start Astro dev server
+
+## Start Astro dev server
 pnpm dev
 
-# With custom port
+## With custom port
 pnpm dev --port 3000
+
 ```
 
 </Accordion>
@@ -72,11 +79,13 @@ pnpm dev --port 3000
 <Accordion title="Full Stack" icon="layers">
 
 ```bash
-# Start all services
+
+## Start all services
 pnpm dev:all-services
 
-# Start with specific port
+## Start with specific port
 pnpm dev:all-services --port 8080
+
 ```
 
 </Accordion>
@@ -84,11 +93,13 @@ pnpm dev:all-services --port 8080
 <Accordion title="AI Services Only" icon="brain">
 
 ```bash
-# Start the AI inference service
+
+## Start the AI inference service
 pnpm dev:ai
 
-# Start the research pipeline
+## Start the research pipeline
 pnpm dev:pipeline
+
 ```
 
 </Accordion>
@@ -99,17 +110,19 @@ pnpm dev:pipeline
 Before submitting changes, run the full quality check:
 
 ```bash
-# Type check, lint, and format
+
+## Type check, lint, and format
 pnpm check:all
 
-# Unit tests
+## Unit tests
 pnpm test:all
 
-# Security audit
+## Security audit
 pnpm security:scan
 
-# Ultimate Bug Scanner (UBS) on changed files
+## Ultimate Bug Scanner (UBS) on changed files
 ubs $(git diff --name-only --cached)
+
 ```
 
 <AccordionGroup>
@@ -119,7 +132,9 @@ If port 5173 is already in use, the Astro dev server will attempt the next
 available port. You can also specify a custom port:
 
 ```bash
+
 pnpm dev --port 3000
+
 ```
 
 </Accordion>
@@ -130,7 +145,9 @@ The dev server is configured with increased memory
 (`--max-old-space-size=8192`). If you still encounter memory issues:
 
 ```bash
+
 NODE_OPTIONS="--max-old-space-size=16384" pnpm dev
+
 ```
 
 </Accordion>
@@ -139,9 +156,11 @@ NODE_OPTIONS="--max-old-space-size=16384" pnpm dev
 
 If uv encounters issues, try resetting the environment:
 
-```bash
+```bash text
+
 rm -rf .venv
 uv sync
+
 ```
 
 </Accordion>
@@ -151,8 +170,10 @@ uv sync
 Check Docker daemon status and available disk space:
 
 ```bash
+
 docker ps
 docker system df
+
 ```
 
 </Accordion>
@@ -164,11 +185,13 @@ This documentation site is built with
 [Astro Starlight](https://starlight.astro.build/). To run the docs locally:
 
 ```bash
-# From project root
+
+## From project root
 pnpm dev
 
-# Docs are served at the same port as the main app
-# Navigate to /docs route
+## Docs are served at the same port as the main app
+## Navigate to /docs route
+
 ```
 
 <Info>

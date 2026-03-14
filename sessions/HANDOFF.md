@@ -5,7 +5,7 @@
 > Read this document first to instantly acquire the mental context of where the
 > project currently stands. Do not reinvent the wheel. Read `AGENTS.md` before
 > writing a single line of code.
-
+>
 ## 🧭 The Current Mission
 
 We are taking the baseline **PsyDefDetect** (Defense Mechanism Classifier via
@@ -47,8 +47,8 @@ component that consumes `gestalt_update` WebSocket events.
 ## 🛑 Strict Rules for Incoming Agent
 
 1. **NO STUBS:** Write real, production-ready code.
-2. **USE CSS MODULES:** Follow the project's styling conventions.
-3. **TYPE SAFETY:** Derive TypeScript types from the `GestaltAnalysisResponse`
+1. **USE CSS MODULES:** Follow the project's styling conventions.
+1. **TYPE SAFETY:** Derive TypeScript types from the `GestaltAnalysisResponse`
    interface in `GestaltClient.ts`.
 
-_GLHF. Keep the empathy pixelated, but the code surgical._
+## GLHF. Keep the empathy pixelated, but the code surgical

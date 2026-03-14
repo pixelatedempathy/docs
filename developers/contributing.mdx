@@ -56,9 +56,13 @@ with **psychological safety**. That context matters.
   <Step title="Branch">
     Create a feature branch from `main`:
 
-    ```bash
+```bash text
     git checkout -b feature/your-feature-name
+
+
     ```
+
+
 
   </Step>
 
@@ -89,12 +93,20 @@ with **psychological safety**. That context matters.
   <Step title="Verify">
     Before submitting, run the full quality check:
 
+
+
     ```bash
+
+
     # Must all pass
     pnpm check:all        # Lint + typecheck + format
     pnpm test:all         # Full test suite
     pnpm security:scan    # Security audit
+
+
     ```
+
+
 
   </Step>
 
@@ -102,11 +114,19 @@ with **psychological safety**. That context matters.
     Write clear, descriptive commit messages. We follow
     conventional commits:
 
-    ```text
+
+
+```text text
+
+
     feat(simulator): add emotional timeline visualization
     fix(crisis): improve indirect signal detection accuracy
     docs(knowledge): add cultural empathy article
+
+
     ```
+
+
 
   </Step>
 
@@ -125,7 +145,11 @@ with **psychological safety**. That context matters.
 
 <Tabs>
   <Tab title="TypeScript (Frontend)">
+
+
     ```typescript
+
+
     // Use path aliases
     import { EmotionAnalyzer }
       from '@/lib/ai/emotion-analyzer'
@@ -150,12 +174,20 @@ with **psychological safety**. That context matters.
         </div>
       )
     }
+
+
     ```
+
+
 
   </Tab>
 
   <Tab title="Python (AI Engine)">
+
+
     ```python
+
+
     def analyze_emotion(text: str) -> EmotionResult:
         """Analyze emotional content of text.
 
@@ -177,7 +209,11 @@ with **psychological safety**. That context matters.
         # Complete implementation — never
         # return placeholders
         ...
+
+
     ```
+
+
 
   </Tab>
 </Tabs>
@@ -205,7 +241,7 @@ Before every PR:
 
 </Warning>
 
-## Questions?
+## Questions
 
 If you're unsure about anything — a design decision, coding convention, or
 ethical consideration — ask. We'd rather have a conversation before the PR than

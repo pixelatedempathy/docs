@@ -71,37 +71,44 @@ automated compliance gate that validates every response before delivery.
 
     The response must demonstrate genuine understanding of the person's emotional state before anything else.
 
-    **What this looks like:**
+## What this looks like
+
     - Naming the emotion the person is expressing
     - Reflecting back the intensity and quality of the feeling
     - Showing that the AI has *heard* the specific situation, not just the category
 
-    **What this does NOT look like:**
+## What this does NOT look like
+
     - Generic sympathy ("That sounds tough")
     - Jumping to advice before acknowledging feelings
     - Minimizing or categorizing emotions prematurely
 
-    ```python
+```python text
     # EARS compliance gate — empathy detection heuristics
     EMPATHY_INDICATORS = [
         "I hear you", "That sounds", "It makes sense that",
         "I can understand", "That must feel", "It's understandable",
         "What you're going through", "I can see how"
     ]
+
+
     ```
+
+
 
   </Tab>
   <Tab title="Appraise">
     ### Appraise the Context
 
-    The response must demonstrate situational awareness — understanding not just the emotion but the circumstances that produced it.
+    The response must demonstrate situational awareness — understanding not just the emotion but the circumstances that
+produced it.
 
-    **What this looks like:**
+## What this looks like (2)
     - Referencing the specific situation the person described
     - Acknowledging the complexity or difficulty of their circumstances
     - Recognizing contributing factors without making assumptions
 
-    **What this does NOT look like:**
+## What this does NOT look like (2)
     - Ignoring context and treating all sadness as equivalent
     - Making assumptions about the person's situation
     - Over-interpreting or reading meaning that wasn't shared
@@ -110,14 +117,15 @@ automated compliance gate that validates every response before delivery.
   <Tab title="Reflect">
     ### Reflect Back Understanding
 
-    The response must mirror the person's experience in a way that shows deep comprehension and creates the feeling of being truly understood.
+    The response must mirror the person's experience in a way that shows deep comprehension and creates the feeling of
+being truly understood.
 
-    **What this looks like:**
+## What this looks like (3)
     - Paraphrasing the person's own words and meaning
     - Connecting emotional experience to stated circumstances
     - Offering a slightly reframed perspective that adds clarity
 
-    **What this does NOT look like:**
+## What this does NOT look like (3)
     - Parroting back exact words without synthesis
     - Projecting feelings or experiences not expressed
     - Intellectualizing or analyzing the person's emotions
@@ -126,15 +134,16 @@ automated compliance gate that validates every response before delivery.
   <Tab title="Support">
     ### Support with Agency
 
-    The response must offer support that empowers the person rather than creating dependence. Support is collaborative, never prescriptive.
+    The response must offer support that empowers the person rather than creating dependence. Support is collaborative,
+never prescriptive.
 
-    **What this looks like:**
+## What this looks like (4)
     - Exploring options together rather than giving instructions
     - Asking what has helped before
     - Reinforcing the person's own strengths and resources
     - Offering practical next steps only when appropriate and invited
 
-    **What this does NOT look like:**
+## What this does NOT look like (4)
     - Unsolicited advice giving
     - "You should..." prescriptive language
     - Creating dependence on the AI system
@@ -149,13 +158,19 @@ The EARS compliance gate is an automated validation system that runs in the
 production pipeline. It enforces a **≥95% crisis detection sensitivity**
 requirement and validates that all responses meet EARS quality standards.
 
+
+
 ```python
-# Production EARS gate configuration
+
+
+## Production EARS gate configuration
 class EarsConfig:
     minimum_sensitivity_threshold: float = 0.95  # ≥95% as per PRD
     maximum_false_negative_rate: float = 0.05    # ≤5%
     maximum_false_positive_rate: float = 0.10    # ≤10%
     minimum_crisis_samples: int = 50             # Min crisis samples for validation
+
+
 ```
 
 <Warning>
@@ -185,7 +200,11 @@ across every interaction.
     - Data quality metrics (completeness, consistency, accuracy)
     - Biased terminology detection and flagging
 
+
+
     ```typescript
+
+
     interface PreprocessingAnalysis {
       linguisticBias: {
         genderBiasScore: number;
@@ -200,6 +219,8 @@ across every interaction.
         diversityIndex: number;
       };
     }
+
+
     ```
 
   </Tab>
@@ -283,11 +304,12 @@ distinguish it from conventional crisis handling.
 
     Before offering any resources, hotline numbers, or next steps, the system:
     1. Acknowledges the severity of what the person is experiencing
-    2. Validates their courage in expressing their pain
-    3. Creates a sense of "being with" the person, not "handling" them
-    4. Only after connection is established does it collaboratively explore safety
+    1. Validates their courage in expressing their pain
+    1. Creates a sense of "being with" the person, not "handling" them
+    1. Only after connection is established does it collaboratively explore safety
 
-    **Why this matters:** Research consistently shows that people in crisis who feel heard and connected are more receptive to safety planning than those who receive immediate directive responses.
+    **Why this matters:** Research consistently shows that people in crisis who feel heard and connected are more
+receptive to safety planning than those who receive immediate directive responses.
 
   </Accordion>
 
@@ -301,7 +323,8 @@ distinguish it from conventional crisis handling.
     - Respects the person's autonomy and agency throughout
     - Reinforces their existing strengths and coping mechanisms
 
-    **What we explicitly avoid:**
+## What we explicitly avoid
+
     - "You need to call [hotline] immediately"
     - "You should go to the emergency room"
     - Paternalistic language that removes agency
@@ -310,7 +333,8 @@ distinguish it from conventional crisis handling.
   </Accordion>
 
   <Accordion title="Peer Support Emphasis" icon="user-group">
-    The system emphasizes the person's **existing support network** — friends, family, trusted individuals — rather than defaulting to institutional referrals.
+    The system emphasizes the person's **existing support network** — friends, family, trusted individuals — rather than
+defaulting to institutional referrals.
 
     - First explores: "Is there someone you trust that you could reach out to?"
     - Validates existing relationships as legitimate sources of support
@@ -318,7 +342,9 @@ distinguish it from conventional crisis handling.
     - Only introduces institutional resources when the person expresses interest or when safety is immediately at risk
 
     <Warning>
-      **No institutional referral language unless the user initiates.** The system does not push crisis hotlines, emergency services, or professional referrals unless the user asks for them or the situation meets the threshold for immediate danger.
+      **No institutional referral language unless the user initiates.** The system does not push crisis hotlines,
+emergency services, or professional referrals unless the user asks for them or the situation meets the threshold for
+immediate danger.
     </Warning>
 
   </Accordion>
@@ -331,39 +357,46 @@ escalation:
 
 <CardGroup cols={2}>
   <Card title="Concern" icon="circle-info">
-    **Confidence < 50%**
+## Confidence < 50%
 
-    Low-level signals detected. Enhanced monitoring activated. Empathetic response adjusted to be more attuned. No escalation.
+    Low-level signals detected. Enhanced monitoring activated. Empathetic response adjusted to be more attuned. No
+escalation.
 
   </Card>
   <Card title="Moderate" icon="triangle-exclamation">
-    **Confidence 50–70%**
+## Confidence 50–70%
 
-    Meaningful crisis signals present. Response shifts to connection-focused mode. Safety gently explored within conversation.
+    Meaningful crisis signals present. Response shifts to connection-focused mode. Safety gently explored within
+conversation.
 
   </Card>
   <Card title="Severe" icon="exclamation-circle">
-    **Confidence 70–90%**
+## Confidence 70–90%
 
     Clear crisis indicators. Collaborative safety planning initiated. On-call staff notified via secure channel.
 
   </Card>
   <Card title="Emergency" icon="bell">
-    **Confidence ≥ 90%**
+## Confidence ≥ 90%
 
-    Immediate danger indicators (plan, means, timeline). Full crisis protocol activated. Incident response team engaged. Auto-escalation if not handled within configured timeframe.
+    Immediate danger indicators (plan, means, timeline). Full crisis protocol activated. Incident response team engaged.
+Auto-escalation if not handled within configured timeframe.
 
   </Card>
 </CardGroup>
 
 ### Crisis Response Template
 
-```
+``` text
+
+
 1. ACKNOWLEDGE — "I hear that you're in a really painful place right now."
-2. VALIDATE    — "It takes courage to share something this heavy."
-3. CONNECT     — "I want you to know you're not alone in this moment."
-4. EXPLORE     — "What has helped you feel even a little safer before?"
-5. SUPPORT     — "Let's think together about what might help right now."
+1. VALIDATE    — "It takes courage to share something this heavy."
+1. CONNECT     — "I want you to know you're not alone in this moment."
+1. EXPLORE     — "What has helped you feel even a little safer before?"
+1. SUPPORT     — "Let's think together about what might help right now."
+
+
 ```
 
 <Info>
@@ -393,25 +426,30 @@ individual identity.
     - **Cultural Values:** Achievement orientation, relationship orientation, tradition, spirituality
 
     <Tip>
-      Cultural profiling is always probabilistic and tentative. The system **never** makes definitive assumptions about a person's cultural identity based on detected signals. Confidence scores below 0.6 result in a culturally neutral default approach.
+      Cultural profiling is always probabilistic and tentative. The system **never** makes definitive assumptions about
+a person's cultural identity based on detected signals. Confidence scores below 0.6 result in a culturally neutral
+default approach.
     </Tip>
 
   </Tab>
   <Tab title="Response Adaptation">
     Based on the cultural profile, the system adapts:
 
-    **Communication adjustments:**
+## Communication adjustments
+
     - Indirect cultures → softer language ("You might consider..." instead of "You should...")
     - Collectivistic cultures → family-inclusive framing
     - High-context cultures → more space for silence and reflection
 
-    **Therapeutic considerations:**
+## Therapeutic considerations
+
     - Acknowledging cultural stigma around mental health
     - Respecting family hierarchy and honor dynamics
     - Integrating faith-based coping where appropriate
     - Considering socioeconomic barriers to treatment
 
-    **Language adaptations:**
+## Language adaptations
+
     - Avoiding idioms and colloquialisms for non-native speakers
     - Using simpler, concrete language when language barriers detected
     - Adapting formality level to cultural expectations

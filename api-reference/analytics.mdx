@@ -21,8 +21,9 @@ Retrieve a summary of key metrics for the authenticated user's dashboard.
 </Note>
 
 ```bash
-curl "https://api.pixelatedempathy.com/v1/analytics/dashboard?period=30d" \
+curl "<https://api.pixelatedempathy.com/v1/analytics/dashboard?period=30d"> \
   -H "Authorization: Bearer YOUR_JWT_TOKEN"
+
 ```
 
 ### Query parameters
@@ -36,6 +37,7 @@ curl "https://api.pixelatedempathy.com/v1/analytics/dashboard?period=30d" \
 ### Response
 
 ```json
+
 {
   "status": "success",
   "data": {
@@ -84,6 +86,7 @@ curl "https://api.pixelatedempathy.com/v1/analytics/dashboard?period=30d" \
     "timestamp": "2025-01-15T10:30:00Z"
   }
 }
+
 ```
 
 ## Performance metrics over time
@@ -94,11 +97,13 @@ by interval.
 ### `GET /v1/analytics/performance`
 
 ```bash
-curl "https://api.pixelatedempathy.com/v1/analytics/performance?period=90d&interval=week&metric=overall_score" \
+
+curl "<https://api.pixelatedempathy.com/v1/analytics/performance?period=90d&interval=week&metric=overall_score"> \
   -H "Authorization: Bearer YOUR_JWT_TOKEN"
+
 ```
 
-### Query parameters
+### Query parameters (2)
 
 | Parameter  | Type   | Default         | Description                                                                                                                                             |
 | ---------- | ------ | --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -107,9 +112,10 @@ curl "https://api.pixelatedempathy.com/v1/analytics/performance?period=90d&inter
 | `metric`   | string | `overall_score` | Metric to retrieve: `overall_score`, `empathic_accuracy`, `bias_awareness`, `crisis_response`, `cultural_sensitivity`, `session_duration`, `turn_count` |
 | `user_id`  | string | —               | Target user (supervisors and admins only)                                                                                                               |
 
-### Response
+### Response (2)
 
 ```json
+
 {
   "status": "success",
   "data": {
@@ -142,6 +148,7 @@ curl "https://api.pixelatedempathy.com/v1/analytics/performance?period=90d&inter
     }
   }
 }
+
 ```
 
 ## Competency scores
@@ -151,13 +158,16 @@ Retrieve granular competency score breakdowns with sub-competency detail.
 ### `GET /v1/analytics/competencies`
 
 ```bash
-curl "https://api.pixelatedempathy.com/v1/analytics/competencies?period=30d" \
+
+curl "<https://api.pixelatedempathy.com/v1/analytics/competencies?period=30d"> \
   -H "Authorization: Bearer YOUR_JWT_TOKEN"
+
 ```
 
-### Response
+### Response (3)
 
 ```json
+
 {
   "status": "success",
   "data": {
@@ -210,6 +220,7 @@ curl "https://api.pixelatedempathy.com/v1/analytics/competencies?period=30d" \
     ]
   }
 }
+
 ```
 
 <Tip>
@@ -226,13 +237,16 @@ category.
 ### `GET /v1/analytics/bias-trends`
 
 ```bash
-curl "https://api.pixelatedempathy.com/v1/analytics/bias-trends?period=90d&interval=week" \
+
+curl "<https://api.pixelatedempathy.com/v1/analytics/bias-trends?period=90d&interval=week"> \
   -H "Authorization: Bearer YOUR_JWT_TOKEN"
+
 ```
 
-### Response
+### Response (4)
 
 ```json
+
 {
   "status": "success",
   "data": {
@@ -329,6 +343,7 @@ curl "https://api.pixelatedempathy.com/v1/analytics/bias-trends?period=90d&inter
     }
   }
 }
+
 ```
 
 ## Session frequency
@@ -338,13 +353,16 @@ Analyze training engagement patterns and session frequency over time.
 ### `GET /v1/analytics/frequency`
 
 ```bash
-curl "https://api.pixelatedempathy.com/v1/analytics/frequency?period=30d" \
+
+curl "<https://api.pixelatedempathy.com/v1/analytics/frequency?period=30d"> \
   -H "Authorization: Bearer YOUR_JWT_TOKEN"
+
 ```
 
-### Response
+### Response (5)
 
 ```json
+
 {
   "status": "success",
   "data": {
@@ -373,6 +391,7 @@ curl "https://api.pixelatedempathy.com/v1/analytics/frequency?period=30d" \
     }
   }
 }
+
 ```
 
 ## Comparative benchmarking
@@ -387,11 +406,13 @@ Compare a user's performance against reference groups.
 </Note>
 
 ```bash
-curl "https://api.pixelatedempathy.com/v1/analytics/benchmarks?user_id=usr_k1l2m3n4&benchmarks=cohort,program,national" \
+
+curl "<https://api.pixelatedempathy.com/v1/analytics/benchmarks?user_id=usr_k1l2m3n4&benchmarks=cohort,program,national"> \
   -H "Authorization: Bearer YOUR_JWT_TOKEN"
+
 ```
 
-### Query parameters
+### Query parameters (3)
 
 | Parameter    | Type   | Description                                                                |
 | ------------ | ------ | -------------------------------------------------------------------------- |
@@ -399,9 +420,10 @@ curl "https://api.pixelatedempathy.com/v1/analytics/benchmarks?user_id=usr_k1l2m
 | `benchmarks` | string | Comma-separated benchmark types: `cohort`, `program`, `national`, `expert` |
 | `period`     | string | Time period for score calculation                                          |
 
-### Response
+### Response (6)
 
 ```json
+
 {
   "status": "success",
   "data": {
@@ -441,6 +463,7 @@ curl "https://api.pixelatedempathy.com/v1/analytics/benchmarks?user_id=usr_k1l2m
     }
   }
 }
+
 ```
 
 ## Export endpoints
@@ -456,7 +479,8 @@ Export analytics data for research, compliance, and institutional reporting.
 </Warning>
 
 ```bash
-curl -X POST https://api.pixelatedempathy.com/v1/analytics/export \
+
+curl -X POST <https://api.pixelatedempathy.com/v1/analytics/export> \
   -H "Authorization: Bearer YOUR_JWT_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
@@ -475,46 +499,61 @@ curl -X POST https://api.pixelatedempathy.com/v1/analytics/export \
     "de_identify": true,
     "group_id": "grp_fall2024"
   }'
+
 ```
 
 ### Export types
 
 <Tabs>
   <Tab title="Research export">
-    De-identified dataset suitable for academic research. Removes all PII and assigns random participant IDs. Includes session-level and response-level metrics.
+    De-identified dataset suitable for academic research. Removes all PII and
+    assigns random participant IDs. Includes session-level and response-level
+    metrics.
 
-    ```json
+```json text
+
     {
       "export_type": "research",
       "format": "csv",
       "de_identify": true
     }
+
     ```
+
 
   </Tab>
   <Tab title="Compliance export">
-    Structured report for accreditation bodies and regulatory compliance. Maps competency scores to standard frameworks (APA, CACREP).
+    Structured report for accreditation bodies and regulatory compliance. Maps
+    competency scores to standard frameworks (APA, CACREP).
 
-    ```json
+
+```json text
+
     {
       "export_type": "compliance",
       "format": "pdf",
       "framework": "cacrep",
       "include_attestations": true
     }
+
     ```
+
 
   </Tab>
   <Tab title="Institutional report">
     Aggregate analytics for institutional dashboards and program review. Includes trends, benchmarks, and ROI metrics.
 
-    ```json
+
+```json text
+
     {
       "export_type": "institutional",
       "format": "json",
       "aggregate_level": "program"
     }
+
     ```
+
 
   </Tab>
 </Tabs>
@@ -524,37 +563,46 @@ curl -X POST https://api.pixelatedempathy.com/v1/analytics/export \
 Exports are processed asynchronously. The initial response includes a job ID for
 status polling:
 
-```json
+
+```json text
+
 {
   "status": "success",
   "data": {
     "export_id": "exp_x1y2z3a4",
     "status": "processing",
     "estimated_completion_seconds": 45,
-    "poll_url": "https://api.pixelatedempathy.com/v1/analytics/export/exp_x1y2z3a4"
+    "poll_url": "<https://api.pixelatedempathy.com/v1/analytics/export/exp_x1y2z3a4">
   }
 }
+
 ```
 
 ### Check export status
 
 ```bash
-curl https://api.pixelatedempathy.com/v1/analytics/export/exp_x1y2z3a4 \
-  -H "Authorization: Bearer YOUR_JWT_TOKEN"
-```
 
-```json
+curl <https://api.pixelatedempathy.com/v1/analytics/export/exp_x1y2z3a4> \
+  -H "Authorization: Bearer YOUR_JWT_TOKEN"
+
+``` text
+
+
+
+```json text
+
 {
   "status": "success",
   "data": {
     "export_id": "exp_x1y2z3a4",
     "status": "completed",
-    "download_url": "https://exports.pixelatedempathy.com/exp_x1y2z3a4.csv",
+    "download_url": "<https://exports.pixelatedempathy.com/exp_x1y2z3a4.csv",>
     "file_size_bytes": 2458624,
     "row_count": 12847,
     "expires_at": "2025-01-22T10:30:00Z"
   }
 }
+
 ```
 
 <Info>
@@ -579,16 +627,16 @@ curl https://api.pixelatedempathy.com/v1/analytics/export/exp_x1y2z3a4 \
 
 <CardGroup cols={2}>
   <Card
-    title='Session Management API'
-    icon='comments'
-    href='/api-reference/session-management'
+    title="Session Management API"
+    icon="comments"
+    href="/api-reference/session-management"
   >
     Manage the training sessions that generate analytics data.
   </Card>
   <Card
-    title='Crisis Detection API'
-    icon='triangle-exclamation'
-    href='/api-reference/crisis-detection'
+    title="Crisis Detection API"
+    icon="triangle-exclamation"
+    href="/api-reference/crisis-detection"
   >
     Monitor for crisis signals and integrate with safety protocols.
   </Card>

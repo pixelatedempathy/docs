@@ -20,19 +20,19 @@ The audit revealed that while some logical structure was written, there were
 critical implementation gaps, fake placeholders, and runtime execution errors
 indicative of untested code:
 
-1.  **Stubbed Safety Redactions**:
+1. **Stubbed Safety Redactions**:
     - In `ai/safety/content_filter.py` (`_apply_redactions`), when crisis
       content was flagged, the logic explicitly hit a `pass` block annotated
       with the warning
       `# In a real implementation, we'd replace with appropriate resources`.
     - In `_filter_text_response`, partially unsafe content bypassed filtering
       entirely, leaving users exposed to unredacted material.
-2.  **Broken Quality Control Analysis**:
+1. **Broken Quality Control Analysis**:
     - In `ai/pipelines/quality_control.py`, standard libraries such as
       `collections.Counter` were called without ever being imported. Attempting
       to use the `_assess_annotator_performance` function would have resulted in
       immediate runtime `NameError` crashes.
-3.  **Invalid Configuration Traversals**:
+1. **Invalid Configuration Traversals**:
     - In `ai/pipelines/quality_gates_runner.py`, executing the file immediately
       threw `FileNotFoundError`. The script was hardcoded to traverse up parent
       directories expecting to find
@@ -41,17 +41,18 @@ indicative of untested code:
 
 ## Rebuild & Remediation
 
-1.  **Safety Filter Redactions Repaired**:
+1. **Safety Filter Redactions Repaired**:
     - Rewrote the stub in the content filter to forcefully inject crisis
       interjection text:
-      `"[Content filtered containing crisis themes. If you are experiencing a crisis, please call 988 or go to your nearest emergency room immediately.]"`
+      `"[Content filtered containing crisis themes. If you are experiencing a crisis, please call 988 or go to your
+nearest emergency room immediately.]"`
     - Fixed `_filter_text_response` to invoke `_apply_redactions` correctly when
       categories are flagged, closing the bypass loophole.
-2.  **Quality Control Execution Fixed**:
+1. **Quality Control Execution Fixed**:
     - Surgically injected the missing `Counter` import into
       `quality_control.py`, enabling reliable annotator metrics and passing
       Python syntax evaluation.
-3.  **Pathing Validated**:
+1. **Pathing Validated**:
     - Corrected relative referencing paths inside `quality_gates_runner.py` to
       seamlessly execute using the accurate `ai/training/` directory, resolving
       `FileNotFoundError`.

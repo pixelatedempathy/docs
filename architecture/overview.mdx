@@ -19,7 +19,7 @@ through well-defined API contracts.
   PII-filtered memory storage and encrypted data transit.
 </Note>
 
-```
+```text
 ┌─────────────────────────────────────────────────────────────────────────┐
 │                          CLIENT LAYER                                   │
 │  ┌─────────────────────┐  ┌──────────────────┐  ┌──────────────────┐   │
@@ -60,6 +60,8 @@ through well-defined API contracts.
 │  │             │ │  Sessions) │  │            │  │                 │  │
 │  └─────────────┘ └────────────┘  └────────────┘  └─────────────────┘  │
 └─────────────────────────────────────────────────────────────────────────┘
+
+
 ```
 
 ## Core components
@@ -69,51 +71,61 @@ responsibility domain.
 
 <CardGroup cols={2}>
   <Card title="Frontend Application" icon="window">
-    **Astro 5 + React 19 + TypeScript**
+## Astro 5 + React 19 + TypeScript
 
-    Server-side rendered application delivering the trainee interface, supervisor dashboard, and administrative panels. Astro's island architecture ensures minimal JavaScript is shipped to the client while React handles interactive components.
+    Server-side rendered application delivering the trainee interface, supervisor dashboard, and administrative panels.
+Astro's island architecture ensures minimal JavaScript is shipped to the client while React handles interactive
+components.
 
   </Card>
   <Card title="API Gateway" icon="shield-halved">
-    **Node.js + Express**
+## Node.js + Express
 
-    Central entry point for all client requests. Handles authentication (JWT validation), rate limiting, CORS enforcement, request logging, and route delegation to downstream services.
+    Central entry point for all client requests. Handles authentication (JWT validation), rate limiting, CORS
+enforcement, request logging, and route delegation to downstream services.
 
   </Card>
   <Card title="EI Engine" icon="brain">
-    **Python + PyTorch**
+## Python + PyTorch
 
-    The Emotional Intelligence Engine — the analytical heart of the platform. Maps conversations using Plutchik's Wheel of Emotions across eight primary dimensions, tracking valence, arousal, and dominance in real time.
+    The Emotional Intelligence Engine — the analytical heart of the platform. Maps conversations using Plutchik's Wheel
+of Emotions across eight primary dimensions, tracking valence, arousal, and dominance in real time.
 
   </Card>
   <Card title="Bias Detection" icon="scale-balanced">
-    **Python + Fairlearn + NumPy**
+## Python + Fairlearn + NumPy
 
-    Continuous analysis of therapeutic sessions for demographic bias across gender, age, ethnicity, and language. Produces fairness metrics (demographic parity, equalized odds, treatment equality) and generates actionable recommendations.
+    Continuous analysis of therapeutic sessions for demographic bias across gender, age, ethnicity, and language.
+Produces fairness metrics (demographic parity, equalized odds, treatment equality) and generates actionable
+recommendations.
 
   </Card>
   <Card title="Journal Research Pipeline" icon="book-open-reader">
-    **Python + FastAPI + HuggingFace**
+## Python + FastAPI + HuggingFace
 
-    Automated pipeline for sourcing, processing, and integrating academic research from PubMed, arXiv, and IEEE Xplore. Powers evidence-based feedback and keeps therapeutic guidance current with published literature.
+    Automated pipeline for sourcing, processing, and integrating academic research from PubMed, arXiv, and IEEE Xplore.
+Powers evidence-based feedback and keeps therapeutic guidance current with published literature.
 
   </Card>
   <Card title="Training Platform" icon="dumbbell">
-    **React + Three.js + WebSocket**
+## React + Three.js + WebSocket
 
-    The Empathy Gym™ simulation engine. Renders immersive training scenarios with 3D visualization, real-time WebSocket communication for live session feedback, and dynamic difficulty adjustment based on trainee performance.
+    The Empathy Gym™ simulation engine. Renders immersive training scenarios with 3D visualization, real-time WebSocket
+communication for live session feedback, and dynamic difficulty adjustment based on trainee performance.
 
   </Card>
   <Card title="MCP Memory Server" icon="database">
-    **Python + FastAPI**
+## Python + FastAPI
 
-    Central memory authority implementing the Model Context Protocol (MCP). Manages long-term memory via Mem0 + Google Gemini integration with PII filtering, crisis detection, and HIPAA-compliant storage.
+    Central memory authority implementing the Model Context Protocol (MCP). Manages long-term memory via Mem0 + Google
+Gemini integration with PII filtering, crisis detection, and HIPAA-compliant storage.
 
   </Card>
   <Card title="Data Layer" icon="layer-group">
-    **MongoDB + Redis + S3 + Qdrant**
+## MongoDB + Redis + S3 + Qdrant
 
-    Multi-store data architecture. MongoDB for persistent document storage, Redis for session caching and real-time state, S3/R2 for blob storage, and Qdrant for vector-based memory search.
+    Multi-store data architecture. MongoDB for persistent document storage, Redis for session caching and real-time
+state, S3/R2 for blob storage, and Qdrant for vector-based memory search.
 
   </Card>
 </CardGroup>
@@ -146,9 +158,13 @@ for personalized content.
     - Integrate with MCP Memory Client for memory dashboard operations
   </Tab>
   <Tab title="Island Architecture">
-    Astro's island architecture is critical to performance. Static content (documentation, marketing, onboarding) ships zero JavaScript. Interactive "islands" — the training simulator, analytics charts, memory dashboard — hydrate independently.
+    Astro's island architecture is critical to performance. Static content (documentation, marketing, onboarding) ships
+zero JavaScript. Interactive "islands" — the training simulator, analytics charts, memory dashboard — hydrate
+independently.
 
     ```typescript
+
+
     // Astro page with React islands
     ---
     import TrainingSimulator from '../components/TrainingSimulator'
@@ -164,6 +180,8 @@ for personalized content.
       <TrainingSimulator client:load />
       <EmotionChart client:visible />
     </Layout>
+
+
     ```
 
   </Tab>
@@ -175,6 +193,8 @@ The Express-based API gateway serves as the single entry point for all client
 traffic, enforcing security policies before requests reach downstream services.
 
 ```typescript
+
+
 // Security middleware chain
 app.use(helmet()) // Security headers
 app.use(cors({ credentials: true })) // CORS with credentials
@@ -193,6 +213,8 @@ app.use(authMiddleware)
 app.use('/api/documents', documentRoutes)
 app.use('/api/projects', projectRoutes)
 app.use('/api/users', userRoutes)
+
+
 ```
 
 <Info>
@@ -209,9 +231,12 @@ multi-dimensional emotional analysis pipeline.
 
 <AccordionGroup>
   <Accordion title="Emotional Mapping" icon="map">
-    Conversations are mapped using **Plutchik's Wheel of Emotions** across eight primary dimensions: Joy, Trust, Fear, Surprise, Sadness, Disgust, Anger, and Anticipation. Each emotion is scored on a `0.0`–`1.0` normalized scale with intensity, valence, and arousal dimensions.
+    Conversations are mapped using **Plutchik's Wheel of Emotions** across eight primary dimensions: Joy, Trust, Fear,
+Surprise, Sadness, Disgust, Anger, and Anticipation. Each emotion is scored on a `0.0`–`1.0` normalized scale with
+intensity, valence, and arousal dimensions.
 
-    The mapper also detects **complex emotional dyads** — compound emotions formed by combining primary emotions (e.g., Joy + Trust = Love, Fear + Surprise = Awe).
+    The mapper also detects **complex emotional dyads** — compound emotions formed by combining primary emotions (e.g.,
+Joy + Trust = Love, Fear + Surprise = Awe).
 
   </Accordion>
   <Accordion title="Dimensional Analysis" icon="chart-scatter">
@@ -220,11 +245,14 @@ multi-dimensional emotional analysis pipeline.
     - **Arousal**: Calm ↔ Excited (0.0 to 1.0)
     - **Dominance**: Submissive ↔ Dominant (0.0 to 1.0)
 
-    This enables detection of subtle emotional shifts that categorical models miss — like the difference between quiet sadness (low arousal, low dominance) and frustrated anger (high arousal, high dominance).
+    This enables detection of subtle emotional shifts that categorical models miss — like the difference between quiet
+sadness (low arousal, low dominance) and frustrated anger (high arousal, high dominance).
 
   </Accordion>
   <Accordion title="Transition Detection" icon="arrows-spin">
-    The engine tracks **emotional trajectories** over the course of a conversation, identifying significant transitions (e.g., moving from defensive anger to vulnerable sadness) and flagging them as potential breakthrough moments for the trainee.
+    The engine tracks **emotional trajectories** over the course of a conversation, identifying significant transitions
+(e.g., moving from defensive anger to vulnerable sadness) and flagging them as potential breakthrough moments for the
+trainee.
   </Accordion>
 </AccordionGroup>
 
@@ -234,19 +262,23 @@ The bias detection service runs as a sidecar analysis on every therapeutic
 session, producing fairness metrics and actionable recommendations.
 
 ```python
+
+
 # Bias analysis produces multi-dimensional fairness metrics
 result = analyze_session_bias(session)
 
-# Result includes:
-# - overall_bias_score: 0.0-1.0 aggregate score
-# - bias_level: NONE | LOW | MODERATE | HIGH | CRITICAL
-# - indicators: per-category breakdowns (gender, age, ethnicity)
-# - recommendations: actionable improvement suggestions
-# - fairness_metrics: {
-#     demographic_parity: 0.92,
-#     equalized_odds: 0.88,
-#     treatment_equality: 0.95
-#   }
+## Result includes
+## - overall_bias_score: 0.0-1.0 aggregate score
+## - bias_level: NONE | LOW | MODERATE | HIGH | CRITICAL
+## - indicators: per-category breakdowns (gender, age, ethnicity)
+## - recommendations: actionable improvement suggestions
+## - fairness_metrics: {
+##     demographic_parity: 0.92,
+##     equalized_odds: 0.88,
+##     treatment_equality: 0.95
+##   }
+
+
 ```
 
 <Warning>

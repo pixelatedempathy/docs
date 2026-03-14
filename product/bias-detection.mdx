@@ -124,13 +124,14 @@ through a weighted scoring system to produce a unified bias assessment.
        ┌───────▼───────┐
        │  Alert System  │  ◄── Real-time alerts & escalation
        └───────────────┘
+
 ```
 
 ### Analysis layers
 
 <AccordionGroup>
   <Accordion title="Preprocessing layer" icon="filter">
-    **Weight: 25% (configurable)**
+## Weight: 25% (configurable)
 
     Performs linguistic analysis on raw text before model inference:
 
@@ -141,7 +142,9 @@ through a weighted scoring system to produce a unified bias assessment.
     - **Data quality metrics** — Completeness, consistency, accuracy,
     timeliness, and validity checks
 
+
     ```typescript
+
     interface PreprocessingResult {
       biasScore: number
       linguisticBias: {
@@ -163,11 +166,12 @@ through a weighted scoring system to produce a unified bias assessment.
         diversityIndex: number
       }
     }
+
     ```
 
   </Accordion>
   <Accordion title="Model-level layer" icon="microchip">
-    **Weight: 25% (configurable)**
+## Weight: 25% (configurable) (2)
 
     Evaluates bias at the ML model level using fairness metrics:
 
@@ -185,7 +189,7 @@ through a weighted scoring system to produce a unified bias assessment.
 
   </Accordion>
   <Accordion title="Interactive layer" icon="arrows-spin">
-    **Weight: 25% (configurable)**
+## Weight: 25% (configurable) (3)
 
     Analyzes conversational dynamics and interaction patterns:
 
@@ -198,7 +202,7 @@ through a weighted scoring system to produce a unified bias assessment.
 
   </Accordion>
   <Accordion title="Evaluation layer" icon="chart-column">
-    **Weight: 25% (configurable)**
+## Weight: 25% (configurable) (4)
 
     Post-hoc evaluation using industry-standard metrics:
 
@@ -207,7 +211,9 @@ through a weighted scoring system to produce a unified bias assessment.
     - **Temporal analysis** — Trend direction, change rate, seasonal patterns,
     and intervention effectiveness
 
+
     ```typescript
+
     interface EvaluationMetrics {
       huggingFaceMetrics: {
         toxicity: number
@@ -223,6 +229,7 @@ through a weighted scoring system to produce a unified bias assessment.
         patientSafety: number
       }
     }
+
     ```
 
   </Accordion>
@@ -233,9 +240,11 @@ through a weighted scoring system to produce a unified bias assessment.
 Each layer produces a `biasScore` between 0.0 and 1.0. The final overall bias
 score is a weighted average:
 
-```text
+```text text
+
 overallBiasScore = (preprocessing × 0.25) + (modelLevel × 0.25)
                  + (interactive × 0.25) + (evaluation × 0.25)
+
 ```
 
 <Tip>
@@ -300,6 +309,7 @@ For live training sessions, the Bias Detection Engine operates in streaming
 mode:
 
 ```typescript
+
 // Real-time bias analysis during a training session
 const engine = new BiasDetectionEngine({
   thresholds: { warning: 0.3, high: 0.6, critical: 0.8 },
@@ -336,6 +346,7 @@ const result = await engine.analyzeSession({
 // result.overallBiasScore: 0.0 - 1.0
 // result.alertLevel: "low" | "medium" | "high" | "critical"
 // result.recommendations: string[]
+
 ```
 
 <Warning>

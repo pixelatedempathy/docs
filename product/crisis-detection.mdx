@@ -46,7 +46,7 @@ Our system is built on two core principles:
 1. **Collaborative safety planning** — Work _with_ the person, not _at_ them.
    Safety plans are developed collaboratively, honoring the individual's
    autonomy and lived experience.
-2. **Peer support emphasis** — Connect people with their existing support
+1. **Peer support emphasis** — Connect people with their existing support
    networks and peer resources first. Emergency services are engaged only when
    explicitly requested or when there is imminent, immediate danger.
 
@@ -138,16 +138,18 @@ indicate more severe and more specific crisis signals:
 "suicide plan": 9.5
 "wish i was dead": 9.5
 
-# Medium-severity keywords (weight 5.0 - 7.0) — active ideation
+## Medium-severity keywords (weight 5.0 - 7.0) — active ideation
 "suicidal thoughts": 7.0
 "thinking about suicide": 7.5
 "don't want to live": 6.0
 "no reason to live": 5.5
 
-# Lower-severity indicators (weight 3.0 - 5.0) — passive signals
+## Lower-severity indicators (weight 3.0 - 5.0) — passive signals
 "hopeless": 5.0
 "worthless": 4.0
 "nothing matters": 3.0
+
+
 ```
 
 ### Layer 2: Pattern recognition
@@ -155,14 +157,18 @@ indicate more severe and more specific crisis signals:
 Combination patterns that dramatically increase severity assessment:
 
 ```python
-# Plan + intent patterns → elevates to SUICIDE_PLAN category
+
+
+## Plan + intent patterns → elevates to SUICIDE_PLAN category
 "going to (kill|end|hurt)" → HIGH severity
 "planning to (kill|end)"   → HIGH severity
 "ready to (kill|end|die)"  → SEVERE severity
 "about to (kill|end|die)"  → IMMEDIATE severity
 
-# Means access → elevates urgency
+## Means access → elevates urgency
 "have the (pills|gun|knife|rope)" → SEVERE severity
+
+
 ```
 
 ### Layer 3: Intensity and context modifiers
@@ -218,14 +224,18 @@ The final confidence score normalizes all signals to a 0.0–1.0 range using a
 sigmoid-like function:
 
 ```python
+
+
 confidence = min(1.0, total_score / 15.0)  # Normalized
 
-# Pattern boosts add additional confidence
+## Pattern boosts add additional confidence
 if suicide_plan_detected:
     confidence += 0.3  # Significant boost for plan indicators
 
-# Crisis triggered when confidence >= sensitivity_threshold (default: 0.85)
+## Crisis triggered when confidence >= sensitivity_threshold (default: 0.85)
 is_crisis = confidence >= sensitivity_threshold
+
+
 ```
 
 ## Severity and urgency classification
@@ -328,13 +338,13 @@ prioritizes connection at every step.
 
     1. **Detection triggers** — Crisis signals are detected in real time as the
        AI persona's responses include crisis-level content
-    2. **Training overlay** — A non-intrusive overlay indicates this is a crisis
+    1. **Training overlay** — A non-intrusive overlay indicates this is a crisis
        scenario and provides guidance on the EARS framework
-    3. **Performance tracking** — The system evaluates the therapist's crisis
+    1. **Performance tracking** — The system evaluates the therapist's crisis
        response skills in real time
-    4. **Debrief prompt** — After the scenario, a structured debrief helps the
+    1. **Debrief prompt** — After the scenario, a structured debrief helps the
        therapist reflect on their crisis intervention approach
-    5. **No real danger** — The system clearly communicates that this is a
+    1. **No real danger** — The system clearly communicates that this is a
        training scenario while maintaining immersive realism
 
   </Accordion>
@@ -343,13 +353,13 @@ prioritizes connection at every step.
     may be experiencing genuine distress:
 
     1. **Gentle check-in** — The system pauses training with a supportive check-in message
-    2. **Resource display** — Relevant support resources are displayed (988
+    1. **Resource display** — Relevant support resources are displayed (988
        Lifeline, Crisis Text Line, peer support)
-    3. **Session pause** — The training session is paused, not terminated,
+    1. **Session pause** — The training session is paused, not terminated,
        preserving the therapist's sense of control
-    4. **Supervisor notification** — If configured, the training supervisor is
+    1. **Supervisor notification** — If configured, the training supervisor is
        notified that a check-in was triggered
-    5. **No forced action** — The therapist decides when and whether to resume,
+    1. **No forced action** — The therapist decides when and whether to resume,
        seek support, or end the session
 
   </Accordion>
@@ -373,6 +383,8 @@ prioritizes connection at every step.
 The Crisis Protocol system handles the operational side of crisis events:
 
 ```typescript
+
+
 // Crisis protocol activation flow
 interface CrisisEvent {
   category: CrisisCategory // e.g., SUICIDE_IDEATION
@@ -388,6 +400,8 @@ interface CrisisEvent {
 // LOW/MEDIUM → Session monitor only
 // HIGH → Supervisor notification + Slack alert
 // IMMEDIATE → All channels + auto-escalation timer
+
+
 ```
 
 ### Session flagging

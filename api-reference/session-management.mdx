@@ -21,7 +21,7 @@ Start a new training session with a selected scenario and configuration.
 </Note>
 
 ```bash
-curl -X POST https://api.pixelatedempathy.com/v1/sessions \
+curl -X POST <https://api.pixelatedempathy.com/v1/sessions> \
   -H "Authorization: Bearer YOUR_JWT_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
@@ -36,6 +36,7 @@ curl -X POST https://api.pixelatedempathy.com/v1/sessions \
       "difficulty_override": null
     }
   }'
+
 ```
 
 ### Request body parameters
@@ -55,6 +56,7 @@ curl -X POST https://api.pixelatedempathy.com/v1/sessions \
 ### Response
 
 ```json
+
 {
   "status": "success",
   "data": {
@@ -81,6 +83,7 @@ curl -X POST https://api.pixelatedempathy.com/v1/sessions \
     "timestamp": "2025-01-15T10:00:00Z"
   }
 }
+
 ```
 
 <Tip>
@@ -97,8 +100,10 @@ assigned trainees if the user has supervisor permissions.
 ### `GET /v1/sessions`
 
 ```bash
-curl "https://api.pixelatedempathy.com/v1/sessions?status=completed&limit=10&sort=created_at&order=desc" \
+
+curl "<https://api.pixelatedempathy.com/v1/sessions?status=completed&limit=10&sort=created_at&order=desc"> \
   -H "Authorization: Bearer YOUR_JWT_TOKEN"
+
 ```
 
 ### Query parameters
@@ -116,9 +121,10 @@ curl "https://api.pixelatedempathy.com/v1/sessions?status=completed&limit=10&sor
 | `sort`        | string  | `created_at` | Sort field                                                                 |
 | `order`       | string  | `desc`       | Sort direction: `asc` or `desc`                                            |
 
-### Response
+### Response (2)
 
 ```json
+
 {
   "status": "success",
   "data": [
@@ -155,6 +161,7 @@ curl "https://api.pixelatedempathy.com/v1/sessions?status=completed&limit=10&sor
     "total_count": 47
   }
 }
+
 ```
 
 ## Get session details
@@ -165,13 +172,16 @@ scores, and AI feedback.
 ### `GET /v1/sessions/{session_id}`
 
 ```bash
-curl https://api.pixelatedempathy.com/v1/sessions/sess_7a8b9c0d1e2f \
+
+curl <https://api.pixelatedempathy.com/v1/sessions/sess_7a8b9c0d1e2f> \
   -H "Authorization: Bearer YOUR_JWT_TOKEN"
+
 ```
 
-### Response
+### Response (3)
 
 ```json
+
 {
   "status": "success",
   "data": {
@@ -201,7 +211,8 @@ curl https://api.pixelatedempathy.com/v1/sessions/sess_7a8b9c0d1e2f \
       {
         "turn": 2,
         "role": "therapist",
-        "content": "Thank you for coming in today. It takes courage to take that step, even when someone else suggested it. I'd like to understand more about what's been going on. What would feel comfortable to start with?",
+        "content": "Thank you for coming in today. It takes courage to take that step, even when someone else suggested
+it. I'd like to understand more about what's been going on. What would feel comfortable to start with?",
         "timestamp": "2025-01-15T10:01:15Z",
         "feedback": {
           "empathic_accuracy": 88,
@@ -233,12 +244,13 @@ curl https://api.pixelatedempathy.com/v1/sessions/sess_7a8b9c0d1e2f \
         }
       ]
     },
-    "recording_url": "https://recordings.pixelatedempathy.com/sess_7a8b9c0d1e2f.mp3",
+    "recording_url": "<https://recordings.pixelatedempathy.com/sess_7a8b9c0d1e2f.mp3",>
     "recording_expires_at": "2025-02-15T10:00:00Z",
     "created_at": "2025-01-15T10:00:00Z",
     "completed_at": "2025-01-15T10:24:00Z"
   }
 }
+
 ```
 
 <Warning>
@@ -254,7 +266,8 @@ annotations or mark a session for review.
 ### `PATCH /v1/sessions/{session_id}`
 
 ```bash
-curl -X PATCH https://api.pixelatedempathy.com/v1/sessions/sess_7a8b9c0d1e2f \
+
+curl -X PATCH <https://api.pixelatedempathy.com/v1/sessions/sess_7a8b9c0d1e2f> \
   -H "Authorization: Bearer YOUR_JWT_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
@@ -268,6 +281,7 @@ curl -X PATCH https://api.pixelatedempathy.com/v1/sessions/sess_7a8b9c0d1e2f \
     ],
     "tags": ["intake", "needs-review", "anchoring-bias"]
   }'
+
 ```
 
 ### Updatable fields
@@ -281,9 +295,10 @@ curl -X PATCH https://api.pixelatedempathy.com/v1/sessions/sess_7a8b9c0d1e2f \
 | `annotations[].comment` | string  | Annotation text (max 1,000 characters)                                                    |
 | `tags`                  | array   | Free-form tags for organizing and searching sessions                                      |
 
-### Response
+### Response (4)
 
-```json
+```json text
+
 {
   "status": "success",
   "data": {
@@ -294,6 +309,7 @@ curl -X PATCH https://api.pixelatedempathy.com/v1/sessions/sess_7a8b9c0d1e2f \
     "updated_at": "2025-01-15T11:00:00Z"
   }
 }
+
 ```
 
 ## Delete a session
@@ -310,13 +326,16 @@ recordings, and annotations.
 </Warning>
 
 ```bash
-curl -X DELETE https://api.pixelatedempathy.com/v1/sessions/sess_7a8b9c0d1e2f \
+
+curl -X DELETE <https://api.pixelatedempathy.com/v1/sessions/sess_7a8b9c0d1e2f> \
   -H "Authorization: Bearer YOUR_JWT_TOKEN"
+
 ```
 
-### Response
+### Response (5)
 
-```json
+```json text
+
 {
   "status": "success",
   "data": {
@@ -325,6 +344,7 @@ curl -X DELETE https://api.pixelatedempathy.com/v1/sessions/sess_7a8b9c0d1e2f \
     "deleted_at": "2025-01-15T12:00:00Z"
   }
 }
+
 ```
 
 ## Scenario selection
@@ -334,11 +354,13 @@ Browse and select scenarios for new training sessions.
 ### `GET /v1/scenarios`
 
 ```bash
-curl "https://api.pixelatedempathy.com/v1/scenarios?category=crisis&difficulty_min=3&difficulty_max=7&limit=10" \
+
+curl "<https://api.pixelatedempathy.com/v1/scenarios?category=crisis&difficulty_min=3&difficulty_max=7&limit=10"> \
   -H "Authorization: Bearer YOUR_JWT_TOKEN"
+
 ```
 
-### Query parameters
+### Query parameters (2)
 
 | Parameter        | Type    | Description                                                                                                     |
 | ---------------- | ------- | --------------------------------------------------------------------------------------------------------------- |
@@ -348,16 +370,18 @@ curl "https://api.pixelatedempathy.com/v1/scenarios?category=crisis&difficulty_m
 | `tags`           | string  | Comma-separated tags                                                                                            |
 | `search`         | string  | Full-text search across scenario titles and descriptions                                                        |
 
-### Response
+### Response (6)
 
 ```json
+
 {
   "status": "success",
   "data": [
     {
       "id": "scn_crisis_intervention_03",
       "title": "Suicidal Ideation Assessment",
-      "description": "A 28-year-old client presents with increasing hopelessness after a recent job loss. The session requires careful risk assessment and safety planning.",
+      "description": "A 28-year-old client presents with increasing hopelessness after a recent job loss. The session
+requires careful risk assessment and safety planning.",
       "category": "crisis",
       "difficulty": 6,
       "estimated_duration_minutes": 30,
@@ -377,6 +401,7 @@ curl "https://api.pixelatedempathy.com/v1/scenarios?category=crisis&difficulty_m
     "total_count": 34
   }
 }
+
 ```
 
 ## Real-time WebSocket connection
@@ -387,6 +412,7 @@ communication between the trainee and the AI client.
 ### Connecting
 
 ```javascript
+
 const ws = new WebSocket(
   'wss://rt.pixelatedempathy.com/v1/sessions/sess_7a8b9c0d1e2f/connect',
   {
@@ -419,13 +445,15 @@ ws.onerror = (error) => {
 ws.onclose = (event) => {
   console.log('Session disconnected:', event.code, event.reason)
 }
+
 ```
 
 ### Sending messages
 
 Send trainee responses to the AI client:
 
-```javascript
+```javascript text
+
 // Send a text message
 ws.send(
   JSON.stringify({
@@ -443,6 +471,7 @@ ws.send(
     timestamp: new Date().toISOString(),
   }),
 )
+
 ```
 
 ### Receiving messages
@@ -452,6 +481,7 @@ ws.send(
     The AI client's response to the trainee:
 
     ```json
+
     {
       "type": "client_message",
       "content": "I don't know... everything just feels heavy lately. Like I can't get out from under it.",
@@ -463,13 +493,15 @@ ws.send(
       },
       "timestamp": "2025-01-15T10:02:00Z"
     }
+
     ```
 
   </Accordion>
   <Accordion title="feedback">
     Real-time feedback on the trainee's most recent response (practice mode only):
 
-    ```json
+```json text
+
     {
       "type": "feedback",
       "turn": 2,
@@ -481,13 +513,17 @@ ws.send(
       "suggestions": [],
       "timestamp": "2025-01-15T10:01:30Z"
     }
+
     ```
+
 
   </Accordion>
   <Accordion title="bias_alert">
     Real-time bias detection alert:
 
-    ```json
+
+```json text
+
     {
       "type": "bias_alert",
       "turn": 5,
@@ -496,13 +532,17 @@ ws.send(
       "explanation": "Your response focused narrowly on the initial concern without exploring other factors.",
       "timestamp": "2025-01-15T10:05:00Z"
     }
+
     ```
+
 
   </Accordion>
   <Accordion title="crisis_alert">
     Crisis signal detected in the conversation:
 
-    ```json
+
+```json text
+
     {
       "type": "crisis_alert",
       "turn": 7,
@@ -511,13 +551,17 @@ ws.send(
       "recommended_action": "Initiate structured risk assessment using the Columbia Protocol.",
       "timestamp": "2025-01-15T10:08:00Z"
     }
+
     ```
+
 
   </Accordion>
   <Accordion title="session_summary">
     Sent when the session ends:
 
-    ```json
+
+```json text
+
     {
       "type": "session_summary",
       "session_id": "sess_7a8b9c0d1e2f",
@@ -532,7 +576,9 @@ ws.send(
       },
       "timestamp": "2025-01-15T10:24:00Z"
     }
+
     ```
+
 
   </Accordion>
 </AccordionGroup>
@@ -554,23 +600,30 @@ Sessions with recording enabled store audio for later playback and review.
 
 ### Get recording URL
 
-```bash
-curl https://api.pixelatedempathy.com/v1/sessions/sess_7a8b9c0d1e2f/recording \
-  -H "Authorization: Bearer YOUR_JWT_TOKEN"
-```
 
-```json
+```bash
+
+curl <https://api.pixelatedempathy.com/v1/sessions/sess_7a8b9c0d1e2f/recording> \
+  -H "Authorization: Bearer YOUR_JWT_TOKEN"
+
+``` text
+
+
+
+```json text
+
 {
   "status": "success",
   "data": {
     "session_id": "sess_7a8b9c0d1e2f",
-    "recording_url": "https://recordings.pixelatedempathy.com/sess_7a8b9c0d1e2f.mp3",
+    "recording_url": "<https://recordings.pixelatedempathy.com/sess_7a8b9c0d1e2f.mp3",>
     "format": "mp3",
     "duration_seconds": 1440,
     "size_bytes": 17280000,
     "expires_at": "2025-02-15T10:00:00Z"
   }
 }
+
 ```
 
 <Info>

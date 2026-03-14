@@ -16,7 +16,7 @@ There are **MULTIPLE CONFLICTING DEFINITIONS** of PIX-4 in the codebase:
 | **dataset_audit_final_report.md (line 223)** | P1 - YouTube Transcript Extraction Script              | Missing | YouTube extraction             |
 | **metrics (line 170)**                       | 🟠 P1: YouTube Extraction                              | P1      | YouTube extraction             |
 
-### **Key Discrepancy**: The Jira PIX-4 is about dataset download, but other docs reference PIX-4 as YouTube extraction!
+### **Key Discrepancy**: The Jira PIX-4 is about dataset download, but other docs reference PIX-4 as YouTube extraction
 
 ---
 
@@ -38,9 +38,11 @@ There are **MULTIPLE CONFLICTING DEFINITIONS** of PIX-4 in the codebase:
 ### Verification Commands (from Jira PIX-4)
 
 ```bash
-# Tier 3 - CoT Datasets
+## Tier 3 - CoT Datasets
 ls ~/datasets/consolidated/cot/
 ls ~/datasets/consolidated/reddit/
+
+
 ```
 
 **Status**: NOT EXECUTED - Cannot verify without access to VPS
@@ -56,7 +58,7 @@ From `metrics/dataset_audit_final_report.md`:
 > ⚠️ YouTube/Books Extraction Scripts Missing (PIX-4, PIX-2)
 >
 > - Scripts referenced but not implemented
-
+>
 ### Reality: Scripts DO EXIST! 🎉
 
 | File                                      | Purpose                         | Status    |
@@ -98,8 +100,8 @@ infrastructure is ALREADY IMPLEMENTED.
 Based on the current Jira issue, PIX-4 is a **verification task**:
 
 1. Check if Tier 3 CoT datasets exist in `~/datasets/consolidated/cot/`
-2. Check if Tier 4 Reddit datasets exist in `~/datasets/consolidated/reddit/`
-3. If missing, download via rclone commands provided in the issue
+1. Check if Tier 4 Reddit datasets exist in `~/datasets/consolidated/reddit/`
+1. If missing, download via rclone commands provided in the issue
 
 ### What PIX-4 Was Mistaken As
 
@@ -120,23 +122,35 @@ The audit report incorrectly conflates PIX-4 with YouTube extraction, which:
    - Create separate ticket for YouTube extraction if needed
    - Remove PIX-4 from the "missing scripts" list
 
-2. **Execute Verification** (requires VPS access)
+1. **Execute Verification** (requires VPS access)
 
-   ```bash
+```bash text
+
+
    ls ~/datasets/consolidated/cot/
    ls ~/datasets/consolidated/reddit/
-   ```
 
-3. **If Missing, Download**
 
-   ```bash
+``` text
+
+
+
+1. **If Missing, Download**
+
+
+
+```bash text
+
+
    rclone copy gdrive:datasets/CoT_Neurodivergent_vs_Neurotypical_Interactions ~/datasets/consolidated/cot/
    rclone copy gdrive:datasets/CoT_Philosophical_Understanding ~/datasets/consolidated/cot/
    rclone copy gdrive:datasets/reddit_mental_health/mental_disorders_reddit.csv ~/datasets/consolidated/reddit/
    rclone copy gdrive:datasets/reddit_mental_health/Suicide_Detection.csv ~/datasets/consolidated/reddit/
+
+
    ```
 
-4. **Update Documentation**
+1. **Update Documentation**
    - Remove PIX-4 from "missing scripts" list in audit reports
    - Update MASTER_TRAINING_EPIC with actual verification status
 

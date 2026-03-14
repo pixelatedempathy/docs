@@ -98,11 +98,11 @@ This is useful when you need:
 ### Agent responsibilities
 
 1. **Observation Agent** keeps context continuity and reads the latest artifact state.
-2. **Proposal Agents** generate candidate changes and alternatives.
-3. **Critic Agents** run consistency, policy, and safety checks.
-4. **Synthesis Agent** merges compatible proposals and resolves minor conflicts.
-5. **Router Agent** selects final path and creates the next handoff target.
-6. **Human or implementation engine** consumes approved handoff turns.
+1. **Proposal Agents** generate candidate changes and alternatives.
+1. **Critic Agents** run consistency, policy, and safety checks.
+1. **Synthesis Agent** merges compatible proposals and resolves minor conflicts.
+1. **Router Agent** selects final path and creates the next handoff target.
+1. **Human or implementation engine** consumes approved handoff turns.
 
 ### Data structure (reference)
 
@@ -129,11 +129,15 @@ This is useful when you need:
   "requestedAction": "handoff",
   "replyTo": "urn:agentturn:2026-03-02T11:54:22Z:tx-089"
 }
+
+
 ```
 
 ### Handoff contract (machine-readable)
 
 ```ts
+
+
 export type HandoffResult = {
   nextAgent: string;
   summary: string;
@@ -142,15 +146,17 @@ export type HandoffResult = {
   constraints: string[];
   nextPhase: "Observe" | "Propose" | "Counter" | "Synthesize" | "Handoff";
 };
+
+
 ```
 
 ## Example workflow
 
 1. The Proposal Agent reviews unresolved bug reports and creates a patch idea in the Turn Log.
-2. A Critic Agent counters with a risk: the change may break backward compatibility.
-3. A second Critic adds a safer alternative architecture.
-4. The Synthesis Agent merges the strongest points and sets confidence.
-5. The Router Agent hands the final decision to the implementation engine.
+1. A Critic Agent counters with a risk: the change may break backward compatibility.
+1. A second Critic adds a safer alternative architecture.
+1. The Synthesis Agent merges the strongest points and sets confidence.
+1. The Router Agent hands the final decision to the implementation engine.
 
 You end up with a decision that includes who agreed, who objected, and why.
 
