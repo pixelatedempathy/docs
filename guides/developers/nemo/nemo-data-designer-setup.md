@@ -184,7 +184,7 @@ NEMO_DATA_DESIGNER_BATCH_SIZE=1000
 
 For local Docker Compose deployment:
 
-````bash
+`````bash
 
 curl <http://localhost:8000/health>
 
@@ -203,45 +203,9 @@ curl <https://nemo-data-designer.your-cluster-domain.com/health>
 
 1. Run the example script:
 
-
 ```bash
 
-uv run python ai/data_designer/examples.py
-
-``` text
-
-
-You should see output like:
-
-
-``` text
-
-================================================================================
-Example 1: Generating Therapeutic Dataset
-================================================================================
-Generated 100 samples
-Generation time: 12.34 seconds
-Columns: age, gender, ethnicity, primary_diagnosis, ...
-
-````
-
-## Usage Examples
-
-### Example 1: Generate Therapeutic Dataset
-
-```python
-
-from ai.data_designer import NeMoDataDesignerService
-
-## Initialize service
-service = NeMoDataDesignerService()
-
-## Generate 1000 samples
-result = service.generate_therapeutic_dataset(num_samples=1000)
-
-## Access the data
-data = result['data']
-print(f"Generated {result['num_samples']} samples")
+uv run python ai/pipelines/design/examples.py
 
 ```
 
@@ -249,7 +213,7 @@ print(f"Generated {result['num_samples']} samples")
 
 ```python
 
-from ai.data_designer import NeMoDataDesignerService
+from ai.pipelines.design import NeMoDataDesignerService
 
 service = NeMoDataDesignerService()
 
@@ -260,6 +224,7 @@ result = service.generate_bias_detection_dataset(
 )
 
 ## Use with bias detection system
+# Note: BiasDetectionService is in the main app (src/lib/ai/bias-detection/python-service/)
 from src.lib.ai.bias_detection.python_service.bias_detection_service import BiasDetectionService
 bias_service = BiasDetectionService()
 analysis = bias_service.analyze_session_bias(result['data'])
@@ -270,7 +235,7 @@ analysis = bias_service.analyze_session_bias(result['data'])
 
 ```python
 
-from ai.data_designer import NeMoDataDesignerService
+from ai.pipelines.design import NeMoDataDesignerService
 from nemo_microservices.data_designer.essentials import (
     SamplerColumnConfig,
     SamplerType,
@@ -312,7 +277,7 @@ system:
 
 ```python
 
-from ai.data_designer import NeMoDataDesignerService
+from ai.pipelines.design import NeMoDataDesignerService
 
 ## Generate synthetic data for bias testing
 designer = NeMoDataDesignerService()
@@ -322,6 +287,7 @@ dataset = designer.generate_bias_detection_dataset(
 )
 
 ## Use with existing bias detection
+# Note: BiasDetectionService is in the main app (src/lib/ai/bias-detection/python-service/)
 from src.lib.ai.bias_detection.python_service.bias_detection_service import BiasDetectionService
 bias_service = BiasDetectionService()
 results = bias_service.analyze_session_bias(dataset['data'])
@@ -334,15 +300,15 @@ Integrate with the existing dataset pipeline:
 
 ```python
 
-from ai.data_designer import NeMoDataDesignerService
-from ai.dataset_pipeline.main_orchestrator import DatasetOrchestrator
+from ai.pipelines.design import NeMoDataDesignerService
+from ai.pipelines.orchestrator.main_orchestrator import DatasetPipelineOrchestrator
 
 ## Generate synthetic therapeutic data
 designer = NeMoDataDesignerService()
 synthetic = designer.generate_therapeutic_dataset(num_samples=5000)
 
 ## Process through existing pipeline
-orchestrator = DatasetOrchestrator()
+orchestrator = DatasetPipelineOrchestrator()
 processed = orchestrator.process_dataset(synthetic['data'])
 
 ```
@@ -429,7 +395,7 @@ Or using the provided Kubernetes manifest:
 
 kubectl apply -f ai/deployment/nemo-data-designer-k8s.yaml
 
-````
+`````
 
 See
 [NVIDIA Documentation](https://docs.nvidia.com/nemo/microservices/latest/set-up/deploy-as-microservices/data-designer/parent-chart.html)
