@@ -33,7 +33,7 @@ level.
     database administrators cannot read raw PHI.
   </Card>
   <Card title="PII Filtering at Ingestion" icon="filter">
-    The GeminiMem0Manager filters all PII from data before it enters the AI
+    The GeminiHindsightManager filters all PII from data before it enters the AI
     memory system. Names, emails, phone numbers, SSNs, and other identifiers are
     scrubbed or replaced with anonymized placeholders.
   </Card>
@@ -71,7 +71,7 @@ level.
                           ┌────────▼──────┐  ┌───────▼────────┐
                           │  Encrypted DB  │  │ AI Memory      │
                           │  (AES-256)     │  │ (PII-free via  │
-                          │                │  │ GeminiMem0Mgr) │
+                          │                │  │ GeminiHindsightMgr) │
                           └───────────────┘  └────────────────┘
 ```text
 
@@ -79,9 +79,9 @@ level.
 
 ## PII Handling
 
-### GeminiMem0Manager PII Filtering
+### GeminiHindsightManager PII Filtering
 
-The GeminiMem0Manager serves as the privacy gateway between user interactions
+The GeminiHindsightManager serves as the privacy gateway between user interactions
 and the AI memory system. It ensures that **no personally identifiable
 information is ever stored in AI memory**.
 

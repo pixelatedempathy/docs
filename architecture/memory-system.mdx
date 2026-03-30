@@ -1,7 +1,7 @@
 ---
 title: 'Memory System Architecture'
 description:
-  'How Pixelated Empathy implements long-term memory using Mem0 + Google Gemini
+  'How Pixelated Empathy implements long-term memory using Hindsight + Google Gemini
   — with PII filtering, crisis detection, speculation filtering, and
   HIPAA-compliant storage for therapeutic conversations.'
 ---
@@ -28,7 +28,7 @@ strict privacy controls.
 │  ┌───────────────┐    ┌──────────────────────────────────────────┐  │
 │  │   Frontend    │    │         MCP Memory Server (:5003)        │  │
 │  │  Dashboard    │    │  ┌────────────────────────────────────┐  │  │
-│  │              │───▶│  │       GeminiMem0Manager            │  │  │
+│  │              │───▶│  │       GeminiHindsightManager            │  │  │
 │  │ MCPMemory    │    │  │                                    │  │  │
 │  │ Client (TS)  │    │  │  ┌──────────┐  ┌───────────────┐  │  │  │
 │  └───────────────┘    │  │  │   PII    │  │  Speculation  │  │  │  │
@@ -44,7 +44,7 @@ strict privacy controls.
 │                    ┌─────────────────────┼─────────────────────┐   │
 │                    │              STORAGE LAYER                │   │
 │                    │   ┌─────────┐  ┌────▼─────┐  ┌─────────┐│   │
-│                    │   │ Gemini  │  │   Mem0   │  │  Null   ││   │
+│                    │   │ Gemini  │  │   Hindsight   │  │  Null   ││   │
 │                    │   │  API    │  │  Vector  │  │ Memory  ││   │
 │                    │   │(Filter/ │  │  Store   │  │(Fallback││   │
 │                    │   │ Gen)    │  │ (Qdrant) │  │         ││   │
@@ -65,10 +65,10 @@ layered architecture.
     FastAPI-based server (port 5003) that exposes RESTful endpoints for all memory operations. Acts as the single gateway to the memory system — no service writes to memory directly.
 
   </Card>
-  <Card title="GeminiMem0Manager" icon="brain">
+  <Card title="GeminiHindsightManager" icon="brain">
     **Intelligence Layer**
 
-    Python class that orchestrates PII filtering, speculation filtering, crisis detection, and memory storage/retrieval. Uses Google Gemini for response generation and Mem0 for vector storage.
+    Python class that orchestrates PII filtering, speculation filtering, crisis detection, and memory storage/retrieval. Uses Google Gemini for response generation and Hindsight for vector storage.
 
   </Card>
   <Card title="MCPMemoryClient" icon="display">
@@ -85,17 +85,17 @@ layered architecture.
   </Card>
 </CardGroup>
 
-## GeminiMem0Manager deep dive
+## GeminiHindsightManager deep dive
 
-The `GeminiMem0Manager` is the core orchestrator of the memory system. It
-integrates Google Gemini (for PII filtering and response generation) with Mem0
+The `GeminiHindsightManager` is the core orchestrator of the memory system. It
+integrates Google Gemini (for PII filtering and response generation) with Hindsight
 (for vector-based long-term memory storage).
 
 ### Initialization and configuration
 
 ```python
-from ai.memory.mem0_gemini.manager import GeminiMem0Manager, GeminiMem0Config
-from ai.memory.mem0_gemini.memory_ingestion_config import TherapeuticMemoryConfig
+from ai.memory.hindsight_gemini.manager import GeminiHindsightManager, GeminiHindsightConfig
+from ai.memory.hindsight_gemini.memory_ingestion_config import TherapeuticMemoryConfig
 
 # Configure therapeutic memory settings
 therapeutic_config = TherapeuticMemoryConfig(
@@ -106,19 +106,19 @@ therapeutic_config = TherapeuticMemoryConfig(
 )
 
 # Initialize the manager
-config = GeminiMem0Config(
+config = GeminiHindsightConfig(
     gemini_api_key=os.environ["GEMINI_API_KEY"],
-    mem0_api_key=os.environ.get("MEM0_API_KEY"),
+    hindsight_api_key=os.environ.get("HINDSIGHT_API_KEY"),
     model_name="gemini-2.0-flash",
     user_id="default_user",
     therapeutic_config=therapeutic_config,
 )
 
-manager = GeminiMem0Manager(config)
+manager = GeminiHindsightManager(config)
 ```text
 
 <Tip>
-  The `TherapeuticMemoryConfig` uses **Mem0 cookbook best practices** for
+  The `TherapeuticMemoryConfig` uses **Hindsight cookbook best practices** for
   controlling memory ingestion — including custom instructions that tell the
   memory system exactly what to store, what to ignore, and what requires special
   handling.
@@ -149,7 +149,7 @@ whether it's triggered by the inference service or the frontend dashboard.
         if len(filtered) > config.max_memory_length:
             filtered = filtered[:config.max_memory_length] + "..."
 
-        # Step 4: Store in Mem0 with metadata
+        # Step 4: Store in Hindsight with metadata
         result = memory.add(
             filtered,
             user_id=user_id,
@@ -167,7 +167,7 @@ whether it's triggered by the inference service or the frontend dashboard.
     ```python
     # Searching memories (semantic similarity)
     def search_memories(query, user_id):
-        # Mem0 performs vector similarity search via Qdrant
+        # Hindsight performs vector similarity search via Qdrant
         results = memory.search(query, user_id=user_id)
 
         # Format for context injection
@@ -392,11 +392,11 @@ retrieval and dashboard organization.
 | `preference`          | Communication preferences, learning style                | Medium           |
 | `general`             | General context without specific categorization          | Low              |
 
-## Custom instructions (Mem0 integration)
+## Custom instructions (Hindsight integration)
 
-The memory system uses **Mem0's custom instruction feature** to guide what gets
+The memory system uses **Hindsight's custom instruction feature** to guide what gets
 extracted and stored. These instructions are applied at the project level and
-influence Mem0's memory extraction behavior.
+influence Hindsight's memory extraction behavior.
 
 <AccordionGroup>
   <Accordion title='What to STORE (High Confidence)' icon='check'>
@@ -437,15 +437,15 @@ never fails due to memory system unavailability.
 
 ```text
 ┌─────────────────────────────────────────────────────────────┐
-│  Tier 1: Gemini + Mem0 Platform Client (Production)         │
+│  Tier 1: Gemini + Hindsight Platform Client (Production)         │
 │  ┌─────────────────────────────────────────────────────┐    │
-│  │  • Mem0 Platform API (cloud-hosted vector store)    │    │
+│  │  • Hindsight Platform API (cloud-hosted vector store)    │    │
 │  │  • Google Gemini API (PII filtering + generation)   │    │
 │  │  • Full feature set: search, filter, custom instr.  │    │
 │  └─────────────────────────────────────────────────────┘    │
 │                         │ on failure                         │
 │                         ▼                                    │
-│  Tier 2: Local Mem0 (Self-hosted)                           │
+│  Tier 2: Local Hindsight (Self-hosted)                           │
 │  ┌─────────────────────────────────────────────────────┐    │
 │  │  • Qdrant vector store (localhost:6333)             │    │
 │  │  • Local memory operations (no cloud dependency)    │    │
@@ -464,8 +464,8 @@ never fails due to memory system unavailability.
 
 <Info>
   The fallback selection happens at **initialization time**, not per-request. If
-  the Mem0 Platform Client fails to initialize, the manager falls back to local
-  Mem0. If that also fails, `NullMemoryManager` is used for the lifetime of the
+  the Hindsight Platform Client fails to initialize, the manager falls back to local
+  Hindsight. If that also fails, `NullMemoryManager` is used for the lifetime of the
   process. A restart attempts re-initialization.
 </Info>
 
@@ -530,7 +530,7 @@ interface MemoryEntry {
 | Variable                     | Required | Default                 | Purpose                                               |
 | ---------------------------- | -------- | ----------------------- | ----------------------------------------------------- |
 | `GEMINI_API_KEY`             | Yes      | —                       | Google Gemini API for PII filtering and generation    |
-| `MEM0_API_KEY`               | No       | —                       | Mem0 Platform API (cloud). If absent, uses local Mem0 |
+| `HINDSIGHT_API_KEY`               | No       | —                       | Hindsight Platform API (cloud). If absent, uses local Hindsight |
 | `MEMORY_SERVER_PORT`         | No       | `5003`                  | MCP Memory Server listen port                         |
 | `NEXT_PUBLIC_MEMORY_API_URL` | No       | `http://localhost:5003` | Frontend client base URL                              |
 

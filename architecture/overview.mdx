@@ -55,7 +55,7 @@ through well-defined API contracts.
 ┌─────────┼────────────────┼──────────────┼─────────────────┼─────────────┐
 │         │          DATA LAYER           │                 │             │
 │  ┌──────▼──────┐ ┌──────▼─────┐  ┌─────▼──────┐  ┌──────▼──────────┐  │
-│  │  MongoDB    │ │  Redis     │  │  AWS S3 /  │  │  Mem0 Vector   │  │
+│  │  MongoDB    │ │  Redis     │  │  AWS S3 /  │  │  Hindsight Vector   │  │
 │  │  (Primary)  │ │  (Cache /  │  │  R2 (Blob) │  │  Store (Qdrant) │  │
 │  │             │ │  Sessions) │  │            │  │                 │  │
 │  └─────────────┘ └────────────┘  └────────────┘  └─────────────────┘  │
@@ -117,7 +117,7 @@ communication for live session feedback, and dynamic difficulty adjustment based
   <Card title="MCP Memory Server" icon="database">
 ## Python + FastAPI
 
-    Central memory authority implementing the Model Context Protocol (MCP). Manages long-term memory via Mem0 + Google
+    Central memory authority implementing the Model Context Protocol (MCP). Manages long-term memory via Hindsight + Google
 Gemini integration with PII filtering, crisis detection, and HIPAA-compliant storage.
 
   </Card>
@@ -331,8 +331,8 @@ asynchronous WebSocket connections, depending on latency requirements.
   </Tab>
   <Tab title='Internal (Service-to-Service)'>
     Direct internal calls between co-located services: - **MCP Server →
-    GeminiMem0Manager**: Memory storage with PII filtering - **Pixel Inference
-    Service → GeminiMem0Manager**: Context retrieval for response generation -
+    GeminiHindsightManager**: Memory storage with PII filtering - **Pixel Inference
+    Service → GeminiHindsightManager**: Context retrieval for response generation -
     **Bias Detection → EI Engine**: Emotional context for bias severity
     assessment
   </Tab>
@@ -352,7 +352,7 @@ asynchronous WebSocket connections, depending on latency requirements.
 | **AI/ML**    | FastAPI                | 0.100+    | High-performance API framework      |
 | **AI/ML**    | Fairlearn              | Latest    | Fairness metrics and bias detection |
 | **AI/ML**    | HuggingFace            | Latest    | NLP models, research pipeline       |
-| **Memory**   | Mem0                   | Latest    | Long-term vector memory             |
+| **Memory**   | Hindsight                   | Latest    | Long-term vector memory             |
 | **Memory**   | Google Gemini          | 2.0 Flash | PII filtering, response generation  |
 | **Data**     | MongoDB                | 7.x       | Primary document store              |
 | **Data**     | PostgreSQL             | 15.x      | Relational data (CMS, analytics)    |
@@ -373,7 +373,7 @@ asynchronous WebSocket connections, depending on latency requirements.
     compliance is architectural, not bolted on.
   </Card>
   <Card title='Graceful Degradation' icon='life-ring'>
-    Every external dependency has a fallback. Memory system: Gemini → Mem0 →
+    Every external dependency has a fallback. Memory system: Gemini → Hindsight →
     NullMemory. AI inference: Primary model → Fallback model → Cached response.
     Database: Primary → Read replica → Cache.
   </Card>
