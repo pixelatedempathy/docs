@@ -422,6 +422,41 @@ Validate JWT tokens using the JSON Web Key Set (JWKS) published at:
   </Accordion>
 </AccordionGroup>
 
+## TypeScript SDK
+
+The official `@pixelated-empathy/sdk` package provides a TypeScript client for easy API integration.
+
+### Installation
+
+```bash
+npm install @pixelated-empathy/sdk
+```
+
+### Usage
+
+```typescript
+import { PixelatedClient } from '@pixelated-empathy/sdk';
+
+// Initialize with API key
+const client = new PixelatedClient({
+  apiKey: 'pe_live_your_api_key_here'
+});
+
+// Or with JWT
+const client = new PixelatedClient({
+  jwt: 'your_jwt_token_here'
+});
+
+// Get user profile
+const profile = await client.getProfile();
+
+// Search content
+const results = await client.search('therapeutic techniques');
+
+// Check health
+const health = await client.health();
+```
+
 ## Next steps
 
 <CardGroup cols={2}>
@@ -435,5 +470,8 @@ Validate JWT tokens using the JSON Web Key Set (JWKS) published at:
     href='/api-reference/bias-analysis'
   >
     Start making your first API calls with the bias analysis endpoint.
+  </Card>
+  <Card title='TypeScript SDK' icon='code' href='https://www.npmjs.com/package/@pixelated-empathy/sdk'>
+    Use the official TypeScript SDK for easier integration.
   </Card>
 </CardGroup>

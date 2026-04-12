@@ -278,11 +278,16 @@ Official client libraries are available for popular languages:
     import { PixelatedEmpathy } from '@pixelated-empathy/sdk';
 
     const client = new PixelatedEmpathy({ apiKey: 'pe_live_your_api_key' });
+    
+    // Perform bias analysis
     const result = await client.biasAnalysis.analyze({
       text: 'The patient seems resistant to treatment.',
+      therapistId: 'ther_123',
       context: 'clinical_notes',
     });
-    console.log(result.biasTypes);
+    
+    console.log(result.data.overallBiasScore);
+    console.log(result.data.detectedBiases);
 
     ```
 
