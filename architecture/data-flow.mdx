@@ -33,7 +33,7 @@ when they receive AI-generated feedback.
                                      │          ┌────┴────┐          │
                                      │          │         │          │
                                 ┌────▼───┐ ┌───▼───┐ ┌───▼───┐ ┌───▼────┐
-                                │  Bias  │ │  EI   │ │Crisis │ │  Hindsight  │
+                                │  Bias  │ │  EI   │ │Crisis │ │  Foresight  │
                                 │  Check │ │Engine │ │Detect │ │+Gemini │
                                 └────┬───┘ └───┬───┘ └───┬───┘ └───┬────┘
                                      │         │         │         │
@@ -111,7 +111,7 @@ when they receive AI-generated feedback.
   <Step title="Response Generation" icon="robot">
     The Pixel Inference Service combines all analysis results to generate a contextual response:
 
-    1. Retrieve relevant memories from Hindsight vector store
+    1. Retrieve relevant memories from Foresight vector store
     2. Format memory context for the system prompt
     3. Inject crisis handling instructions if applicable
     4. Inject emotional context from EI Engine analysis
@@ -383,7 +383,7 @@ Pixelated Empathy's memory system through a standardized interface.
     DELETE /api/memory/{id}         # Delete specific memory
 ```text
 
-    All operations pass through the `GeminiHindsightManager` which enforces:
+    All operations pass through the `GeminiForesightManager` which enforces:
     - PII detection and redaction (HIPAA-compliant regex patterns)
     - Speculation filtering (confidence thresholds for uncertain statements)
     - Crisis signal detection and flagging
@@ -519,7 +519,7 @@ ensure graceful degradation.
     Primary: Google Gemini API (PII filtering + generation)
         │
         ▼ (on failure)
-    Secondary: Hindsight Platform Client (vector search + storage)
+    Secondary: Foresight Platform Client (vector search + storage)
         │
         ▼ (on failure)
     Tertiary: NullMemoryManager (no-op, logs warning)
@@ -559,7 +559,7 @@ ensure graceful degradation.
 
 <Info>
   **Next:** Dive into the [Memory System
-  Architecture](/architecture/memory-system) to understand how Hindsight + Gemini
+  Architecture](/architecture/memory-system) to understand how Foresight + Gemini
   powers long-term memory with PII compliance, or explore the [Deployment
   Architecture](/architecture/deployment) for infrastructure details.
 </Info>

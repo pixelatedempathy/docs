@@ -751,7 +751,7 @@ dependency connectivity:
     "mongodb": "connected",
     "postgresql": "connected",
     "redis": "connected",
-    "hindsight": "connected",
+    "foresight": "connected",
     "gemini": "available"
   },
   "uptime_seconds": 86400
@@ -776,7 +776,7 @@ dependency connectivity:
 
     # AI Services
     GEMINI_API_KEY=your-gemini-api-key
-    HINDSIGHT_API_KEY=your-hindsight-api-key # Legacy fallback: HINDSIGHT_API_KEY
+    HINDSIGHT_API_KEY=your-foresight-api-key # Legacy fallback: HINDSIGHT_API_KEY
     OLLAMA_HOST=<http://localhost:11434>
 
     # Memory
@@ -901,7 +901,7 @@ terraform/
   <Accordion title='Deployment' icon='rocket'>
     - [ ] Deploy to staging first and verify health checks - [ ] Run integration
     test suite against staging - [ ] Verify memory system connectivity (MCP
-    Server → Hindsight → Gemini) - [ ] Verify WebSocket connectivity for
+    Server → Foresight → Gemini) - [ ] Verify WebSocket connectivity for
     training sessions - [ ] Check Grafana dashboards for anomalies - [ ] Deploy
     to production with rolling update strategy
   </Accordion>
