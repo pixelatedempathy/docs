@@ -165,8 +165,8 @@ def generate_dashboard_content(
 
     total_done = 0
     total_sub_issues = 0
-    total_done_effort = 0
-    total_effort = 0
+    total_done_effort = 0.0
+    total_effort = 0.0
 
     def _get_state_type(k: dict) -> str:
         st = k.get("state")
@@ -235,7 +235,7 @@ def generate_dashboard_content(
 
     now = now_str or datetime.now(UTC).strftime("%Y-%m-%d %H:%M UTC")
 
-    if total_done == 0 and sum(ws["in_progress_count"] for ws in ws_entries) == 0:
+    if total_done == 0 and sum(int(ws.get("in_progress_count", 0)) for ws in ws_entries) == 0:
         banner = (
             "> **\U0001f504 All sub-issues are in Triage \u2014 execution has not yet begun.**\n"
             "> The 0% completion across all workstreams is accurate for this starting state. "

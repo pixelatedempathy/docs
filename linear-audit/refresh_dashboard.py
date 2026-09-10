@@ -81,6 +81,7 @@ def gql(query: str, api_key: str | None = None, api_url: str = DEFAULT_API_URL) 
             else:
                 print(f"  Failed after 3 retries: {e}", file=sys.stderr)
                 return None
+    return None
 
 
 def fetch_project_issues(

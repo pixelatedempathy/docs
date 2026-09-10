@@ -26,6 +26,7 @@ import argparse
 import os
 import secrets
 import sys
+from typing import Any
 
 import requests
 
@@ -42,7 +43,7 @@ def gql(
     if not api_url.startswith(("https://", "http://")):
         raise ValueError("Invalid URL scheme: only https/http supported")
     key = api_key or os.environ.get("LINEAR_API_KEY", "")
-    payload: dict[str, object] = {"query": query}
+    payload: dict[str, Any] = {"query": query}
     if variables:
         payload["variables"] = variables
 
