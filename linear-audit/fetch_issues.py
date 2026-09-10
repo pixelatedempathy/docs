@@ -57,6 +57,7 @@ import os
 import sys
 import time
 from pathlib import Path
+from typing import Any
 
 try:
     import requests
@@ -178,6 +179,36 @@ def transform_to_flat(node: dict) -> dict:
     }
 
 
+def gql(
+    query: str,
+    variables: dict | None = None,
+    api_key: str | None = None,
+    api_url: str = LINEAR_GRAPHQL_URL,
+) -> dict | None:
+    """Execute a GraphQL query against the Linear API. Returns None on failure."""
+    if not api_url.startswith(("https://", "http://")):
+        raise ValueError("Invalid URL scheme: only https/http supported")
+    key = api_key or os.environ.get("LINEAR_API_KEY", "")
+    payload: dict[str, Any] = {"query": query}
+    if variables:
+        payload["variables"] = variables
+    try:
+        resp = requests.post(
+            api_url,
+            json=payload,
+            headers={"Content-Type": "application/json", "Authorization": key},
+            timeout=30,
+        )
+        result = resp.json()
+        if "errors" in result:
+            print(f"  API Error: {result['errors']}", file=sys.stderr)
+            return None
+        return result
+    except requests.RequestException as e:
+        print(f"  Connection/HTTP error from Linear API: {e}", file=sys.stderr)
+        return None
+
+
 def fetch_all_issues(api_key: str, team_id: str, page_size: int = 50, max_pages: int | None = 100) -> list[dict]:
     """Fetch all issues with pagination, returned as v2 flat-shape dicts."""
     # Linear API keys must NOT use the "Bearer" prefix — that prefix is
@@ -198,7 +229,7 @@ def fetch_all_issues(api_key: str, team_id: str, page_size: int = 50, max_pages:
             print(f"Reached maximum page limit ({max_pages}), stopping pagination.", file=sys.stderr)
             break
 
-        variables = {"teamId": team_id, "first": page_size, "after": cursor}
+        variables: dict[str, Any] = {"teamId": team_id, "first": page_size, "after": cursor}
         resp = requests.post(
             LINEAR_GRAPHQL_URL,
             headers=headers,
